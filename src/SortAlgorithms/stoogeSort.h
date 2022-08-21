@@ -1,12 +1,11 @@
 #ifndef STOOGE_SORT_H
 #define STOOGE_SORT_H
 
-#include "../sort.h"
-
+#include "../sortStrategy.h"
 class StoogeSort : public SortStrategy {
   public:
     explicit StoogeSort(uint32_t size) : SortStrategy(size) {
-        Visualize::drawSortTitle("Stooge Sort");
+        Visualize::visualizeSortTitle("Stooge Sort");
     }
 
     ~StoogeSort() noexcept override = default;
@@ -22,7 +21,7 @@ class StoogeSort : public SortStrategy {
     void sort() override {
         std::vector<std::pair<float, Color>> v_ = vector_.getVector();
         stoogeSort(v_, 0, v_.size() - 1);
-        Visualize::visualize(v_, "Stooge Sort");
+        Visualize::visualizeVector(v_, "Stooge Sort");
         Visualize::visualizeEnding(v_, "Stooge Sort");
     }
 
@@ -34,8 +33,7 @@ class StoogeSort : public SortStrategy {
                 Visualize::visualizeBar(v, left, "Stooge Sort");
                 Visualize::visualizeBar(v, right, "Stooge Sort");
                 std::swap(v[left], v[right]);
-                Visualize::visualize(v, "Stooge Sort");
-                if (IsKeyDown(KEY_Q)) { return; }
+                Visualize::visualizeVector(v, "Stooge Sort");
             }
             if (right - left + 1 >= 3) {
                 uint32_t middle{(right - left + 1) / 3};

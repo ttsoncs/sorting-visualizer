@@ -10,7 +10,7 @@ class SortStrategy {
 
   public:
     explicit SortStrategy(uint32_t size) : vector_(size) {
-        Visualize::visualize(vector_.getVector());
+        Visualize::visualizeVector(vector_.getVector());
     }
 
     virtual ~SortStrategy() noexcept = default;

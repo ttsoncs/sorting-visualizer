@@ -13,11 +13,11 @@ class Vector {
 
     static Color getRandomColor() {
         std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(0, 255);
-        return {static_cast<unsigned char>(dis(gen)),
-                static_cast<unsigned char>(dis(gen)),
-                static_cast<unsigned char>(dis(gen)), 255};
+        std::mt19937 g(rd());
+        std::uniform_int_distribution<int> rgb(0, 255);
+        return {static_cast<unsigned char>(rgb(g)),
+                static_cast<unsigned char>(rgb(g)),
+                static_cast<unsigned char>(rgb(g)), 255};
     }
 
   public:
@@ -29,23 +29,19 @@ class Vector {
     void generate() {
         auto [r1, g1, b1, a1] = getRandomColor();
         auto [r2, g2, b2, a2] = getRandomColor();
-        int deltaRed = r2 - r1;
-        int deltaGreen = g2 - g1;
-        int deltaBlue = b2 - b1;
-        float redShift =
-            static_cast<float>(deltaRed) / static_cast<float>(v_.size());
-        float greenShift =
-            static_cast<float>(deltaGreen) / static_cast<float>(v_.size());
-        float blueShift =
-            static_cast<float>(deltaBlue) / static_cast<float>(v_.size());
-        float blockHeight = static_cast<float>(GetScreenHeight()) /
-                            static_cast<float>(v_.size());
-        for (uint32_t i{0}; i < v_.size(); ++i) {
-            float barHeight = static_cast<float>(i + 1) * blockHeight;
-            unsigned char red = r1 + i * redShift;
-            unsigned char green = g1 + i * greenShift;
-            unsigned char blue = b1 + i * blueShift;
-            v_[i] = std::make_pair(barHeight, Color{red, green, blue, 255});
+        auto size{v_.size()};
+        auto deltaRed{static_cast<float>(r2 - r1) / static_cast<float>(size)};
+        auto deltaGreen{static_cast<float>(g2 - g1) / static_cast<float>(size)};
+        auto deltaBlue{static_cast<float>(b2 - b1) / static_cast<float>(size)};
+        auto deltaHeight{static_cast<float>(GetScreenHeight()) / size};
+        auto barHeight{0.0f};
+        for (auto i{0}; i < size; ++i) {
+            barHeight = static_cast<float>(i + 1) * deltaHeight;
+            v_[i] = std::make_pair(
+                barHeight,
+                Color{static_cast<unsigned char>(r1 + i * deltaRed),
+                      static_cast<unsigned char>(g1 + i * deltaGreen),
+                      static_cast<unsigned char>(b1 + i * deltaBlue), 255});
         }
     }
 

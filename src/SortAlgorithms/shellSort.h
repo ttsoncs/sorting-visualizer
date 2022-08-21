@@ -1,12 +1,11 @@
 #ifndef SHELL_SORT_H
 #define SHELL_SORT_H
 
-#include "../sort.h"
-
+#include "../sortStrategy.h"
 class ShellSort : public SortStrategy {
   public:
     explicit ShellSort(uint32_t size) : SortStrategy(size) {
-        Visualize::drawSortTitle("Shell Sort");
+        Visualize::visualizeSortTitle("Shell Sort");
     }
 
     ~ShellSort() noexcept override = default;
@@ -34,8 +33,7 @@ class ShellSort : public SortStrategy {
                 Visualize::visualizeBar(v_, i, "Shell Sort");
                 v_[j] = std::make_pair(value, color);
                 Visualize::visualizeBar(v_, j, "Shell Sort");
-                Visualize::visualize(v_, "Shell Sort");
-                if (IsKeyPressed(KEY_Q)) { return; }
+                Visualize::visualizeVector(v_, "Shell Sort");
             }
         }
         Visualize::visualizeEnding(v_, "Shell Sort");

@@ -1,28 +1,29 @@
-#include "Sort/bubbleSort.h"
-#include "Sort/cocktailSort.h"
-#include "Sort/combSort.h"
-#include "Sort/cycleSort.h"
-#include "Sort/evenOddSort.h"
-#include "Sort/gnomeSort.h"
-#include "Sort/heapSort.h"
-#include "Sort/insertionSort.h"
-#include "Sort/mergeSort.h"
-#include "Sort/pancakeSort.h"
-#include "Sort/selectionSort.h"
-#include "Sort/shellSort.h"
-#include "Sort/stoogeSort.h"
-#include "Sort/timSort.h"
+#include "SortAlgorithms/bubbleSort.h"
+#include "SortAlgorithms/cocktailSort.h"
+#include "SortAlgorithms/combSort.h"
+#include "SortAlgorithms/cycleSort.h"
+#include "SortAlgorithms/evenOddSort.h"
+#include "SortAlgorithms/gnomeSort.h"
+#include "SortAlgorithms/insertionSort.h"
+#include "SortAlgorithms/mergeSort.h"
+#include "SortAlgorithms/pancakeSort.h"
+#include "SortAlgorithms/quickSort.h"
+#include "SortAlgorithms/selectionSort.h"
+#include "SortAlgorithms/shellSort.h"
+#include "SortAlgorithms/stoogeSort.h"
+#include "SortAlgorithms/timSort.h"
 #include "sortController.h"
 #include "window.h"
 
-int constexpr SCREEN_WIDTH = 1280;
-int constexpr SCREEN_HEIGHT = 720;
-int constexpr SCREEN_FPS = 60;
+uint32_t constexpr SCREEN_WIDTH = 1280;
+uint32_t constexpr SCREEN_HEIGHT = 720;
+uint32_t constexpr SCREEN_FPS = 60;
 std::string const WINDOW_TITLE{"Sort Visualizer"};
 
 int main() {
-    Window window{SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_FPS, WINDOW_TITLE};
-    SortController sortController(std::make_unique<BubbleSort>(60));
+    Window window{SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE};
+    window.setTargetFps(SCREEN_FPS);
+    SortController sortController;
     while (!Window::windowShouldClose()) {
         if (Window::isKeyDown(KEY_ESCAPE)) { break; }
 
@@ -65,11 +66,11 @@ int main() {
         }
 
         if (Window::isKeyDown(KEY_ZERO)) {
-            sortController.setSortStrategy(std::make_unique<HeapSort>(60));
+            sortController.setSortStrategy(std::make_unique<QuickSort>(60));
         }
 
         if (Window::isKeyDown(KEY_Z)) {
-            sortController.setSortStrategy(std::make_unique<StoogeSort>(30));
+            sortController.setSortStrategy(std::make_unique<StoogeSort>(60));
         }
 
         if (Window::isKeyDown(KEY_X)) {

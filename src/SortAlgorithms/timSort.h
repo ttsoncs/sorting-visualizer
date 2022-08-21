@@ -1,8 +1,7 @@
 #ifndef TIM_SORT_H
 #define TIM_SORT_H
 
-#include "../sort.h"
-
+#include "../sortStrategy.h"
 class TimSort : public SortStrategy {
   private:
     void timSort(std::vector<std::pair<float, Color>> &v_, uint32_t start,
@@ -29,7 +28,7 @@ class TimSort : public SortStrategy {
             Visualize::visualizeBar(v_, i, "Insertion Sort");
             Visualize::visualizeBar(v_, j, "Insertion Sort");
             v_[j] = std::make_pair(value, color);
-            Visualize::visualize(v_, "Tim Sort");
+            Visualize::visualizeVector(v_, "Tim Sort");
         }
     }
 
@@ -44,15 +43,15 @@ class TimSort : public SortStrategy {
                 temp[k++] = v_[j++];
             }
         }
-        Visualize::visualize(v_, "Tim Sort");
+        Visualize::visualizeVector(v_, "Tim Sort");
         while (i <= mid) {
             temp[k++] = v_[i++];
         }
-        Visualize::visualize(v_, "Tim Sort");
+        Visualize::visualizeVector(v_, "Tim Sort");
         while (j <= end) {
             temp[k++] = v_[j++];
         }
-        Visualize::visualize(v_, "Tim Sort");
+        Visualize::visualizeVector(v_, "Tim Sort");
         for (uint32_t i{0}; i < temp.size(); ++i) {
             v_[start + i] = temp[i];
         }
@@ -60,7 +59,7 @@ class TimSort : public SortStrategy {
 
   public:
     explicit TimSort(uint32_t size) : SortStrategy(size) {
-        Visualize::drawSortTitle("Tim Sort");
+        Visualize::visualizeSortTitle("Tim Sort");
     }
 
     ~TimSort() noexcept override = default;
@@ -76,7 +75,7 @@ class TimSort : public SortStrategy {
     void sort() override {
         std::vector<std::pair<float, Color>> v_ = vector_.getVector();
         timSort(v_, 0, v_.size() - 1);
-        Visualize::visualize(v_, "Tim Sort");
+        Visualize::visualizeVector(v_, "Tim Sort");
         Visualize::visualizeEnding(v_, "Tim Sort");
     }
 };

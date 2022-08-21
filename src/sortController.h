@@ -1,7 +1,7 @@
 #ifndef SORT_CONTROLLER_H
 #define SORT_CONTROLLER_H
 
-#include "sort.h"
+#include "SortAlgorithms/bubbleSort.h"
 #include <memory>
 
 class SortController {
@@ -9,7 +9,7 @@ class SortController {
     std::unique_ptr<SortStrategy> sortStrategy_;
 
   public:
-    SortController() = default;
+    SortController() { sortStrategy_ = std::make_unique<BubbleSort>(60); }
 
     explicit SortController(std::unique_ptr<SortStrategy> sortStrategy)
         : sortStrategy_{std::move(sortStrategy)} {}

@@ -1,8 +1,7 @@
 #ifndef MERGE_SORT_H
 #define MERGE_SORT_H
 
-#include "../sort.h"
-
+#include "../sortStrategy.h"
 class MergeSort : public SortStrategy {
   private:
     void mergeSort(std::vector<std::pair<float, Color>> &v_, uint32_t start,
@@ -12,7 +11,7 @@ class MergeSort : public SortStrategy {
             Visualize::visualizeBar(v_, start, "Merge Sort");
             Visualize::visualizeBar(v_, mid, "Merge Sort");
             Visualize::visualizeBar(v_, end, "Merge Sort");
-            Visualize::visualize(v_, "Merge Sort");
+            Visualize::visualizeVector(v_, "Merge Sort");
             mergeSort(v_, start, mid);
             mergeSort(v_, mid + 1, end);
             merge(v_, start, mid, end);
@@ -30,15 +29,15 @@ class MergeSort : public SortStrategy {
                 temp[k++] = v_[j++];
             }
         }
-        Visualize::visualize(v_, "Merge Sort");
+        Visualize::visualizeVector(v_, "Merge Sort");
         while (i <= mid) {
             temp[k++] = v_[i++];
         }
-        Visualize::visualize(v_, "Merge Sort");
+        Visualize::visualizeVector(v_, "Merge Sort");
         while (j <= end) {
             temp[k++] = v_[j++];
         }
-        Visualize::visualize(v_, "Merge Sort");
+        Visualize::visualizeVector(v_, "Merge Sort");
         for (uint32_t i{0}; i < temp.size(); ++i) {
             v_[start + i] = temp[i];
         }
@@ -46,7 +45,7 @@ class MergeSort : public SortStrategy {
 
   public:
     explicit MergeSort(uint32_t size) : SortStrategy(size) {
-        Visualize::drawSortTitle("Merge Sort");
+        Visualize::visualizeSortTitle("Merge Sort");
     }
 
     ~MergeSort() noexcept override = default;
@@ -62,7 +61,7 @@ class MergeSort : public SortStrategy {
     void sort() override {
         std::vector<std::pair<float, Color>> v_ = vector_.getVector();
         mergeSort(v_, 0, v_.size() - 1);
-        Visualize::visualize(v_, "Merge Sort");
+        Visualize::visualizeVector(v_, "Merge Sort");
         Visualize::visualizeEnding(v_, "Merge Sort");
     }
 };

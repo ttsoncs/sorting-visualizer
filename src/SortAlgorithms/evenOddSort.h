@@ -1,12 +1,11 @@
 #ifndef EVEN_ODD_SORT_H
 #define EVEN_ODD_SORT_H
 
-#include "../sort.h"
-
+#include "../sortStrategy.h"
 class EvenOddSort : public SortStrategy {
   public:
     explicit EvenOddSort(uint32_t size) : SortStrategy(size) {
-        Visualize::drawSortTitle("Even Odd Sort");
+        Visualize::visualizeSortTitle("Even Odd Sort");
     }
 
     ~EvenOddSort() noexcept override = default;
@@ -20,31 +19,30 @@ class EvenOddSort : public SortStrategy {
     EvenOddSort &operator=(EvenOddSort &&other) noexcept = default;
 
     void sort() override {
-        std::vector<std::pair<float, Color>> v = vector_.getVector();
-        bool swapped{false};
-        do {
-            swapped = true;
-            for (uint32_t i{0}; i < v.size() - 1; ++i) {
+        auto v = vector_.getVector();
+        auto size = v.size();
+        bool isSorted{false};
+        while (!isSorted) {
+            isSorted = true;
+            for (auto i{1}; i < size - 1; i = i + 2) {
                 if (v[i].first > v[i + 1].first) {
                     Visualize::visualizeBar(v, i, "Even Odd Sort");
                     Visualize::visualizeBar(v, i + 1, "Even Odd Sort");
                     std::swap(v[i], v[i + 1]);
-                    Visualize::visualize(v, "Even Odd Sort");
-                    swapped = false;
-                    if (IsKeyPressed(KEY_Q)) { return; }
+                    isSorted = false;
+                    Visualize::visualizeVector(v, "Even Odd Sort");
                 }
             }
-            for (uint32_t i{static_cast<uint32_t>(v.size() - 1)}; i > 0; --i) {
-                if (v[i].first < v[i - 1].first) {
+            for (auto i{0}; i < size - 1; i = i + 2) {
+                if (v[i].first > v[i + 1].first) {
                     Visualize::visualizeBar(v, i, "Even Odd Sort");
-                    Visualize::visualizeBar(v, i - 1, "Even Odd Sort");
-                    std::swap(v[i], v[i - 1]);
-                    Visualize::visualize(v, "Even Odd Sort");
-                    swapped = false;
-                    if (IsKeyPressed(KEY_Q)) { return; }
+                    Visualize::visualizeBar(v, i + 1, "Even Odd Sort");
+                    std::swap(v[i], v[i + 1]);
+                    isSorted = false;
+                    Visualize::visualizeVector(v, "Even Odd Sort");
                 }
             }
-        } while (!swapped);
+        }
         Visualize::visualizeEnding(v, "Even Odd Sort");
     }
 };
