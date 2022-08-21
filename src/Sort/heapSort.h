@@ -22,35 +22,34 @@ class HeapSort : public SortStrategy {
     void sort() override {
         std::vector<std::pair<float, Color>> v_ = vector_.getVector();
         for (uint32_t i{static_cast<uint32_t>(v_.size()) / 2}; i > 0; --i) {
-            siftDown(v_, i, v_.size() - 1);
+            heapify(v_, i, v_.size() - 1);
             Visualize::visualize(v_, "Heap Sort");
         }
 
         for (uint32_t i{static_cast<uint32_t>(v_.size() - 1)}; i > 0; --i) {
             std::swap(v_[0], v_[i]);
-            siftDown(v_, 0, i - 1);
+            heapify(v_, 0, i - 1);
             Visualize::visualize(v_, "Heap Sort");
         }
         Visualize::visualizeEnding(v_, "Heap Sort");
     }
 
   private:
-    void siftDown(std::vector<std::pair<float, Color>> &v_, uint32_t start,
-                  uint32_t end) {
-        uint32_t root{start};
-        while (root * 2 + 1 <= end) {
-            uint32_t child{root * 2 + 1};
-            if (child + 1 <= end && v_[child].first < v_[child + 1].first) {
+    void heapify(std::vector<std::pair<float, Color>> &v, uint32_t index, uint32_t size) {
+        uint32_t child{index * 2};
+        while (child <= size) {
+            if (child < size && v[child].first < v[child + 1].first) {
                 ++child;
             }
-            if (v_[root].first < v_[child].first) {
-                std::swap(v_[root], v_[child]);
-                root = child;
-            } else {
+            if (v[index].first >= v[child].first) {
                 break;
             }
+            std::swap(v[index], v[child]);
+            index = child;
+            child = index * 2;
         }
     }
+
 };
 
 #endif
