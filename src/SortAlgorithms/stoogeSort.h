@@ -19,10 +19,10 @@ class StoogeSort : public SortStrategy {
     StoogeSort &operator=(StoogeSort &&other) noexcept = default;
 
     void sort() override {
-        std::vector<std::pair<float, Color>> v_ = vector_.getVector();
-        stoogeSort(v_, 0, v_.size() - 1);
-        Visualize::visualizeVector(v_, "Stooge Sort");
-        Visualize::visualizeEnding(v_, "Stooge Sort");
+        auto v = vector_.getVector();
+        stoogeSort(v, 0, v.size() - 1);
+        Visualize::visualizeVector(v, "Stooge Sort");
+        Visualize::visualizeEnding(v, "Stooge Sort");
     }
 
   private:
@@ -35,11 +35,11 @@ class StoogeSort : public SortStrategy {
                 std::swap(v[left], v[right]);
                 Visualize::visualizeVector(v, "Stooge Sort");
             }
-            if (right - left + 1 >= 3) {
-                uint32_t middle{(right - left + 1) / 3};
-                stoogeSort(v, left, right - middle);
-                stoogeSort(v, left + middle, right);
-                stoogeSort(v, left, right - middle);
+            if (right - left + 1 > 2) {
+                auto mid{(right - left + 1) / 3};
+                stoogeSort(v, left, right - mid);
+                stoogeSort(v, left + mid, right);
+                stoogeSort(v, left, right - mid);
             }
         }
     }

@@ -4,56 +4,58 @@
 #include "../sortStrategy.h"
 class TimSort : public SortStrategy {
   private:
-    void timSort(std::vector<std::pair<float, Color>> &v_, uint32_t start,
+    void timSort(std::vector<std::pair<float, Color>> &v, uint32_t start,
                  uint32_t end) {
         if (end - start < 15) {
-            insertionSort(v_, start, end);
+            insertionSort(v, start, end);
             return;
         }
-        uint32_t mid{(start + end) / 2};
-        timSort(v_, start, mid);
-        timSort(v_, mid + 1, end);
-        if (v_[mid].first > v_[mid + 1].first) { merge(v_, start, mid, end); }
+        auto mid{(start + end) / 2};
+        timSort(v, start, mid);
+        timSort(v, mid + 1, end);
+        if (v[mid].first > v[mid + 1].first) { merge(v, start, mid, end); }
     }
 
-    void insertionSort(std::vector<std::pair<float, Color>> &v_, uint32_t start,
+    void insertionSort(std::vector<std::pair<float, Color>> &v, uint32_t start,
                        uint32_t end) {
-        for (uint32_t i{start + 1}; i <= end; ++i) {
-            auto [value, color] = v_[i];
-            uint32_t j{i};
-            while (j > start && v_[j - 1].first > value) {
-                v_[j] = v_[j - 1];
+        for (auto i{start + 1}; i <= end; ++i) {
+            auto [barHeight, color] = v[i];
+            auto j{i};
+            while (j > start && v[j - 1].first > barHeight) {
+                v[j] = v[j - 1];
                 --j;
             }
-            Visualize::visualizeBar(v_, i, "Insertion Sort");
-            Visualize::visualizeBar(v_, j, "Insertion Sort");
-            v_[j] = std::make_pair(value, color);
-            Visualize::visualizeVector(v_, "Tim Sort");
+            Visualize::visualizeBar(v, i, "Insertion Sort");
+            Visualize::visualizeBar(v, j, "Insertion Sort");
+            v[j] = std::make_pair(barHeight, color);
+            Visualize::visualizeVector(v, "Tim Sort");
         }
     }
 
-    void merge(std::vector<std::pair<float, Color>> &v_, uint32_t start,
+    void merge(std::vector<std::pair<float, Color>> &v, uint32_t start,
                uint32_t mid, uint32_t end) {
         std::vector<std::pair<float, Color>> temp(end - start + 1);
-        uint32_t i{start}, j{mid + 1}, k{0};
+        auto i{start};
+        auto j{mid + 1};
+        auto k{0};
         while (i <= mid && j <= end) {
-            if (v_[i].first < v_[j].first) {
-                temp[k++] = v_[i++];
+            if (v[i].first < v[j].first) {
+                temp[k++] = v[i++];
             } else {
-                temp[k++] = v_[j++];
+                temp[k++] = v[j++];
             }
         }
-        Visualize::visualizeVector(v_, "Tim Sort");
+        Visualize::visualizeVector(v, "Tim Sort");
         while (i <= mid) {
-            temp[k++] = v_[i++];
+            temp[k++] = v[i++];
         }
-        Visualize::visualizeVector(v_, "Tim Sort");
+        Visualize::visualizeVector(v, "Tim Sort");
         while (j <= end) {
-            temp[k++] = v_[j++];
+            temp[k++] = v[j++];
         }
-        Visualize::visualizeVector(v_, "Tim Sort");
-        for (uint32_t i{0}; i < temp.size(); ++i) {
-            v_[start + i] = temp[i];
+        Visualize::visualizeVector(v, "Tim Sort");
+        for (auto i{0}; i < temp.size(); ++i) {
+            v[start + i] = temp[i];
         }
     }
 
@@ -73,10 +75,10 @@ class TimSort : public SortStrategy {
     TimSort &operator=(TimSort &&other) noexcept = default;
 
     void sort() override {
-        std::vector<std::pair<float, Color>> v_ = vector_.getVector();
-        timSort(v_, 0, v_.size() - 1);
-        Visualize::visualizeVector(v_, "Tim Sort");
-        Visualize::visualizeEnding(v_, "Tim Sort");
+        auto v = vector_.getVector();
+        timSort(v, 0, v.size() - 1);
+        Visualize::visualizeVector(v, "Tim Sort");
+        Visualize::visualizeEnding(v, "Tim Sort");
     }
 };
 
