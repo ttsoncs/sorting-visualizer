@@ -27,13 +27,13 @@ class ShellSort : public SortStrategy {
             for (uint32_t i{gap}; i < v_.size(); ++i) {
                 auto [value, color] = v_[i];
                 uint32_t j{i};
-                Visualize::visualizeBar(v_, i, "Shell Sort");
                 while (j >= gap && v_[j - gap].first > value) {
                     v_[j] = v_[j - gap];
                     j -= gap;
                 }
-                Visualize::visualizeBar(v_, j, "Shell Sort");
+                Visualize::visualizeBar(v_, i, "Shell Sort");
                 v_[j] = std::make_pair(value, color);
+                Visualize::visualizeBar(v_, j, "Shell Sort");
                 Visualize::visualize(v_, "Shell Sort");
                 if (IsKeyPressed(KEY_Q)) { return; }
             }

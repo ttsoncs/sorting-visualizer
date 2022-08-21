@@ -17,7 +17,7 @@
 
 int constexpr SCREEN_WIDTH = 1280;
 int constexpr SCREEN_HEIGHT = 720;
-int constexpr SCREEN_FPS = 30;
+int constexpr SCREEN_FPS = 60;
 std::string const WINDOW_TITLE{"Sort Visualizer"};
 
 int main() {
@@ -69,7 +69,7 @@ int main() {
         }
 
         if (Window::isKeyDown(KEY_Z)) {
-            sortController.setSortStrategy(std::make_unique<StoogeSort>(10));
+            sortController.setSortStrategy(std::make_unique<StoogeSort>(30));
         }
 
         if (Window::isKeyDown(KEY_X)) {

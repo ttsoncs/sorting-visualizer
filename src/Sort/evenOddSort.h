@@ -21,28 +21,30 @@ class EvenOddSort : public SortStrategy {
 
     void sort() override {
         std::vector<std::pair<float, Color>> v = vector_.getVector();
-        bool isSorted{false};
+        bool swapped{false};
         do {
-            isSorted = true;
+            swapped = true;
             for (uint32_t i{0}; i < v.size() - 1; ++i) {
                 if (v[i].first > v[i + 1].first) {
-                    std::swap(v[i], v[i + 1]);
                     Visualize::visualizeBar(v, i, "Even Odd Sort");
                     Visualize::visualizeBar(v, i + 1, "Even Odd Sort");
+                    std::swap(v[i], v[i + 1]);
                     Visualize::visualize(v, "Even Odd Sort");
-                    isSorted = false;
+                    swapped = false;
+                    if (IsKeyPressed(KEY_Q)) { return; }
                 }
             }
             for (uint32_t i{static_cast<uint32_t>(v.size() - 1)}; i > 0; --i) {
                 if (v[i].first < v[i - 1].first) {
-                    std::swap(v[i], v[i - 1]);
                     Visualize::visualizeBar(v, i, "Even Odd Sort");
                     Visualize::visualizeBar(v, i - 1, "Even Odd Sort");
+                    std::swap(v[i], v[i - 1]);
                     Visualize::visualize(v, "Even Odd Sort");
-                    isSorted = false;
+                    swapped = false;
+                    if (IsKeyPressed(KEY_Q)) { return; }
                 }
             }
-        } while (!isSorted);
+        } while (!swapped);
         Visualize::visualizeEnding(v, "Even Odd Sort");
     }
 };

@@ -23,10 +23,10 @@ class SelectionSort : public SortStrategy {
         std::vector<std::pair<float, Color>> v_ = vector_.getVector();
         for (uint32_t i{0}; i < v_.size(); ++i) {
             uint32_t minIndex{i};
-            Visualize::visualizeBar(v_, i, "Selection Sort");
             for (uint32_t j{i + 1}; j < v_.size(); ++j) {
                 if (v_[j].first < v_[minIndex].first) { minIndex = j; }
             }
+            Visualize::visualizeBar(v_, i, "Selection Sort");
             Visualize::visualizeBar(v_, minIndex, "Selection Sort");
             std::swap(v_[i], v_[minIndex]);
             if (IsKeyPressed(KEY_Q)) { return; }

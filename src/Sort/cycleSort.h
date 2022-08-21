@@ -33,6 +33,7 @@ class CycleSort : public SortStrategy {
                 Visualize::visualizeBar(v, rank, "Cycle Sort");
                 Visualize::visualizeBar(v, cycleStart, "Cycle Sort");
                 Visualize::visualize(v, "Cycle Sort");
+                if (IsKeyPressed(KEY_Q)) { return; }
             } while (rank != cycleStart);
         }
         Visualize::visualizeEnding(v, "Cycle Sort");

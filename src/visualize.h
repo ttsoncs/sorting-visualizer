@@ -43,7 +43,6 @@ class Visualize {
             Vector2{static_cast<float>(index) * barWidth,
                     static_cast<float>(GetScreenHeight()) - barHeight},
             Vector2{barWidth, barHeight}, RAYWHITE);
-        drawSortTitle(title);
         if (IsKeyDown(KEY_ESCAPE)) { return; }
         EndDrawing();
     }

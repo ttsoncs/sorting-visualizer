@@ -9,6 +9,10 @@ class MergeSort : public SortStrategy {
                    uint32_t end) {
         if (start < end) {
             uint32_t mid{(start + end) / 2};
+            Visualize::visualizeBar(v_, start, "Merge Sort");
+            Visualize::visualizeBar(v_, mid, "Merge Sort");
+            Visualize::visualizeBar(v_, end, "Merge Sort");
+            Visualize::visualize(v_, "Merge Sort");
             mergeSort(v_, start, mid);
             mergeSort(v_, mid + 1, end);
             merge(v_, start, mid, end);
@@ -25,16 +29,16 @@ class MergeSort : public SortStrategy {
             } else {
                 temp[k++] = v_[j++];
             }
-            Visualize::visualize(v_, "Merge Sort");
         }
+        Visualize::visualize(v_, "Merge Sort");
         while (i <= mid) {
             temp[k++] = v_[i++];
-            Visualize::visualize(v_, "Merge Sort");
         }
+        Visualize::visualize(v_, "Merge Sort");
         while (j <= end) {
             temp[k++] = v_[j++];
-            Visualize::visualize(v_, "Merge Sort");
         }
+        Visualize::visualize(v_, "Merge Sort");
         for (uint32_t i{0}; i < temp.size(); ++i) {
             v_[start + i] = temp[i];
         }

@@ -26,6 +26,8 @@ class TimSort : public SortStrategy {
                 v_[j] = v_[j - 1];
                 --j;
             }
+            Visualize::visualizeBar(v_, i, "Insertion Sort");
+            Visualize::visualizeBar(v_, j, "Insertion Sort");
             v_[j] = std::make_pair(value, color);
             Visualize::visualize(v_, "Tim Sort");
         }
@@ -41,16 +43,16 @@ class TimSort : public SortStrategy {
             } else {
                 temp[k++] = v_[j++];
             }
-            Visualize::visualize(v_, "Tim Sort");
         }
+        Visualize::visualize(v_, "Tim Sort");
         while (i <= mid) {
             temp[k++] = v_[i++];
-            Visualize::visualize(v_, "Tim Sort");
         }
+        Visualize::visualize(v_, "Tim Sort");
         while (j <= end) {
             temp[k++] = v_[j++];
-            Visualize::visualize(v_, "Tim Sort");
         }
+        Visualize::visualize(v_, "Tim Sort");
         for (uint32_t i{0}; i < temp.size(); ++i) {
             v_[start + i] = temp[i];
         }

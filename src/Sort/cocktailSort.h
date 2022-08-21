@@ -25,24 +25,26 @@ class CocktailSort : public SortStrategy {
         while (swapped) {
             swapped = false;
             for (uint32_t i{0}; i < v_.size() - 1; ++i) {
-                Visualize::visualizeBar(v_, i, "Cocktail Sort");
                 if (v_[i].first > v_[i + 1].first) {
+                    Visualize::visualizeBar(v_, i, "Cocktail Sort");
+                    Visualize::visualizeBar(v_, i + 1, "Cocktail Sort");
                     std::swap(v_[i], v_[i + 1]);
                     swapped = true;
+                    Visualize::visualize(v_, "Cocktail Sort");
                 }
                 if (IsKeyPressed(KEY_Q)) { return; }
-                Visualize::visualize(v_, "Cocktail Sort");
             }
             if (!swapped) { break; }
             swapped = false;
             for (uint64_t i{v_.size() - 1}; i > 0; --i) {
-                Visualize::visualizeBar(v_, i, "Cocktail Sort");
                 if (v_[i].first < v_[i - 1].first) {
+                    Visualize::visualizeBar(v_, i, "Cocktail Sort");
+                    Visualize::visualizeBar(v_, i - 1, "Cocktail Sort");
                     std::swap(v_[i], v_[i - 1]);
                     swapped = true;
+                    Visualize::visualize(v_, "Cocktail Sort");
                 }
                 if (IsKeyPressed(KEY_Q)) { return; }
-                Visualize::visualize(v_, "Cocktail Sort");
             }
         }
         Visualize::visualizeEnding(v_, "Cocktail Sort");

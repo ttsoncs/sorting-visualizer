@@ -29,14 +29,14 @@ class CombSort : public SortStrategy {
             }
             swapped = false;
             for (uint32_t i{0}; i < v_.size() - gap; ++i) {
-                Visualize::visualizeBar(v_, i, "Comb Sort");
-                Visualize::visualizeBar(v_, i + gap, "Comb Sort");                
                 if (v_[i].first > v_[i + gap].first) {
+                    Visualize::visualizeBar(v_, i, "Comb Sort");
+                    Visualize::visualizeBar(v_, i + gap, "Comb Sort");
                     std::swap(v_[i], v_[i + gap]);
                     swapped = true;
+                    Visualize::visualize(v_, "Comb Sort");
                 }
                 if (IsKeyPressed(KEY_Q)) { return; }
-                Visualize::visualize(v_, "Comb Sort");
             }
         }
         Visualize::visualizeEnding(v_, "Comb Sort");

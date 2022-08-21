@@ -30,13 +30,14 @@ class StoogeSort : public SortStrategy {
     void stoogeSort(std::vector<std::pair<float, Color>> &v, uint32_t left,
                     uint32_t right) {
         if (left <= right) {
-            Visualize::visualize(v, "Stooge Sort");
             if (v[left].first > v[right].first) {
-                std::swap(v[left], v[right]);
-            }
-            if (right - left + 1 >= 3) {
                 Visualize::visualizeBar(v, left, "Stooge Sort");
                 Visualize::visualizeBar(v, right, "Stooge Sort");
+                std::swap(v[left], v[right]);
+                Visualize::visualize(v, "Stooge Sort");
+                if (IsKeyDown(KEY_Q)) { return; }
+            }
+            if (right - left + 1 >= 3) {
                 uint32_t middle{(right - left + 1) / 3};
                 stoogeSort(v, left, right - middle);
                 stoogeSort(v, left + middle, right);
