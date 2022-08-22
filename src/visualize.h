@@ -13,13 +13,13 @@ class Visualize {
         auto barWidth{static_cast<float>(GetScreenWidth()) /
                       static_cast<float>(v.size())};
         auto size{v.size()};
+        auto screenHeight{static_cast<float>(GetScreenHeight())};
         ClearBackground(BLANK);
         for (auto i{0}; i < size; ++i) {
             auto [barHeight, color] = v[i];
-            DrawRectangleV(
-                Vector2{static_cast<float>(i) * barWidth,
-                        static_cast<float>(GetScreenHeight()) - barHeight},
-                Vector2{barWidth, barHeight}, color);
+            DrawRectangleV(Vector2{static_cast<float>(i) * barWidth,
+                                   screenHeight - barHeight},
+                           Vector2{barWidth, barHeight}, color);
         }
         visualizeSortTitle(sortTitle);
     }
@@ -29,14 +29,14 @@ class Visualize {
         auto barWidth{static_cast<float>(GetScreenWidth()) /
                       static_cast<float>(v.size())};
         auto [barHeight, color] = v[index];
-        DrawRectangleV(
-            Vector2{static_cast<float>(index) * barWidth,
-                    static_cast<float>(GetScreenHeight()) - barHeight},
-            Vector2{barWidth, barHeight}, RAYWHITE);
+        auto screenHeight{static_cast<float>(GetScreenHeight())};
+        DrawRectangleV(Vector2{static_cast<float>(index) * barWidth,
+                               screenHeight - barHeight},
+                       Vector2{barWidth, barHeight}, RAYWHITE);
     }
 
     static void visualizeSortTitle(std::string const &sortTitle = {}) {
-        DrawText(sortTitle.c_str(), 10, 10, 30, RAYWHITE);
+        DrawText(sortTitle.c_str(), 10, 10, GetScreenWidth() / 40, RAYWHITE);
     }
 
     static void
