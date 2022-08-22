@@ -4,7 +4,7 @@
 #include "../sortStrategy.h"
 class GnomeSort : public SortStrategy {
   public:
-    explicit GnomeSort(uint32_t size) : SortStrategy(size) {
+    explicit GnomeSort(int size) : SortStrategy(size) {
         Visualize::visualizeSortTitle("Gnome Sort");
     }
 
@@ -19,7 +19,7 @@ class GnomeSort : public SortStrategy {
     GnomeSort &operator=(GnomeSort &&other) noexcept = default;
 
     void sort() override {
-        auto v = vector_.getVector();
+        auto v{vector_.getVector()};
         auto size = v.size();
         auto index{0};
         while (index < size) {

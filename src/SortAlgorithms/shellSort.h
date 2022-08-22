@@ -4,7 +4,7 @@
 #include "../sortStrategy.h"
 class ShellSort : public SortStrategy {
   public:
-    explicit ShellSort(uint32_t size) : SortStrategy(size) {
+    explicit ShellSort(int size) : SortStrategy(size) {
         Visualize::visualizeSortTitle("Shell Sort");
     }
 
@@ -19,7 +19,7 @@ class ShellSort : public SortStrategy {
     ShellSort &operator=(ShellSort &&other) noexcept = default;
 
     void sort() override {
-        auto v = vector_.getVector();
+        auto v{vector_.getVector()};
         auto size{v.size()};
         for (auto gap{size / 2}; gap > 0; gap /= 2) {
             for (auto i{gap}; i < size; ++i) {

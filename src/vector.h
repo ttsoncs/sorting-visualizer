@@ -21,7 +21,7 @@ class Vector {
     }
 
   public:
-    explicit Vector(uint32_t size) : v_(size) {
+    explicit Vector(int size) : v_(size) {
         generate();
         shuffle();
     }

@@ -5,7 +5,7 @@
 
 class BubbleSort : public SortStrategy {
   public:
-    explicit BubbleSort(uint32_t size) : SortStrategy(size) {
+    explicit BubbleSort(int size) : SortStrategy(size) {
         Visualize::visualizeSortTitle("Bubble Sort");
     }
 
@@ -20,7 +20,7 @@ class BubbleSort : public SortStrategy {
     BubbleSort &operator=(BubbleSort &&other) noexcept = default;
 
     void sort() override {
-        auto v = vector_.getVector();
+        auto v{vector_.getVector()};
         auto size{v.size()};
         for (auto i{0}; i < size; ++i) {
             for (auto j{0}; j < size - i - 1; ++j) {

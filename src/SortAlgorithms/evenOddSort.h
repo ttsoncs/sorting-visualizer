@@ -4,7 +4,7 @@
 #include "../sortStrategy.h"
 class EvenOddSort : public SortStrategy {
   public:
-    explicit EvenOddSort(uint32_t size) : SortStrategy(size) {
+    explicit EvenOddSort(int size) : SortStrategy(size) {
         Visualize::visualizeSortTitle("Even Odd Sort");
     }
 
@@ -19,8 +19,8 @@ class EvenOddSort : public SortStrategy {
     EvenOddSort &operator=(EvenOddSort &&other) noexcept = default;
 
     void sort() override {
-        auto v = vector_.getVector();
-        auto size = v.size();
+        auto v{vector_.getVector()};
+        auto size{v.size()};
         bool isSorted{false};
         while (!isSorted) {
             isSorted = true;

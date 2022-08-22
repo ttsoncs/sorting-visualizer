@@ -3,9 +3,37 @@
 
 #include "../sortStrategy.h"
 class QuickSort : public SortStrategy {
+  private:
+    void quickSort(std::vector<std::pair<float, Color>> &v, int start,
+                   int end) {
+        if (start <= end) {
+            auto i{start};
+            auto j{end};
+            auto pivot{v[(start + end) / 2]};
+            while (i <= j) {
+                while (v[i].first < pivot.first) {
+                    ++i;
+                }
+                while (v[j].first > pivot.first) {
+                    --j;
+                }
+                if (i <= j) {
+                    Visualize::visualizeBar(v, i, "Quicksort");
+                    Visualize::visualizeBar(v, j, "Quicksort");
+                    std::swap(v[i], v[j]);
+                    ++i;
+                    --j;
+                    Visualize::visualizeVector(v, "Quicksort");
+                }
+            }
+            if (start < j) { quickSort(v, start, j); }
+            if (i < end) { quickSort(v, i, end); }
+        }
+    }
+
   public:
-    explicit QuickSort(uint32_t size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Quick Sort");
+    explicit QuickSort(int size) : SortStrategy(size) {
+        Visualize::visualizeSortTitle("Quicksort");
     }
 
     ~QuickSort() noexcept override = default;
@@ -19,41 +47,40 @@ class QuickSort : public SortStrategy {
     QuickSort &operator=(QuickSort &&other) noexcept = default;
 
     void sort() override {
-        std::vector<std::pair<float, Color>> v_ = vector_.getVector();
-        quickSort(v_, 0, v_.size() - 1);
-        Visualize::visualizeEnding(v_, "Heap Sort");
+        auto v = vector_.getVector();
+        quickSort(v, 0, v.size() - 1);
+        Visualize::visualizeVector(v, "Quicksort");
+        Visualize::visualizeEnding(v, "Quicksort");
     }
 
-    void quickSort(std::vector<std::pair<float, Color>> &v, uint32_t start,
-                   uint32_t end) {
-        if (start < end) {
-            uint32_t pivot = partition(v, start, end);
-            Visualize::visualizeBar(v, start, "Quick Sort");
-            Visualize::visualizeBar(v, pivot, "Quick Sort");
-            Visualize::visualizeBar(v, end, "Quick Sort");
-            Visualize::visualizeVector(v, "Quick Sort");
-            quickSort(v, start, pivot - 1);
-            quickSort(v, pivot + 1, end);
-        }
-    }
+    // void quickSort(std::vector<std::pair<float, Color>> &v, int start,
+    //                int end) {
+    //     if (start < end) {
+    //         auto pivot = partition(v, start, end);
+    //         quickSort(v, start, pivot - 1);
+    //         quickSort(v, pivot + 1, end);
+    //     }
+    // }
 
-    uint32_t partition(std::vector<std::pair<float, Color>> &v, uint32_t start,
-                       uint32_t end) {
-        uint32_t i = start;
-        uint32_t j = end;
-        uint32_t pivot = v[start].first;
-        while (i < j) {
-            while (pivot >= v[i].first) {
-                ++i;
-            }
-            while (pivot < v[j].first) {
-                --j;
-            }
-            if (i < j) { std::swap(v[i], v[j]); }
-        }
-        std::swap(v[start], v[j]);
-        return j;
-    }
+    // int partition(std::vector<std::pair<float, Color>> &v, int
+    // start,
+    //                    int end) {
+    //     auto pivot = v[end];
+    //     auto i = start - 1;
+    //     for (auto j = start; j < end; j++) {
+    //         if (v[j].first <= pivot.first) {
+    //             i++;
+    //             std::swap(v[i], v[j]);
+    //             Visualize::visualizeBar(v, i, "Quicksort");
+    //             Visualize::visualizeBar(v, j, "Quicksort");
+    //             Visualize::visualizeVector(v, "Quicksort");
+    //         }
+    //     }
+    //     std::swap(v[i + 1], v[end]);
+    //     Visualize::visualizeBar(v, i + 1, "Quicksort");
+    //     Visualize::visualizeBar(v, end, "Quicksort");
+    //     Visualize::visualizeVector(v, "Quicksort");
+    //     return i + 1;
 };
 
 #endif

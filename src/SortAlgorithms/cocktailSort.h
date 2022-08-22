@@ -4,7 +4,7 @@
 #include "../sortStrategy.h"
 class CocktailSort : public SortStrategy {
   public:
-    explicit CocktailSort(uint32_t size) : SortStrategy(size) {
+    explicit CocktailSort(int size) : SortStrategy(size) {
         Visualize::visualizeSortTitle("Cocktail Sort");
     }
 
@@ -19,7 +19,7 @@ class CocktailSort : public SortStrategy {
     CocktailSort &operator=(CocktailSort &&other) noexcept = default;
 
     void sort() override {
-        auto v = vector_.getVector();
+        auto v{vector_.getVector()};
         auto size{v.size()};
         bool swapped{true};
         while (swapped) {

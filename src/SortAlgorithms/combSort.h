@@ -2,9 +2,10 @@
 #define COMB_SORT_H
 
 #include "../sortStrategy.h"
+
 class CombSort : public SortStrategy {
   public:
-    explicit CombSort(uint32_t size) : SortStrategy(size) {
+    explicit CombSort(int size) : SortStrategy(size) {
         Visualize::visualizeSortTitle("Comb Sort");
     }
 
@@ -19,7 +20,7 @@ class CombSort : public SortStrategy {
     CombSort &operator=(CombSort &&other) noexcept = default;
 
     void sort() override {
-        auto v = vector_.getVector();
+        auto v{vector_.getVector()};
         auto gap{v.size()};
         auto size{v.size()};
         bool swapped{true};

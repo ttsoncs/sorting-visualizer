@@ -9,7 +9,7 @@ class SortStrategy {
     Vector vector_;
 
   public:
-    explicit SortStrategy(uint32_t size) : vector_(size) {
+    explicit SortStrategy(int size) : vector_(size) {
         Visualize::visualizeVector(vector_.getVector());
     }
 

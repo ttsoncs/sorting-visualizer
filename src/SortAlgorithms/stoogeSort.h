@@ -4,7 +4,7 @@
 #include "../sortStrategy.h"
 class StoogeSort : public SortStrategy {
   public:
-    explicit StoogeSort(uint32_t size) : SortStrategy(size) {
+    explicit StoogeSort(int size) : SortStrategy(size) {
         Visualize::visualizeSortTitle("Stooge Sort");
     }
 
@@ -19,15 +19,15 @@ class StoogeSort : public SortStrategy {
     StoogeSort &operator=(StoogeSort &&other) noexcept = default;
 
     void sort() override {
-        auto v = vector_.getVector();
+        auto v{vector_.getVector()};
         stoogeSort(v, 0, v.size() - 1);
         Visualize::visualizeVector(v, "Stooge Sort");
         Visualize::visualizeEnding(v, "Stooge Sort");
     }
 
   private:
-    void stoogeSort(std::vector<std::pair<float, Color>> &v, uint32_t left,
-                    uint32_t right) {
+    void stoogeSort(std::vector<std::pair<float, Color>> &v, int left,
+                    int right) {
         if (left <= right) {
             if (v[left].first > v[right].first) {
                 Visualize::visualizeBar(v, left, "Stooge Sort");

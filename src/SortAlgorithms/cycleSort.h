@@ -4,7 +4,7 @@
 #include "../sortStrategy.h"
 class CycleSort : public SortStrategy {
   public:
-    explicit CycleSort(uint32_t size) : SortStrategy(size) {
+    explicit CycleSort(int size) : SortStrategy(size) {
         Visualize::visualizeSortTitle("Cycle Sort");
     }
 
@@ -19,8 +19,8 @@ class CycleSort : public SortStrategy {
     CycleSort &operator=(CycleSort &&other) noexcept = default;
 
     void sort() override {
-        auto v = vector_.getVector();
-        auto size = v.size();
+        auto v{vector_.getVector()};
+        auto size{v.size()};
         auto rank{0};
         for (auto cycleStart{0}; cycleStart < size; ++cycleStart) {
             do {
@@ -29,9 +29,9 @@ class CycleSort : public SortStrategy {
                     if (v[i].first < v[cycleStart].first) { ++rank; }
                 }
                 if (rank == cycleStart) { break; }
-                std::swap(v[rank], v[cycleStart]);
                 Visualize::visualizeBar(v, rank, "Cycle Sort");
                 Visualize::visualizeBar(v, cycleStart, "Cycle Sort");
+                std::swap(v[rank], v[cycleStart]);
                 Visualize::visualizeVector(v, "Cycle Sort");
             } while (rank != cycleStart);
         }

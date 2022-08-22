@@ -6,7 +6,7 @@
 
 class Window {
   public:
-    Window(uint32_t width, uint32_t height, std::string const &windowTitle = {}) {
+    Window(int width, int height, std::string const &windowTitle = {}) {
         InitWindow(width, height, windowTitle.c_str());
         SetExitKey(KEY_ESCAPE);
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT |
@@ -23,7 +23,7 @@ class Window {
 
     Window &operator=(Window &&other) noexcept = default;
 
-    void setTargetFps(uint32_t fps) { SetTargetFPS(fps); }
+    void setTargetFps(int fps) { SetTargetFPS(fps); }
 
     [[nodiscard]] static bool windowShouldClose() {
         return WindowShouldClose();

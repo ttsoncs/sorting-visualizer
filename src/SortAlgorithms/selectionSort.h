@@ -4,7 +4,7 @@
 #include "../sortStrategy.h"
 class SelectionSort : public SortStrategy {
   public:
-    explicit SelectionSort(uint32_t size) : SortStrategy(size) {
+    explicit SelectionSort(int size) : SortStrategy(size) {
         Visualize::visualizeSortTitle("Selection Sort");
     }
 
@@ -19,12 +19,14 @@ class SelectionSort : public SortStrategy {
     SelectionSort &operator=(SelectionSort &&other) noexcept = default;
 
     void sort() override {
-        auto v = vector_.getVector();
+        auto v{vector_.getVector()};
         auto size{v.size()};
         for (auto i{0}; i < size; ++i) {
             auto minIndex{i};
             for (auto j{i + 1}; j < size; ++j) {
+                Visualize::visualizeBar(v, j, "Selection Sort");
                 if (v[j].first < v[minIndex].first) { minIndex = j; }
+                Visualize::visualizeVector(v, "Selection Sort");
             }
             Visualize::visualizeBar(v, i, "Selection Sort");
             Visualize::visualizeBar(v, minIndex, "Selection Sort");

@@ -1,0 +1,3 @@
+/home/marie/Documents/AAA/src/cmake-build-debug/CMakeFiles/src.dir
+/home/marie/Documents/AAA/src/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/marie/Documents/AAA/src/cmake-build-debug/CMakeFiles/rebuild_cache.dir

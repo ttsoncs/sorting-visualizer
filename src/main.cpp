@@ -4,6 +4,7 @@
 #include "SortAlgorithms/cycleSort.h"
 #include "SortAlgorithms/evenOddSort.h"
 #include "SortAlgorithms/gnomeSort.h"
+#include "SortAlgorithms/heapSort.h"
 #include "SortAlgorithms/insertionSort.h"
 #include "SortAlgorithms/mergeSort.h"
 #include "SortAlgorithms/pancakeSort.h"
@@ -15,9 +16,9 @@
 #include "sortController.h"
 #include "window.h"
 
-uint32_t constexpr SCREEN_WIDTH = 1280;
-uint32_t constexpr SCREEN_HEIGHT = 720;
-uint32_t constexpr SCREEN_FPS = 60;
+auto const SCREEN_WIDTH{1280};
+auto const SCREEN_HEIGHT{720};
+auto const SCREEN_FPS{60};
 std::string const WINDOW_TITLE{"Sort Visualizer"};
 
 int main() {
@@ -25,10 +26,6 @@ int main() {
     window.setTargetFps(SCREEN_FPS);
     SortController sortController;
     while (!Window::windowShouldClose()) {
-        if (Window::isKeyDown(KEY_ESCAPE)) { break; }
-
-        if (Window::isKeyDown(KEY_SPACE)) { sortController.sort(); }
-
         if (Window::isKeyDown(KEY_ONE)) {
             sortController.setSortStrategy(std::make_unique<BubbleSort>(60));
         }
@@ -84,6 +81,14 @@ int main() {
         if (Window::isKeyDown(KEY_V)) {
             sortController.setSortStrategy(std::make_unique<PancakeSort>(60));
         }
+
+        if (Window::isKeyDown(KEY_B)) {
+            sortController.setSortStrategy(std::make_unique<HeapSort>(60));
+        }
+
+        if (Window::isKeyDown(KEY_SPACE)) { sortController.sort(); }
+
+        if (Window::isKeyDown(KEY_ESCAPE)) { break; }
 
         BeginDrawing();
         EndDrawing();
