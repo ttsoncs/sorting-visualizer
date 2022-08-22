@@ -2,6 +2,7 @@
 #define INSERTION_SORT_H
 
 #include "../sortStrategy.h"
+
 class InsertionSort : public SortStrategy {
   public:
     explicit InsertionSort(int size) : SortStrategy(size) {
@@ -25,11 +26,7 @@ class InsertionSort : public SortStrategy {
             auto [barHeight, color] = v[i];
             auto j{i};
             while (j > 0 && v[j - 1].first > barHeight) {
-                BeginDrawing();
-                Visualize::visualizeVector(v, "Insertion Sort");
-                Visualize::visualizeBar(v, j, "Insertion Sort");
-                Visualize::visualizeBar(v, j - 1, "Insertion Sort");
-                EndDrawing();
+                Visualize::visualizeTraverse(v, j - 1, j, "Insertion Sort");
                 v[j] = v[j - 1];
                 --j;
             }

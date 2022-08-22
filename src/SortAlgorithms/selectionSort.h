@@ -2,6 +2,7 @@
 #define SELECTION_SORT_H
 
 #include "../sortStrategy.h"
+
 class SelectionSort : public SortStrategy {
   public:
     explicit SelectionSort(int size) : SortStrategy(size) {
@@ -24,18 +25,10 @@ class SelectionSort : public SortStrategy {
         for (auto i{0}; i < size; ++i) {
             auto minIndex{i};
             for (auto j{i + 1}; j < size; ++j) {
-                BeginDrawing();
-                Visualize::visualizeVector(v, "Selection Sort");
-                Visualize::visualizeBar(v, j, "Selection Sort");
-                Visualize::visualizeBar(v, minIndex, "Selection Sort");
-                EndDrawing();
+                Visualize::visualizeTraverse(v, j, minIndex, "Selection Sort");
                 if (v[j].first < v[minIndex].first) { minIndex = j; }
             }
-            BeginDrawing();
-            Visualize::visualizeVector(v, "Selection Sort");
-            Visualize::visualizeBar(v, i, "Selection Sort");
-            Visualize::visualizeBar(v, minIndex, "Selection Sort");
-            EndDrawing();
+            Visualize::visualizeTraverse(v, i, minIndex, "Selection Sort");
             std::swap(v[i], v[minIndex]);
         }
         Visualize::visualizeEnding(v, "Selection Sort");

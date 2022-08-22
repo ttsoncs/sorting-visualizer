@@ -22,30 +22,20 @@ class MergeSort : public SortStrategy {
         auto j{mid + 1};
         auto k{0};
         while (i <= mid && j <= end) {
-            BeginDrawing();
-            Visualize::visualizeVector(v, "Merge Sort");
+            Visualize::visualizeTraverse(v, i, j, "Merge Sort");
             if (v[i].first < v[j].first) {
-                Visualize::visualizeBar(v, i, "Merge Sort");
                 temp[k++] = v[i++];
             } else {
-                Visualize::visualizeBar(v, j, "Merge Sort");
                 temp[k++] = v[j++];
             }
-            EndDrawing();
         }
         while (i <= mid) {
-            BeginDrawing();
-            Visualize::visualizeVector(v, "Merge Sort");
-            Visualize::visualizeBar(v, i, "Merge Sort");
+            Visualize::visualizeTraverse(v, i, j, "Merge Sort");
             temp[k++] = v[i++];
-            EndDrawing();
         }
         while (j <= end) {
-            BeginDrawing();
-            Visualize::visualizeVector(v, "Merge Sort");
-            Visualize::visualizeBar(v, j, "Merge Sort");
+            Visualize::visualizeTraverse(v, i, j, "Merge Sort");
             temp[k++] = v[j++];
-            EndDrawing();
         }
         for (auto i{0}; i < temp.size(); ++i) {
             v[start + i] = temp[i];

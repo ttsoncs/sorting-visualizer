@@ -18,7 +18,7 @@
 
 auto const SCREEN_WIDTH{1280};
 auto const SCREEN_HEIGHT{720};
-auto const SCREEN_FPS{60};
+auto const SCREEN_FPS{50};
 std::string const WINDOW_TITLE{"Sort Visualizer"};
 
 int main() {

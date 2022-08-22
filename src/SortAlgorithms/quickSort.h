@@ -2,6 +2,7 @@
 #define QUICK_SORT_H
 
 #include "../sortStrategy.h"
+
 class QuickSort : public SortStrategy {
   private:
     void quickSort(std::vector<std::pair<float, Color>> &v, int start,
@@ -17,12 +18,8 @@ class QuickSort : public SortStrategy {
                 while (v[j].first > pivot.first) {
                     --j;
                 }
+                Visualize::visualizeTraverse(v, i, j, "Quick Sort");
                 if (i <= j) {
-                    BeginDrawing();
-                    Visualize::visualizeVector(v, "Quicksort");
-                    Visualize::visualizeBar(v, i, "Quicksort");
-                    Visualize::visualizeBar(v, j, "Quicksort");
-                    EndDrawing();
                     std::swap(v[i], v[j]);
                     ++i;
                     --j;
@@ -49,7 +46,7 @@ class QuickSort : public SortStrategy {
     QuickSort &operator=(QuickSort &&other) noexcept = default;
 
     void sort() override {
-        auto v = vector_.getVector();
+        auto v{vector_.getVector()};
         quickSort(v, 0, v.size() - 1);
         Visualize::visualizeEnding(v, "Quicksort");
     }

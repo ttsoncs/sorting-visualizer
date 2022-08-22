@@ -2,6 +2,7 @@
 #define GNOME_SORT_H
 
 #include "../sortStrategy.h"
+
 class GnomeSort : public SortStrategy {
   public:
     explicit GnomeSort(int size) : SortStrategy(size) {
@@ -20,17 +21,13 @@ class GnomeSort : public SortStrategy {
 
     void sort() override {
         auto v{vector_.getVector()};
-        auto size = v.size();
+        auto size{v.size()};
         auto index{0};
         while (index < size) {
+            Visualize::visualizeTraverse(v, index, index - 1, "Gnome Sort");
             if (index == 0 || v[index].first >= v[index - 1].first) {
                 ++index;
             } else {
-                BeginDrawing();
-                Visualize::visualizeVector(v, "Gnome Sort");
-                Visualize::visualizeBar(v, index, "Gnome Sort");
-                Visualize::visualizeBar(v, index - 1, "Gnome Sort");
-                EndDrawing();
                 std::swap(v[index], v[index - 1]);
                 --index;
             }

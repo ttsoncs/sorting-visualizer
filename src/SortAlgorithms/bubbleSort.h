@@ -20,23 +20,15 @@ class BubbleSort : public SortStrategy {
     BubbleSort &operator=(BubbleSort &&other) noexcept = default;
 
     void sort() override {
-        BeginDrawing();
         auto v{vector_.getVector()};
         auto size{v.size()};
         for (auto i{0}; i < size; ++i) {
             for (auto j{0}; j < size - i - 1; ++j) {
-                if (v[j].first > v[j + 1].first) {
-                    BeginDrawing();
-                    Visualize::visualizeVector(v, "Bubble Sort");
-                    Visualize::visualizeBar(v, j, "Bubble Sort");
-                    Visualize::visualizeBar(v, j + 1, "Bubble Sort");
-                    std::swap(v[j], v[j + 1]);
-                    EndDrawing();
-                }
+                Visualize::visualizeTraverse(v, j, j + 1, "Bubble Sort");
+                if (v[j].first > v[j + 1].first) { std::swap(v[j], v[j + 1]); }
             }
         }
         Visualize::visualizeEnding(v, "Bubble Sort");
-        EndDrawing();
     }
 };
 

@@ -2,6 +2,7 @@
 #define EVEN_ODD_SORT_H
 
 #include "../sortStrategy.h"
+
 class EvenOddSort : public SortStrategy {
   public:
     explicit EvenOddSort(int size) : SortStrategy(size) {
@@ -25,23 +26,15 @@ class EvenOddSort : public SortStrategy {
         while (!isSorted) {
             isSorted = true;
             for (auto i{1}; i < size - 1; i = i + 2) {
+                Visualize::visualizeTraverse(v, i, i + 1, "Even Odd Sort");
                 if (v[i].first > v[i + 1].first) {
-                    BeginDrawing();
-                    Visualize::visualizeVector(v, "Even Odd Sort");
-                    Visualize::visualizeBar(v, i, "Even Odd Sort");
-                    Visualize::visualizeBar(v, i + 1, "Even Odd Sort");
-                    EndDrawing();
                     std::swap(v[i], v[i + 1]);
                     isSorted = false;
                 }
             }
             for (auto i{0}; i < size - 1; i = i + 2) {
+                Visualize::visualizeTraverse(v, i, i + 1, "Even Odd Sort");
                 if (v[i].first > v[i + 1].first) {
-                    BeginDrawing();
-                    Visualize::visualizeVector(v, "Even Odd Sort");
-                    Visualize::visualizeBar(v, i, "Even Odd Sort");
-                    Visualize::visualizeBar(v, i + 1, "Even Odd Sort");
-                    EndDrawing();
                     std::swap(v[i], v[i + 1]);
                     isSorted = false;
                 }

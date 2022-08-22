@@ -2,6 +2,7 @@
 #define CYCLE_SORT_H
 
 #include "../sortStrategy.h"
+
 class CycleSort : public SortStrategy {
   public:
     explicit CycleSort(int size) : SortStrategy(size) {
@@ -29,11 +30,7 @@ class CycleSort : public SortStrategy {
                     if (v[i].first < v[cycleStart].first) { ++rank; }
                 }
                 if (rank == cycleStart) { break; }
-                BeginDrawing();
-                Visualize::visualizeVector(v, "Cycle Sort");
-                Visualize::visualizeBar(v, rank, "Cycle Sort");
-                Visualize::visualizeBar(v, cycleStart, "Cycle Sort");
-                EndDrawing();
+                Visualize::visualizeTraverse(v, cycleStart, rank, "Cycle Sort");
                 std::swap(v[rank], v[cycleStart]);
             } while (rank != cycleStart);
         }

@@ -2,6 +2,7 @@
 #define PANCAKE_SORT_H
 
 #include "../sortStrategy.h"
+
 class PancakeSort : public SortStrategy {
   public:
     explicit PancakeSort(int size) : SortStrategy(size) {
@@ -44,11 +45,7 @@ class PancakeSort : public SortStrategy {
                         int index) {
         auto start{0};
         while (start < index) {
-            BeginDrawing();
-            Visualize::visualizeVector(v, "Pancake Sort");
-            Visualize::visualizeBar(v, start, "Pancake Sort");
-            Visualize::visualizeBar(v, index, "Pancake Sort");
-            EndDrawing();
+            Visualize::visualizeTraverse(v, start, index, "Pancake Sort");
             std::swap(v[start], v[index]);
             ++start;
             --index;

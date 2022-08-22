@@ -22,11 +22,7 @@ class TimSort : public SortStrategy {
             auto [barHeight, color] = v[i];
             auto j{i};
             while (j > start && v[j - 1].first > barHeight) {
-                BeginDrawing();
-                Visualize::visualizeVector(v, "Insertion Sort");
-                Visualize::visualizeBar(v, j, "Insertion Sort");
-                Visualize::visualizeBar(v, j - 1, "Insertion Sort");
-                EndDrawing();
+                Visualize::visualizeTraverse(v, j - 1, j, "Tim Sort");
                 v[j] = v[j - 1];
                 --j;
             }
@@ -41,30 +37,20 @@ class TimSort : public SortStrategy {
         auto j{mid + 1};
         auto k{0};
         while (i <= mid && j <= end) {
-            BeginDrawing();
-            Visualize::visualizeVector(v, "Tim Sort");
+            Visualize::visualizeTraverse(v, i, j, "Tim Sort");
             if (v[i].first < v[j].first) {
-                Visualize::visualizeBar(v, i, "Tim Sort");
                 temp[k++] = v[i++];
             } else {
-                Visualize::visualizeBar(v, j, "Tim Sort");
                 temp[k++] = v[j++];
             }
-            EndDrawing();
         }
         while (i <= mid) {
-            BeginDrawing();
-            Visualize::visualizeVector(v, "Tim Sort");
-            Visualize::visualizeBar(v, i, "Tim Sort");
+            Visualize::visualizeTraverse(v, i, j, "Tim Sort");
             temp[k++] = v[i++];
-            EndDrawing();
         }
         while (j <= end) {
-            BeginDrawing();
-            Visualize::visualizeVector(v, "Tim Sort");
-            Visualize::visualizeBar(v, j, "Tim Sort");
+            Visualize::visualizeTraverse(v, i, j, "Tim Sort");
             temp[k++] = v[j++];
-            EndDrawing();
         }
         for (auto i{0}; i < temp.size(); ++i) {
             v[start + i] = temp[i];
@@ -89,7 +75,6 @@ class TimSort : public SortStrategy {
     void sort() override {
         auto v{vector_.getVector()};
         timSort(v, 0, v.size() - 1);
-        Visualize::visualizeVector(v, "Tim Sort");
         Visualize::visualizeEnding(v, "Tim Sort");
     }
 };

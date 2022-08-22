@@ -2,6 +2,7 @@
 #define STOOGE_SORT_H
 
 #include "../sortStrategy.h"
+
 class StoogeSort : public SortStrategy {
   public:
     explicit StoogeSort(int size) : SortStrategy(size) {
@@ -29,11 +30,7 @@ class StoogeSort : public SortStrategy {
                     int right) {
         if (left <= right) {
             if (v[left].first > v[right].first) {
-                BeginDrawing();
-                Visualize::visualizeVector(v, "Stooge Sort");
-                Visualize::visualizeBar(v, left, "Stooge Sort");
-                Visualize::visualizeBar(v, right, "Stooge Sort");
-                EndDrawing();
+                Visualize::visualizeTraverse(v, left, right, "Stooge Sort");
                 std::swap(v[left], v[right]);
             }
             if (right - left + 1 > 2) {

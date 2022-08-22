@@ -2,6 +2,7 @@
 #define COCKTAIL_SORT_H
 
 #include "../sortStrategy.h"
+
 class CocktailSort : public SortStrategy {
   public:
     explicit CocktailSort(int size) : SortStrategy(size) {
@@ -25,12 +26,8 @@ class CocktailSort : public SortStrategy {
         while (swapped) {
             swapped = false;
             for (auto i{0}; i < size - 1; ++i) {
+                Visualize::visualizeTraverse(v, i, i + 1, "Cocktail Sort");
                 if (v[i].first > v[i + 1].first) {
-                    BeginDrawing();
-                    Visualize::visualizeVector(v, "Cocktail Sort");
-                    Visualize::visualizeBar(v, i, "Cocktail Sort");
-                    Visualize::visualizeBar(v, i + 1, "Cocktail Sort");
-                    EndDrawing();
                     std::swap(v[i], v[i + 1]);
                     swapped = true;
                 }
@@ -38,12 +35,8 @@ class CocktailSort : public SortStrategy {
             if (!swapped) { break; }
             swapped = false;
             for (auto i{size - 1}; i > 0; --i) {
+                Visualize::visualizeTraverse(v, i, i - 1, "Cocktail Sort");
                 if (v[i].first < v[i - 1].first) {
-                    BeginDrawing();
-                    Visualize::visualizeVector(v, "Cocktail Sort");
-                    Visualize::visualizeBar(v, i, "Cocktail Sort");
-                    Visualize::visualizeBar(v, i - 1, "Cocktail Sort");
-                    EndDrawing();
                     std::swap(v[i], v[i - 1]);
                     swapped = true;
                 }

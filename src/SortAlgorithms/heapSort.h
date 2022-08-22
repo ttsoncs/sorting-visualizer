@@ -11,11 +11,8 @@ class HeapSort : public SortStrategy {
             if (v[i].first > v[(i - 1) / 2].first) {
                 auto j{i};
                 while (v[j].first > v[(j - 1) / 2].first) {
-                    BeginDrawing();
-                    Visualize::visualizeVector(v, "Heap Sort");
-                    Visualize::visualizeBar(v, j, "Heap Sort");
-                    Visualize::visualizeBar(v, (j - 1) / 2, "Heap Sort");
-                    EndDrawing();
+                    Visualize::visualizeTraverse(v, j, (j - 1) / 2,
+                                                 "Heap Sort");
                     std::swap(v[j], v[(j - 1) / 2]);
                     j = (j - 1) / 2;
                 }
@@ -43,11 +40,7 @@ class HeapSort : public SortStrategy {
         auto size{v.size()};
         buildMaxHeap(v);
         for (auto i{size - 1}; i > 0; --i) {
-            BeginDrawing();
-            Visualize::visualizeVector(v, "Heap Sort");
-            Visualize::visualizeBar(v, 0, "Heap Sort");
-            Visualize::visualizeBar(v, i, "Heap Sort");
-            EndDrawing();
+            Visualize::visualizeTraverse(v, 0, i, "Heap Sort");
             std::swap(v[0], v[i]);
             auto j{0};
             while (j * 2 + 1 < i) {
@@ -56,12 +49,8 @@ class HeapSort : public SortStrategy {
                     ++index;
                 }
                 if (v[j].first >= v[index].first) { break; }
-                BeginDrawing();
-                Visualize::visualizeVector(v, "Heap Sort");
-                Visualize::visualizeBar(v, j, "Heap Sort");
-                Visualize::visualizeBar(v, index, "Heap Sort");
+                Visualize::visualizeTraverse(v, j, index, "Heap Sort");
                 std::swap(v[j], v[index]);
-                EndDrawing();
                 j = index;
             }
         }
