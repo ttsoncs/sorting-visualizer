@@ -21,7 +21,6 @@ class StoogeSort : public SortStrategy {
     void sort() override {
         auto v{vector_.getVector()};
         stoogeSort(v, 0, v.size() - 1);
-        Visualize::visualizeVector(v, "Stooge Sort");
         Visualize::visualizeEnding(v, "Stooge Sort");
     }
 
@@ -30,10 +29,12 @@ class StoogeSort : public SortStrategy {
                     int right) {
         if (left <= right) {
             if (v[left].first > v[right].first) {
+                BeginDrawing();
+                Visualize::visualizeVector(v, "Stooge Sort");
                 Visualize::visualizeBar(v, left, "Stooge Sort");
                 Visualize::visualizeBar(v, right, "Stooge Sort");
+                EndDrawing();
                 std::swap(v[left], v[right]);
-                Visualize::visualizeVector(v, "Stooge Sort");
             }
             if (right - left + 1 > 2) {
                 auto mid{(right - left + 1) / 3};

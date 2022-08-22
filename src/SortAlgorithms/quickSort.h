@@ -18,12 +18,14 @@ class QuickSort : public SortStrategy {
                     --j;
                 }
                 if (i <= j) {
+                    BeginDrawing();
+                    Visualize::visualizeVector(v, "Quicksort");
                     Visualize::visualizeBar(v, i, "Quicksort");
                     Visualize::visualizeBar(v, j, "Quicksort");
+                    EndDrawing();
                     std::swap(v[i], v[j]);
                     ++i;
                     --j;
-                    Visualize::visualizeVector(v, "Quicksort");
                 }
             }
             if (start < j) { quickSort(v, start, j); }
@@ -49,7 +51,6 @@ class QuickSort : public SortStrategy {
     void sort() override {
         auto v = vector_.getVector();
         quickSort(v, 0, v.size() - 1);
-        Visualize::visualizeVector(v, "Quicksort");
         Visualize::visualizeEnding(v, "Quicksort");
     }
 

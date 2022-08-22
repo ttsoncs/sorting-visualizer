@@ -86,7 +86,9 @@ int main() {
             sortController.setSortStrategy(std::make_unique<HeapSort>(60));
         }
 
-        if (Window::isKeyDown(KEY_SPACE)) { sortController.sort(); }
+        if (Window::isKeyDown(KEY_SPACE)) {
+            sortController.sort();
+        }
 
         if (Window::isKeyDown(KEY_ESCAPE)) { break; }
 

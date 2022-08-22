@@ -26,22 +26,26 @@ class CocktailSort : public SortStrategy {
             swapped = false;
             for (auto i{0}; i < size - 1; ++i) {
                 if (v[i].first > v[i + 1].first) {
+                    BeginDrawing();
+                    Visualize::visualizeVector(v, "Cocktail Sort");
                     Visualize::visualizeBar(v, i, "Cocktail Sort");
                     Visualize::visualizeBar(v, i + 1, "Cocktail Sort");
+                    EndDrawing();
                     std::swap(v[i], v[i + 1]);
                     swapped = true;
-                    Visualize::visualizeVector(v, "Cocktail Sort");
                 }
             }
             if (!swapped) { break; }
             swapped = false;
             for (auto i{size - 1}; i > 0; --i) {
                 if (v[i].first < v[i - 1].first) {
+                    BeginDrawing();
+                    Visualize::visualizeVector(v, "Cocktail Sort");
                     Visualize::visualizeBar(v, i, "Cocktail Sort");
                     Visualize::visualizeBar(v, i - 1, "Cocktail Sort");
+                    EndDrawing();
                     std::swap(v[i], v[i - 1]);
                     swapped = true;
-                    Visualize::visualizeVector(v, "Cocktail Sort");
                 }
             }
         }

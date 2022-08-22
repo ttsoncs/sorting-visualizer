@@ -25,15 +25,16 @@ class InsertionSort : public SortStrategy {
             auto [barHeight, color] = v[i];
             auto j{i};
             while (j > 0 && v[j - 1].first > barHeight) {
+                BeginDrawing();
+                Visualize::visualizeVector(v, "Insertion Sort");
                 Visualize::visualizeBar(v, j, "Insertion Sort");
                 Visualize::visualizeBar(v, j - 1, "Insertion Sort");
+                EndDrawing();
                 v[j] = v[j - 1];
                 --j;
-                Visualize::visualizeVector(v, "Insertion Sort");
             }
             v[j] = std::make_pair(barHeight, color);
         }
-        Visualize::visualizeVector(v, "Insertion Sort");
         Visualize::visualizeEnding(v, "Insertion Sort");
     }
 };

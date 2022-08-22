@@ -26,11 +26,13 @@ class GnomeSort : public SortStrategy {
             if (index == 0 || v[index].first >= v[index - 1].first) {
                 ++index;
             } else {
+                BeginDrawing();
+                Visualize::visualizeVector(v, "Gnome Sort");
                 Visualize::visualizeBar(v, index, "Gnome Sort");
                 Visualize::visualizeBar(v, index - 1, "Gnome Sort");
+                EndDrawing();
                 std::swap(v[index], v[index - 1]);
                 --index;
-                Visualize::visualizeVector(v, "Gnome Sort");
             }
         }
         Visualize::visualizeEnding(v, "Gnome Sort");

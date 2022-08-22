@@ -29,10 +29,12 @@ class CycleSort : public SortStrategy {
                     if (v[i].first < v[cycleStart].first) { ++rank; }
                 }
                 if (rank == cycleStart) { break; }
+                BeginDrawing();
+                Visualize::visualizeVector(v, "Cycle Sort");
                 Visualize::visualizeBar(v, rank, "Cycle Sort");
                 Visualize::visualizeBar(v, cycleStart, "Cycle Sort");
+                EndDrawing();
                 std::swap(v[rank], v[cycleStart]);
-                Visualize::visualizeVector(v, "Cycle Sort");
             } while (rank != cycleStart);
         }
         Visualize::visualizeEnding(v, "Cycle Sort");

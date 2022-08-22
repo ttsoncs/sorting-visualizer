@@ -31,11 +31,13 @@ class CombSort : public SortStrategy {
             swapped = false;
             for (auto i{0}; i < size - gap; ++i) {
                 if (v[i].first > v[i + gap].first) {
+                    BeginDrawing();
+                    Visualize::visualizeVector(v, "Comb Sort");
                     Visualize::visualizeBar(v, i, "Comb Sort");
                     Visualize::visualizeBar(v, i + gap, "Comb Sort");
+                    EndDrawing();
                     std::swap(v[i], v[i + gap]);
                     swapped = true;
-                    Visualize::visualizeVector(v, "Comb Sort");
                 }
             }
         }

@@ -26,20 +26,24 @@ class EvenOddSort : public SortStrategy {
             isSorted = true;
             for (auto i{1}; i < size - 1; i = i + 2) {
                 if (v[i].first > v[i + 1].first) {
+                    BeginDrawing();
+                    Visualize::visualizeVector(v, "Even Odd Sort");
                     Visualize::visualizeBar(v, i, "Even Odd Sort");
                     Visualize::visualizeBar(v, i + 1, "Even Odd Sort");
+                    EndDrawing();
                     std::swap(v[i], v[i + 1]);
                     isSorted = false;
-                    Visualize::visualizeVector(v, "Even Odd Sort");
                 }
             }
             for (auto i{0}; i < size - 1; i = i + 2) {
                 if (v[i].first > v[i + 1].first) {
+                    BeginDrawing();
+                    Visualize::visualizeVector(v, "Even Odd Sort");
                     Visualize::visualizeBar(v, i, "Even Odd Sort");
                     Visualize::visualizeBar(v, i + 1, "Even Odd Sort");
+                    EndDrawing();
                     std::swap(v[i], v[i + 1]);
                     isSorted = false;
-                    Visualize::visualizeVector(v, "Even Odd Sort");
                 }
             }
         }

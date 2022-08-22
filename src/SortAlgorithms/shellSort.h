@@ -25,11 +25,13 @@ class ShellSort : public SortStrategy {
             for (auto i{gap}; i < size; ++i) {
                 auto j{i};
                 while (j >= gap && v[j].first < v[j - gap].first) {
+                    BeginDrawing();
+                    Visualize::visualizeVector(v, "Shell Sort");
                     Visualize::visualizeBar(v, j, "Shell Sort");
                     Visualize::visualizeBar(v, j - gap, "Shell Sort");
+                    EndDrawing();
                     std::swap(v[j], v[j - gap]);
                     j -= gap;
-                    Visualize::visualizeVector(v, "Shell Sort");
                 }
             }
         }

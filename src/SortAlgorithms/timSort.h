@@ -22,11 +22,13 @@ class TimSort : public SortStrategy {
             auto [barHeight, color] = v[i];
             auto j{i};
             while (j > start && v[j - 1].first > barHeight) {
+                BeginDrawing();
+                Visualize::visualizeVector(v, "Insertion Sort");
                 Visualize::visualizeBar(v, j, "Insertion Sort");
                 Visualize::visualizeBar(v, j - 1, "Insertion Sort");
+                EndDrawing();
                 v[j] = v[j - 1];
                 --j;
-                Visualize::visualizeVector(v, "Insertion Sort");
             }
             v[j] = std::make_pair(barHeight, color);
         }
@@ -39,6 +41,8 @@ class TimSort : public SortStrategy {
         auto j{mid + 1};
         auto k{0};
         while (i <= mid && j <= end) {
+            BeginDrawing();
+            Visualize::visualizeVector(v, "Tim Sort");
             if (v[i].first < v[j].first) {
                 Visualize::visualizeBar(v, i, "Tim Sort");
                 temp[k++] = v[i++];
@@ -46,17 +50,21 @@ class TimSort : public SortStrategy {
                 Visualize::visualizeBar(v, j, "Tim Sort");
                 temp[k++] = v[j++];
             }
-            Visualize::visualizeVector(v, "Tim Sort");
+            EndDrawing();
         }
         while (i <= mid) {
+            BeginDrawing();
+            Visualize::visualizeVector(v, "Tim Sort");
             Visualize::visualizeBar(v, i, "Tim Sort");
             temp[k++] = v[i++];
-            Visualize::visualizeVector(v, "Tim Sort");
+            EndDrawing();
         }
         while (j <= end) {
+            BeginDrawing();
+            Visualize::visualizeVector(v, "Tim Sort");
             Visualize::visualizeBar(v, j, "Tim Sort");
             temp[k++] = v[j++];
-            Visualize::visualizeVector(v, "Tim Sort");
+            EndDrawing();
         }
         for (auto i{0}; i < temp.size(); ++i) {
             v[start + i] = temp[i];

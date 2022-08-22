@@ -44,12 +44,14 @@ class PancakeSort : public SortStrategy {
                         int index) {
         auto start{0};
         while (start < index) {
+            BeginDrawing();
+            Visualize::visualizeVector(v, "Pancake Sort");
             Visualize::visualizeBar(v, start, "Pancake Sort");
             Visualize::visualizeBar(v, index, "Pancake Sort");
+            EndDrawing();
             std::swap(v[start], v[index]);
             ++start;
             --index;
-            Visualize::visualizeVector(v, "Pancake Sort");
         }
     }
 };
