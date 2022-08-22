@@ -22,7 +22,6 @@ class Visualize {
                 Vector2{barWidth, barHeight}, color);
         }
         visualizeSortTitle(sortTitle);
-        if (IsKeyDown(KEY_ESCAPE)) { return; }
     }
 
     static void visualizeBar(std::vector<std::pair<float, Color>> const &v = {},
@@ -34,7 +33,6 @@ class Visualize {
             Vector2{static_cast<float>(index) * barWidth,
                     static_cast<float>(GetScreenHeight()) - barHeight},
             Vector2{barWidth, barHeight}, RAYWHITE);
-        if (IsKeyDown(KEY_ESCAPE)) { return; }
     }
 
     static void visualizeSortTitle(std::string const &sortTitle = {}) {
@@ -43,11 +41,13 @@ class Visualize {
 
     static void
     visualizeTraverse(std::vector<std::pair<float, Color>> const &v = {},
-                      int firstBar = 0, int secondBar = 0, std::string const &sortTitle = {}) {
+                      int firstBar = 0, int secondBar = 0,
+                      std::string const &sortTitle = {}) {
         BeginDrawing();
         Visualize::visualizeVector(v, sortTitle);
         Visualize::visualizeBar(v, firstBar, sortTitle);
         Visualize::visualizeBar(v, secondBar, sortTitle);
+        if (IsKeyDown(KEY_ESCAPE)) { return; }
         EndDrawing();
     }
 
@@ -57,14 +57,17 @@ class Visualize {
         auto size{v.size()};
         BeginDrawing();
         visualizeVector(v, sortTitle);
+        if (IsKeyDown(KEY_ESCAPE)) { return; }
         EndDrawing();
         for (auto i{0}; i < size; ++i) {
             BeginDrawing();
             visualizeBar(v, i, sortTitle);
+            if (IsKeyDown(KEY_ESCAPE)) { return; }
             EndDrawing();
         }
         BeginDrawing();
         visualizeVector(v, sortTitle);
+        if (IsKeyDown(KEY_ESCAPE)) { return; }
         EndDrawing();
     }
 };

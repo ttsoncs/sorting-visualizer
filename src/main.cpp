@@ -1,5 +1,7 @@
+#include "SortAlgorithms/binaryInsertionSort.h"
+#include "SortAlgorithms/bitonicSort.h"
 #include "SortAlgorithms/bubbleSort.h"
-#include "SortAlgorithms/cocktailSort.h"
+#include "SortAlgorithms/cocktailShakerSort.h"
 #include "SortAlgorithms/combSort.h"
 #include "SortAlgorithms/cycleSort.h"
 #include "SortAlgorithms/evenOddSort.h"
@@ -11,6 +13,7 @@
 #include "SortAlgorithms/quickSort.h"
 #include "SortAlgorithms/selectionSort.h"
 #include "SortAlgorithms/shellSort.h"
+#include "SortAlgorithms/slowSort.h"
 #include "SortAlgorithms/stoogeSort.h"
 #include "SortAlgorithms/timSort.h"
 #include "sortController.h"
@@ -39,7 +42,8 @@ int main() {
         }
 
         if (Window::isKeyDown(KEY_FOUR)) {
-            sortController.setSortStrategy(std::make_unique<CocktailSort>(60));
+            sortController.setSortStrategy(
+                std::make_unique<CocktailShakerSort>(60));
         }
 
         if (Window::isKeyDown(KEY_FIVE)) {
@@ -86,9 +90,20 @@ int main() {
             sortController.setSortStrategy(std::make_unique<HeapSort>(60));
         }
 
-        if (Window::isKeyDown(KEY_SPACE)) {
-            sortController.sort();
+        if (Window::isKeyDown(KEY_N)) {
+            sortController.setSortStrategy(
+                std::make_unique<BinaryInsertionSort>(60));
         }
+
+        if (Window::isKeyDown(KEY_M)) {
+            sortController.setSortStrategy(std::make_unique<SlowSort>(20));
+        }
+
+        if (Window::isKeyDown(KEY_A)) {
+            sortController.setSortStrategy(std::make_unique<BitonicSort>(60));
+        }
+
+        if (Window::isKeyDown(KEY_SPACE)) { sortController.sort(); }
 
         if (Window::isKeyDown(KEY_ESCAPE)) { break; }
 

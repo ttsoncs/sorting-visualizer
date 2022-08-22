@@ -3,21 +3,21 @@
 
 #include "../sortStrategy.h"
 
-class CocktailSort : public SortStrategy {
+class CocktailShakerSort : public SortStrategy {
   public:
-    explicit CocktailSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Cocktail Sort");
+    explicit CocktailShakerSort(int size) : SortStrategy(size) {
+        Visualize::visualizeSortTitle("Cocktail Shaker Sort");
     }
 
-    ~CocktailSort() noexcept override = default;
+    ~CocktailShakerSort() noexcept override = default;
 
-    CocktailSort(const CocktailSort &other) = delete;
+    CocktailShakerSort(const CocktailShakerSort &other) = delete;
 
-    CocktailSort &operator=(const CocktailSort &other) = delete;
+    CocktailShakerSort &operator=(const CocktailShakerSort &other) = delete;
 
-    CocktailSort(CocktailSort &&other) noexcept = default;
+    CocktailShakerSort(CocktailShakerSort &&other) noexcept = default;
 
-    CocktailSort &operator=(CocktailSort &&other) noexcept = default;
+    CocktailShakerSort &operator=(CocktailShakerSort &&other) noexcept = default;
 
     void sort() override {
         auto v{vector_.getVector()};
@@ -26,7 +26,7 @@ class CocktailSort : public SortStrategy {
         while (swapped) {
             swapped = false;
             for (auto i{0}; i < size - 1; ++i) {
-                Visualize::visualizeTraverse(v, i, i + 1, "Cocktail Sort");
+                Visualize::visualizeTraverse(v, i, i + 1, "Cocktail Shaker Sort");
                 if (v[i].first > v[i + 1].first) {
                     std::swap(v[i], v[i + 1]);
                     swapped = true;
@@ -35,14 +35,14 @@ class CocktailSort : public SortStrategy {
             if (!swapped) { break; }
             swapped = false;
             for (auto i{size - 1}; i > 0; --i) {
-                Visualize::visualizeTraverse(v, i, i - 1, "Cocktail Sort");
+                Visualize::visualizeTraverse(v, i, i - 1, "Cocktail Shaker Sort");
                 if (v[i].first < v[i - 1].first) {
                     std::swap(v[i], v[i - 1]);
                     swapped = true;
                 }
             }
         }
-        Visualize::visualizeEnding(v, "Cocktail Sort");
+        Visualize::visualizeEnding(v, "Cocktail Shaker Sort");
     }
 };
 
