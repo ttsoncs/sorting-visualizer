@@ -18,112 +18,133 @@
 #include "SortAlgorithms/slowSort.h"
 #include "SortAlgorithms/stoogeSort.h"
 #include "SortAlgorithms/timSort.h"
+#include "globalVariable.h"
 #include "sortController.h"
 #include "window.h"
 
-auto const SCREEN_WIDTH{1280};
-auto const SCREEN_HEIGHT{720};
-auto const SCREEN_FPS{60};
-auto const SIZE{120};
-std::string const WINDOW_TITLE{"Sort Visualizer"};
-
 int main() {
-  Window window{SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE};
-  window.setTargetFps(SCREEN_FPS);
-  SortController sortController;
-  while (!Window::windowShouldClose()) {
-    if (Window::isKeyDown(KEY_ONE)) {
-      sortController.setSortStrategy(std::make_unique<BubbleSort>(SIZE));
-    }
+    Window window{SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE};
+    window.setTargetFps(SCREEN_FPS);
+    SortController sortController;
+    while (!Window::windowShouldClose()) {
+        if (Window::isKeyDown(KEY_ONE)) {
+            sortController.setSortStrategy(
+                std::make_unique<BinaryInsertionSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_TWO)) {
-      sortController.setSortStrategy(std::make_unique<InsertionSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_TWO)) {
+            sortController.setSortStrategy(
+                std::make_unique<BitonicSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_THREE)) {
-      sortController.setSortStrategy(std::make_unique<SelectionSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_THREE)) {
+            sortController.setSortStrategy(
+                std::make_unique<BubbleSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_FOUR)) {
-      sortController.setSortStrategy(
-          std::make_unique<CocktailShakerSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_FOUR)) {
+            sortController.setSortStrategy(
+                std::make_unique<CocktailShakerSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_FIVE)) {
-      sortController.setSortStrategy(std::make_unique<ShellSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_FIVE)) {
+            sortController.setSortStrategy(
+                std::make_unique<CombSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_SIX)) {
-      sortController.setSortStrategy(std::make_unique<MergeSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_SIX)) {
+            sortController.setSortStrategy(
+                std::make_unique<CountingSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_SEVEN)) {
-      sortController.setSortStrategy(std::make_unique<CombSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_SEVEN)) {
+            sortController.setSortStrategy(
+                std::make_unique<CycleSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_EIGHT)) {
-      sortController.setSortStrategy(std::make_unique<GnomeSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_EIGHT)) {
+            sortController.setSortStrategy(
+                std::make_unique<EvenOddSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_NINE)) {
-      sortController.setSortStrategy(std::make_unique<TimSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_NINE)) {
+            sortController.setSortStrategy(
+                std::make_unique<GnomeSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_ZERO)) {
-      sortController.setSortStrategy(std::make_unique<QuickSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_ZERO)) {
+            sortController.setSortStrategy(
+                std::make_unique<HeapSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_Z)) {
-      sortController.setSortStrategy(std::make_unique<StoogeSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_Q)) {
+            sortController.setSortStrategy(
+                std::make_unique<InsertionSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_X)) {
-      sortController.setSortStrategy(std::make_unique<CycleSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_W)) {
+            sortController.setSortStrategy(
+                std::make_unique<MergeSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_C)) {
-      sortController.setSortStrategy(std::make_unique<EvenOddSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_E)) {
+            sortController.setSortStrategy(
+                std::make_unique<PancakeSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_V)) {
-      sortController.setSortStrategy(std::make_unique<PancakeSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_R)) {
+            sortController.setSortStrategy(
+                std::make_unique<QuickSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_B)) {
-      sortController.setSortStrategy(std::make_unique<HeapSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_T)) {
+            sortController.setSortStrategy(
+                std::make_unique<RadixSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_N)) {
-      sortController.setSortStrategy(
-          std::make_unique<BinaryInsertionSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_Y)) {
+            sortController.setSortStrategy(
+                std::make_unique<SelectionSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_M)) {
-      sortController.setSortStrategy(std::make_unique<SlowSort>(20));
-    }
+        if (Window::isKeyDown(KEY_U)) {
+            sortController.setSortStrategy(
+                std::make_unique<ShellSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_A)) {
-      sortController.setSortStrategy(std::make_unique<BitonicSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_I)) {
+            sortController.setSortStrategy(
+                std::make_unique<SlowSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_S)) {
-      sortController.setSortStrategy(std::make_unique<RadixSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_O)) {
+            sortController.setSortStrategy(
+                std::make_unique<StoogeSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_D)) {
-      sortController.setSortStrategy(std::make_unique<CountingSort>(SIZE));
-    }
+        if (Window::isKeyDown(KEY_P)) {
+            sortController.setSortStrategy(
+                std::make_unique<TimSort>(VECTOR_SIZE));
+        }
 
-    if (Window::isKeyDown(KEY_SPACE)) {
-      sortController.sort();
-    }
+        if (Window::isKeyDown(KEY_SPACE)) {
+            sortController.sort();
+        }
 
-    if (Window::isKeyDown(KEY_ESCAPE)) {
-      break;
-    }
+        if (Window::isKeyDown(KEY_ESCAPE)) {
+            break;
+        }
 
-    BeginDrawing();
-    EndDrawing();
-  }
-  return EXIT_SUCCESS;
+        if (Window::isKeyDown(KEY_UP) && VECTOR_SIZE < 480) {
+            VECTOR_SIZE += 2;
+        }
+
+        if (Window::isKeyDown(KEY_DOWN) && VECTOR_SIZE > 10) {
+            VECTOR_SIZE -= 2;
+        }
+
+        BeginDrawing();
+        EndDrawing();
+    }
+    return EXIT_SUCCESS;
 }
