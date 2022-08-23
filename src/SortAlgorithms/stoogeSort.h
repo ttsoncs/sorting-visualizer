@@ -4,43 +4,43 @@
 #include "../sortStrategy.h"
 
 class StoogeSort : public SortStrategy {
-  public:
-    explicit StoogeSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Stooge Sort");
+private:
+  void stoogeSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
+                  int left, int right) {
+    if (left <= right) {
+      if (v[left].first > v[right].first) {
+        Visualize::visualizeTraverse(v, left, right, "Stooge Sort");
+        std::swap(v[left], v[right]);
+      }
+      if (right - left + 1 > 2) {
+        auto mid{(right - left + 1) / 3};
+        stoogeSort(v, left, right - mid);
+        stoogeSort(v, left + mid, right);
+        stoogeSort(v, left, right - mid);
+      }
     }
+  }
 
-    ~StoogeSort() noexcept override = default;
+public:
+  explicit StoogeSort(int size) : SortStrategy(size) {
+    Visualize::visualizeSortTitle("Stooge Sort");
+  }
 
-    StoogeSort(const StoogeSort &other) = delete;
+  ~StoogeSort() noexcept override = default;
 
-    StoogeSort &operator=(const StoogeSort &other) = delete;
+  StoogeSort(const StoogeSort &other) = delete;
 
-    StoogeSort(StoogeSort &&other) noexcept = default;
+  StoogeSort &operator=(const StoogeSort &other) = delete;
 
-    StoogeSort &operator=(StoogeSort &&other) noexcept = default;
+  StoogeSort(StoogeSort &&other) noexcept = default;
 
-    void sort() override {
-        auto v{vector_.getVector()};
-        stoogeSort(v, 0, v.size() - 1);
-        Visualize::visualizeEnding(v, "Stooge Sort");
-    }
+  StoogeSort &operator=(StoogeSort &&other) noexcept = default;
 
-  private:
-    void stoogeSort(std::vector<std::pair<float, Color>> &v, int left,
-                    int right) {
-        if (left <= right) {
-            if (v[left].first > v[right].first) {
-                Visualize::visualizeTraverse(v, left, right, "Stooge Sort");
-                std::swap(v[left], v[right]);
-            }
-            if (right - left + 1 > 2) {
-                auto mid{(right - left + 1) / 3};
-                stoogeSort(v, left, right - mid);
-                stoogeSort(v, left + mid, right);
-                stoogeSort(v, left, right - mid);
-            }
-        }
-    }
+  void sort() override {
+    auto v{vector_.getVector()};
+    stoogeSort(v, 0, v.size() - 1);
+    Visualize::visualizeEnding(v, "Stooge Sort");
+  }
 };
 
 #endif

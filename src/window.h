@@ -5,31 +5,29 @@
 #include <string>
 
 class Window {
-  public:
-    Window(int width, int height, std::string const &windowTitle = {}) {
-        InitWindow(width, height, windowTitle.c_str());
-        SetExitKey(KEY_ESCAPE);
-        SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT |
-                       FLAG_WINDOW_HIGHDPI);
-    }
+public:
+  Window(int width, int height, std::string const &windowTitle = {}) {
+    InitWindow(width, height, windowTitle.c_str());
+    SetExitKey(KEY_ESCAPE);
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT |
+                   FLAG_WINDOW_HIGHDPI);
+  }
 
-    ~Window() noexcept { CloseWindow(); }
+  ~Window() noexcept { CloseWindow(); }
 
-    Window(const Window &other) = delete;
+  Window(const Window &other) = delete;
 
-    Window operator=(const Window &other) = delete;
+  Window operator=(const Window &other) = delete;
 
-    Window(Window &&other) noexcept = default;
+  Window(Window &&other) noexcept = default;
 
-    Window &operator=(Window &&other) noexcept = default;
+  Window &operator=(Window &&other) noexcept = default;
 
-    void setTargetFps(int fps) { SetTargetFPS(fps); }
+  void setTargetFps(int fps) { SetTargetFPS(fps); }
 
-    [[nodiscard]] static bool windowShouldClose() {
-        return WindowShouldClose();
-    }
+  [[nodiscard]] static bool windowShouldClose() { return WindowShouldClose(); }
 
-    [[nodiscard]] static bool isKeyDown(int key) { return IsKeyDown(key); }
+  [[nodiscard]] static bool isKeyDown(int key) { return IsKeyDown(key); }
 };
 
 #endif
