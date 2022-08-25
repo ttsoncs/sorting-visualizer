@@ -1,12 +1,25 @@
 #ifndef QUICK_SORT_H
 #define QUICK_SORT_H
 
-#include "../sortStrategy.h"
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
 class QuickSort : public SortStrategy {
+  public:
+    QuickSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Quicksort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        quickSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Quicksort");
+    }
+
   private:
-    void quickSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                   int start, int end) {
+    auto quickSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
         if (start <= end) {
             auto i{start};
             auto j{end};
@@ -58,27 +71,6 @@ class QuickSort : public SortStrategy {
     //   std::swap(v[i + 1], v[end]);
     //   return i + 1;
     // }
-
-  public:
-    explicit QuickSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Quicksort");
-    }
-
-    ~QuickSort() noexcept override = default;
-
-    QuickSort(const QuickSort &other) = default;
-
-    QuickSort &operator=(const QuickSort &other) = default;
-
-    QuickSort(QuickSort &&other) noexcept = default;
-
-    QuickSort &operator=(QuickSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        quickSort(v, 0, v.size() - 1);
-        Visualize::visualizeEnding(v, "Quicksort");
-    }
 };
 
 #endif

@@ -7,78 +7,80 @@
 
 class Visualize {
   public:
-    static void visualizeVector(
-        std::vector<std::pair<int, std::pair<float, Color>>> const &v = {},
-        std::string const &sortTitle = {}) {
-        auto barWidth{static_cast<float>(GetScreenWidth()) /
-                      static_cast<float>(v.size())};
+    static auto visualizeVector(std::vector<std::pair<int, std::pair<float, Color>>> const &v = {}) {
         auto size{v.size()};
+        auto barWidth{static_cast<float>(GetScreenWidth()) / static_cast<float>(size)};
         auto screenHeight{static_cast<float>(GetScreenHeight())};
         ClearBackground(BLANK);
         for (auto i{0}; i != size; ++i) {
             auto [barHeight, color] = v[i].second;
-            DrawRectangleV(
-                Vector2{static_cast<float>(i) * barWidth, screenHeight - barHeight},
-                Vector2{barWidth, barHeight}, color);
+            DrawRectangleV(Vector2{static_cast<float>(i) * barWidth, screenHeight - barHeight},
+                           Vector2{barWidth, barHeight}, color);
         }
-        visualizeSortTitle(sortTitle);
     }
 
-    static void visualizeBar(
-        std::vector<std::pair<int, std::pair<float, Color>>> const &v = {},
-        int index = 0, std::string const &sortTitle = {}) {
-        auto barWidth{static_cast<float>(GetScreenWidth()) /
-                      static_cast<float>(v.size())};
+    static auto visualizeBar(std::vector<std::pair<int, std::pair<float, Color>>> const &v = {}, int index = 0) {
+        auto barWidth{static_cast<float>(GetScreenWidth()) / static_cast<float>(v.size())};
         auto [barHeight, color] = v[index].second;
         auto screenHeight{static_cast<float>(GetScreenHeight())};
-        DrawRectangleV(
-            Vector2{static_cast<float>(index) * barWidth, screenHeight - barHeight},
-            Vector2{barWidth, barHeight}, RAYWHITE);
+        DrawRectangleV(Vector2{static_cast<float>(index) * barWidth, screenHeight - barHeight},
+                       Vector2{barWidth, barHeight}, RAYWHITE);
     }
 
-    static void visualizeSortTitle(std::string const &sortTitle = {}) {
-        DrawText(sortTitle.c_str(), 10, 10, GetScreenWidth() / 40, RAYWHITE);
+    static auto visualizeTitle(std::string const &title = {}) {
+        DrawText(title.c_str(), 10, 10, GetScreenWidth() / 40, RAYWHITE);
     }
 
-    static void visualizeTraverse(
-        std::vector<std::pair<int, std::pair<float, Color>>> const &v = {},
-        int firstBar = 0, int secondBar = 0, std::string const &sortTitle = {}) {
-        BeginDrawing();
-        Visualize::visualizeVector(v, sortTitle);
-        Visualize::visualizeBar(v, firstBar, sortTitle);
-        Visualize::visualizeBar(v, secondBar, sortTitle);
+    static void visualizeTraverse(std::vector<std::pair<int, std::pair<float, Color>>> const &v = {}, int firstBar = 0, int secondBar = 0,
+                                  std::string const &title = {}) {
+        Window::beginDrawing();
+        Visualize::visualizeVector(v);
+        Visualize::visualizeBar(v, firstBar);
+        Visualize::visualizeBar(v, secondBar);
+        Visualize::visualizeTitle(title);
+        if (Window::isKeyDown(KEY_LEFT)) {
+            Window::decrementFps();
+        }
+        if (Window::isKeyDown(KEY_RIGHT)) {
+            Window::incrementFps();
+        }
         if (Window::isKeyDown(KEY_ESCAPE)) {
             return;
         }
-        Window::changeFps();
-        EndDrawing();
+        Window::endDrawing();
     }
 
-    static void visualizeEnding(
-        std::vector<std::pair<int, std::pair<float, Color>>> const &v = {},
-        std::string const &sortTitle = {}) {
+    static auto visualizeEnding(std::vector<std::pair<int, std::pair<float, Color>>> const &v = {}, std::string const &title = {}) {
         auto size{v.size()};
-        BeginDrawing();
-        visualizeVector(v, sortTitle);
+        Window::beginDrawing();
+        Visualize::visualizeVector(v);
+        Visualize::visualizeTitle(title);
         if (Window::isKeyDown(KEY_ESCAPE)) {
             return;
         }
-        EndDrawing();
+        Window::endDrawing();
         for (auto i{0}; i != size; ++i) {
-            BeginDrawing();
-            visualizeBar(v, i, sortTitle);
+            Window::beginDrawing();
+            Visualize::visualizeBar(v, i);
+            Visualize::visualizeTitle(title);
+            if (Window::isKeyDown(KEY_LEFT)) {
+                Window::decrementFps();
+            }
+            if (Window::isKeyDown(KEY_RIGHT)) {
+                Window::incrementFps();
+            }
             if (Window::isKeyDown(KEY_ESCAPE)) {
                 return;
             }
-            Window::changeFps();
-            EndDrawing();
+            Window::endDrawing();
         }
-        BeginDrawing();
-        visualizeVector(v, sortTitle);
+        Window::beginDrawing();
+        Visualize::visualizeVector(v);
+        Visualize::visualizeTitle(title);
         if (Window::isKeyDown(KEY_ESCAPE)) {
             return;
         }
-        EndDrawing();
+        Window::endDrawing();
     }
 };
 

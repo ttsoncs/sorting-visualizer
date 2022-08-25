@@ -2,43 +2,51 @@
 #define WINDOW_H
 
 #include "../lib/raylib-4.2.0/src/raylib.h"
-#include "globalVariable.h"
+#include <string>
 
 class Window {
   public:
-    Window(int width, int height, std::string const &windowTitle = {}) {
-        InitWindow(width, height, windowTitle.c_str());
+    Window() {
+        InitWindow(1280, 720, "Sort Visualizer");
         SetExitKey(KEY_ESCAPE);
-        SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT |
-                       FLAG_WINDOW_HIGHDPI);
+        SetTargetFPS(Window::fps);
+        SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
     }
 
     ~Window() noexcept { CloseWindow(); }
 
-    Window(const Window &other) = default;
+    Window(const Window &other) = delete;
 
-    Window &operator=(const Window &other) = default;
+    Window &operator=(const Window &other) = delete;
 
     Window(Window &&other) noexcept = default;
 
     Window &operator=(Window &&other) noexcept = default;
 
-    void setTargetFps(int fps) { SetTargetFPS(fps); }
-
-    static void changeFps() {
-        if (IsKeyDown(KEY_LEFT) && SCREEN_FPS > 2) {
-            SCREEN_FPS -= 2;
-            SetTargetFPS(SCREEN_FPS);
-        }
-        if (IsKeyDown(KEY_RIGHT) && SCREEN_FPS < 240) {
-            SCREEN_FPS += 2;
-            SetTargetFPS(SCREEN_FPS);
+    static auto incrementFps() {
+        if (Window::fps < 240) {
+            Window::fps += 2;
+            SetTargetFPS(Window::fps);
         }
     }
 
-    [[nodiscard]] static bool windowShouldClose() { return WindowShouldClose(); }
+    static auto decrementFps() {
+        if (Window::fps > 2) {
+            Window::fps -= 2;
+            SetTargetFPS(Window::fps);
+        }
+    }
 
-    [[nodiscard]] static bool isKeyDown(int key) { return IsKeyDown(key); }
+    static auto beginDrawing() { BeginDrawing(); }
+
+    static auto endDrawing() { EndDrawing(); }
+
+    [[nodiscard]] static auto windowShouldClose() { return WindowShouldClose(); }
+
+    [[nodiscard]] static auto isKeyDown(int key) -> bool { return IsKeyDown(key); }
+
+  private:
+    inline static auto fps{60};
 };
 
 #endif

@@ -1,31 +1,30 @@
 #ifndef COCKTAIL_SORT_H
 #define COCKTAIL_SORT_H
 
-#include "../sortStrategy.h"
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
 class CocktailShakerSort : public SortStrategy {
   public:
-    explicit CocktailShakerSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Cocktail Shaker Sort");
+    CocktailShakerSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Cocktail Shaker Sort");
     }
 
-    ~CocktailShakerSort() noexcept override = default;
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        cocktailShakerSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Cocktail Shaker Sort");
+    }
 
-    CocktailShakerSort(const CocktailShakerSort &other) = default;
-
-    CocktailShakerSort &operator=(const CocktailShakerSort &other) = default;
-
-    CocktailShakerSort(CocktailShakerSort &&other) noexcept = default;
-
-    CocktailShakerSort &operator=(CocktailShakerSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        auto size{v.size()};
+  private:
+    auto cocktailShakerSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        auto size{end - start + 1};
         bool swapped{true};
         while (swapped) {
             swapped = false;
-            for (auto i{0}; i != size - 1; ++i) {
+            for (auto i{start}; i != size - 1; ++i) {
                 Visualize::visualizeTraverse(v, i, i + 1, "Cocktail Shaker Sort");
                 if (v[i].first > v[i + 1].first) {
                     std::swap(v[i], v[i + 1]);
@@ -44,7 +43,6 @@ class CocktailShakerSort : public SortStrategy {
                 }
             }
         }
-        Visualize::visualizeEnding(v, "Cocktail Shaker Sort");
     }
 };
 

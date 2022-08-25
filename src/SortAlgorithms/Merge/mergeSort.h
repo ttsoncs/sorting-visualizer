@@ -1,12 +1,25 @@
 #ifndef MERGE_SORT_H
 #define MERGE_SORT_H
 
-#include "../sortStrategy.h"
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
 class MergeSort : public SortStrategy {
+  public:
+    MergeSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Merge Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        mergeSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Merge Sort");
+    }
+
   private:
-    void mergeSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                   int start, int end) {
+    auto mergeSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end)-> void {
         if (start < end) {
             auto mid{(start + end) / 2};
             mergeSort(v, start, mid);
@@ -15,8 +28,7 @@ class MergeSort : public SortStrategy {
         }
     }
 
-    void merge(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start,
-               int mid, int end) {
+    auto merge(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int mid, int end)-> void {
         std::vector<std::pair<int, std::pair<float, Color>>> temp(end - start + 1);
         auto i{start};
         auto j{mid + 1};
@@ -41,27 +53,6 @@ class MergeSort : public SortStrategy {
         for (auto i{0}; i != size; ++i) {
             v[start + i] = temp[i];
         }
-    }
-
-  public:
-    explicit MergeSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Merge Sort");
-    }
-
-    ~MergeSort() noexcept override = default;
-
-    MergeSort(const MergeSort &other) = default;
-
-    MergeSort &operator=(const MergeSort &other) = default;
-
-    MergeSort(MergeSort &&other) noexcept = default;
-
-    MergeSort &operator=(MergeSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        mergeSort(v, 0, v.size() - 1);
-        Visualize::visualizeEnding(v, "Merge Sort");
     }
 };
 

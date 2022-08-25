@@ -1,12 +1,25 @@
 #ifndef COUNTING_SORT_H
 #define COUNTING_SORT_H
 
-#include "../sortStrategy.h"
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
 class CountingSort : public SortStrategy {
+  public:
+    CountingSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Counting Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        countingSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Counting Sort");
+    }
+
   private:
-    void countingSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                      int start, int end) {
+    auto countingSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
         std::vector<int> count(end - start + 1, 0);
         for (auto &i : v) {
             ++count[i.first - start];
@@ -25,20 +38,6 @@ class CountingSort : public SortStrategy {
             --j;
         }
         v = std::move(sorted);
-    }
-
-  public:
-    explicit CountingSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Counting Sort");
-    }
-    ~CountingSort() noexcept override = default;
-    CountingSort(const CountingSort &other) = default;
-    CountingSort &operator=(const CountingSort &other) = default;
-    CountingSort(CountingSort &&other) noexcept = default;
-    void sort() override {
-        auto v{vector_.getVector()};
-        countingSort(v, 0, v.size() - 1);
-        Visualize::visualizeEnding(v, "Counting Sort");
     }
 };
 

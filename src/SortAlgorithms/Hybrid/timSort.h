@@ -1,12 +1,25 @@
 #ifndef TIM_SORT_H
 #define TIM_SORT_H
 
-#include "../sortStrategy.h"
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
 class TimSort : public SortStrategy {
+  public:
+    TimSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Tim Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        timSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Tim Sort");
+    }
+
   private:
-    void timSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                 int start, int end) {
+    auto timSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
         if (end - start < 15) {
             insertionSort(v, start, end);
             return;
@@ -19,8 +32,7 @@ class TimSort : public SortStrategy {
         }
     }
 
-    void insertionSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                       int start, int end) {
+    auto insertionSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
         for (auto i{start + 1}; i != end + 1; ++i) {
             auto [barHeight, color] = v[i];
             auto j{i};
@@ -34,8 +46,7 @@ class TimSort : public SortStrategy {
         }
     }
 
-    void merge(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start,
-               int mid, int end) {
+    auto merge(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int mid, int end) -> void {
         std::vector<std::pair<int, std::pair<float, Color>>> temp(end - start + 1);
         auto i{start};
         auto j{mid + 1};
@@ -59,27 +70,6 @@ class TimSort : public SortStrategy {
         for (auto i{0}; i != temp.size(); ++i) {
             v[start + i] = temp[i];
         }
-    }
-
-  public:
-    explicit TimSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Tim Sort");
-    }
-
-    ~TimSort() noexcept override = default;
-
-    TimSort(const TimSort &other) = default;
-
-    TimSort &operator=(const TimSort &other) = default;
-
-    TimSort(TimSort &&other) noexcept = default;
-
-    TimSort &operator=(TimSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        timSort(v, 0, v.size() - 1);
-        Visualize::visualizeEnding(v, "Tim Sort");
     }
 };
 
