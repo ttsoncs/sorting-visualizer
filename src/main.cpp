@@ -1,6 +1,7 @@
 #include "SortAlgorithms/Concurrent/bitonicSort.h"
-#include "SortAlgorithms/Distribute/countingSort.h"
+#include "SortAlgorithms/Distribute/pigeonholeSort.h"
 #include "SortAlgorithms/Distribute/radixSort.h"
+#include "SortAlgorithms/Exchange/binaryGnomeSort.h"
 #include "SortAlgorithms/Exchange/bubbleSort.h"
 #include "SortAlgorithms/Exchange/cocktailShakerSort.h"
 #include "SortAlgorithms/Exchange/combSort.h"
@@ -26,87 +27,91 @@ int main() {
     Vector vector_;
     SortController sortController;
     while (!Window::windowShouldClose()) {
-        if (Window::isKeyDown(KEY_ONE)) {
+        if (Window::isKeyPressed(KEY_ONE)) {
             sortController.setSortStrategy(std::make_unique<BinaryInsertionSort>());
         }
 
-        if (Window::isKeyDown(KEY_TWO)) {
+        if (Window::isKeyPressed(KEY_TWO)) {
             sortController.setSortStrategy(std::make_unique<BitonicSort>());
         }
 
-        if (Window::isKeyDown(KEY_THREE)) {
+        if (Window::isKeyPressed(KEY_THREE)) {
             sortController.setSortStrategy(std::make_unique<BubbleSort>());
         }
 
-        if (Window::isKeyDown(KEY_FOUR)) {
+        if (Window::isKeyPressed(KEY_FOUR)) {
             sortController.setSortStrategy(std::make_unique<OddEvenSort>());
         }
 
-        if (Window::isKeyDown(KEY_FIVE)) {
+        if (Window::isKeyPressed(KEY_FIVE)) {
             sortController.setSortStrategy(std::make_unique<GnomeSort>());
         }
 
-        if (Window::isKeyDown(KEY_SIX)) {
+        if (Window::isKeyPressed(KEY_SIX)) {
             sortController.setSortStrategy(std::make_unique<SlowSort>());
         }
 
-        if (Window::isKeyDown(KEY_SEVEN)) {
+        if (Window::isKeyPressed(KEY_SEVEN)) {
             sortController.setSortStrategy(std::make_unique<StoogeSort>());
         }
 
-        if (Window::isKeyDown(KEY_EIGHT)) {
+        if (Window::isKeyPressed(KEY_EIGHT)) {
             sortController.setSortStrategy(std::make_unique<CombSort>());
         }
 
-        if (Window::isKeyDown(KEY_NINE)) {
+        if (Window::isKeyPressed(KEY_NINE)) {
             sortController.setSortStrategy(std::make_unique<CocktailShakerSort>());
         }
 
-        if (Window::isKeyDown(KEY_ZERO)) {
-            sortController.setSortStrategy(std::make_unique<CountingSort>());
+        if (Window::isKeyPressed(KEY_ZERO)) {
+            sortController.setSortStrategy(std::make_unique<PigeonholeSort>());
         }
 
-        if (Window::isKeyDown(KEY_Q)) {
+        if (Window::isKeyPressed(KEY_Q)) {
             sortController.setSortStrategy(std::make_unique<TimSort>());
         }
 
-        if (Window::isKeyDown(KEY_W)) {
+        if (Window::isKeyPressed(KEY_W)) {
             sortController.setSortStrategy(std::make_unique<InsertionSort>());
         }
 
-        if (Window::isKeyDown(KEY_E)) {
+        if (Window::isKeyPressed(KEY_E)) {
             sortController.setSortStrategy(std::make_unique<ShellSort>());
         }
 
-        if (Window::isKeyDown(KEY_R)) {
+        if (Window::isKeyPressed(KEY_R)) {
             sortController.setSortStrategy(std::make_unique<MergeSort>());
         }
 
-        if (Window::isKeyDown(KEY_T)) {
+        if (Window::isKeyPressed(KEY_T)) {
             sortController.setSortStrategy(std::make_unique<PancakeSort>());
         }
 
-        if (Window::isKeyDown(KEY_Y)) {
+        if (Window::isKeyPressed(KEY_Y)) {
             sortController.setSortStrategy(std::make_unique<CycleSort>());
         }
 
-        if (Window::isKeyDown(KEY_U)) {
+        if (Window::isKeyPressed(KEY_U)) {
             sortController.setSortStrategy(std::make_unique<HeapSort>());
         }
 
-        if (Window::isKeyDown(KEY_I)) {
+        if (Window::isKeyPressed(KEY_I)) {
             sortController.setSortStrategy(std::make_unique<SelectionSort>());
         }
 
-        if (Window::isKeyDown(KEY_O)) {
+        if (Window::isKeyPressed(KEY_O)) {
             sortController.setSortStrategy(std::make_unique<RadixSort>());
         }
 
-        if (Window::isKeyDown(KEY_P)) {
+        if (Window::isKeyPressed(KEY_P)) {
             sortController.setSortStrategy(std::make_unique<QuickSort>());
         }
 
-        if (Window::isKeyDown(KEY_SPACE)) {
+        if (Window::isKeyPressed(KEY_A)) {
+            sortController.setSortStrategy(std::make_unique<BinaryGnomeSort>());
+        }
+
+        if (Window::isKeyPressed(KEY_SPACE)) {
             sortController.sort();
         }
 
@@ -114,11 +119,11 @@ int main() {
             break;
         }
 
-        if (Window::isKeyDown(KEY_UP)) {
+        if (Window::isKeyPressed(KEY_UP)) {
             Vector::incrementVectorSize();
         }
 
-        if (Window::isKeyDown(KEY_DOWN)) {
+        if (Window::isKeyPressed(KEY_DOWN)) {
             Vector::decrementVectorSize();
         }
 
@@ -130,20 +135,24 @@ int main() {
             Window::incrementFps();
         }
 
-        if (Window::isKeyDown(KEY_Z)) {
+        if (Window::isKeyPressed(KEY_Z)) {
             Vector::randomShuffle();
         }
 
-        if (Window::isKeyDown(KEY_X)) {
+        if (Window::isKeyPressed(KEY_X)) {
             Vector::reverseSortedShuffle();
         }
 
-        if (Window::isKeyDown(KEY_C)) {
+        if (Window::isKeyPressed(KEY_C)) {
             Vector::almostSortedShuffle();
         }
 
-        BeginDrawing();
-        EndDrawing();
+        if (Window::isKeyPressed(KEY_V)) {
+            Visualize::visualizeStyle(Vector::getVector());
+        }
+
+        Window::beginDrawing();
+        Window::endDrawing();
     }
     return EXIT_SUCCESS;
 }

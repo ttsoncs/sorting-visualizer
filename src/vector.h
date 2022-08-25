@@ -82,11 +82,9 @@ class Vector {
 
     static auto getVector() { return Vector::v_; }
 
-    static auto getVectorSize() { return Vector::v_size_; }
-
     static auto incrementVectorSize() {
         if (Vector::v_size_ < 480) {
-            Vector::v_size_ += 5;
+            Vector::v_size_ += 20;
         }
         Vector::generate();
         Vector::randomShuffle(false);
@@ -95,8 +93,8 @@ class Vector {
     }
 
     static auto decrementVectorSize() {
-        if (Vector::v_size_ > 10) {
-            Vector::v_size_ -= 5;
+        if (Vector::v_size_ > 20) {
+            Vector::v_size_ -= 20;
         }
         Vector::generate();
         Vector::randomShuffle(false);

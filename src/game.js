@@ -98,6 +98,14 @@ Module.expectedDataFileDownloads++;
     if (!check) throw msg + new Error().stack;
    }
    Module["FS_createPath"]("/", "SortAlgorithms", true, true);
+   Module["FS_createPath"]("/SortAlgorithms", "Hybrid", true, true);
+   Module["FS_createPath"]("/SortAlgorithms", "Insert", true, true);
+   Module["FS_createPath"]("/SortAlgorithms", "Concurrent", true, true);
+   Module["FS_createPath"]("/SortAlgorithms", "Distribute", true, true);
+   Module["FS_createPath"]("/SortAlgorithms", "Merge", true, true);
+   Module["FS_createPath"]("/SortAlgorithms", "Select", true, true);
+   Module["FS_createPath"]("/SortAlgorithms", "Exchange", true, true);
+   Module["FS_createPath"]("/SortAlgorithms", "Misc", true, true);
    function DataRequest(start, end, audio) {
     this.start = start;
     this.end = end;
@@ -158,87 +166,91 @@ Module.expectedDataFileDownloads++;
  };
  loadPackage({
   "files": [ {
-   "filename": "/SortAlgorithms/timSort.h",
+   "filename": "/SortAlgorithms/Hybrid/timSort.h",
    "start": 0,
-   "end": 2566
+   "end": 2357
   }, {
-   "filename": "/SortAlgorithms/bitonicSort.h",
-   "start": 2566,
-   "end": 4476
+   "filename": "/SortAlgorithms/Insert/insertionSort.h",
+   "start": 2357,
+   "end": 3460
   }, {
-   "filename": "/SortAlgorithms/insertionSort.h",
-   "start": 4476,
-   "end": 5658
+   "filename": "/SortAlgorithms/Insert/shellSort.h",
+   "start": 3460,
+   "end": 4484
   }, {
-   "filename": "/SortAlgorithms/radixSort.h",
-   "start": 5658,
-   "end": 7985
+   "filename": "/SortAlgorithms/Insert/binaryInsertionSort.h",
+   "start": 4484,
+   "end": 6061
   }, {
-   "filename": "/SortAlgorithms/slowSort.h",
-   "start": 7985,
-   "end": 9168
+   "filename": "/SortAlgorithms/Concurrent/bitonicSort.h",
+   "start": 6061,
+   "end": 7701
   }, {
-   "filename": "/SortAlgorithms/evenOddSort.h",
-   "start": 9168,
-   "end": 10575
+   "filename": "/SortAlgorithms/Distribute/radixSort.h",
+   "start": 7701,
+   "end": 9753
   }, {
-   "filename": "/SortAlgorithms/quickSort.h",
-   "start": 10575,
-   "end": 12989
+   "filename": "/SortAlgorithms/Distribute/pigeonholeSort.h",
+   "start": 9753,
+   "end": 11452
   }, {
-   "filename": "/SortAlgorithms/heapSort.h",
-   "start": 12989,
-   "end": 14830
+   "filename": "/SortAlgorithms/Merge/mergeSort.h",
+   "start": 11452,
+   "end": 13182
   }, {
-   "filename": "/SortAlgorithms/cocktailShakerSort.h",
-   "start": 14830,
-   "end": 16418
+   "filename": "/SortAlgorithms/Select/heapSort.h",
+   "start": 13182,
+   "end": 14963
   }, {
-   "filename": "/SortAlgorithms/pancakeSort.h",
-   "start": 16418,
-   "end": 18107
+   "filename": "/SortAlgorithms/Select/selectionSort.h",
+   "start": 14963,
+   "end": 16071
   }, {
-   "filename": "/SortAlgorithms/gnomeSort.h",
-   "start": 18107,
-   "end": 19133
+   "filename": "/SortAlgorithms/Select/cycleSort.h",
+   "start": 16071,
+   "end": 17386
   }, {
-   "filename": "/SortAlgorithms/mergeSort.h",
-   "start": 19133,
-   "end": 21079
+   "filename": "/SortAlgorithms/Exchange/slowSort.h",
+   "start": 17386,
+   "end": 18361
   }, {
-   "filename": "/SortAlgorithms/combSort.h",
-   "start": 21079,
-   "end": 22248
+   "filename": "/SortAlgorithms/Exchange/oddEvenSort.h",
+   "start": 18361,
+   "end": 19687
   }, {
-   "filename": "/SortAlgorithms/countingSort.h",
-   "start": 22248,
-   "end": 23744
+   "filename": "/SortAlgorithms/Exchange/binaryGnomeSort.h",
+   "start": 19687,
+   "end": 21095
   }, {
-   "filename": "/SortAlgorithms/bubbleSort.h",
-   "start": 23744,
-   "end": 24776
+   "filename": "/SortAlgorithms/Exchange/quickSort.h",
+   "start": 21095,
+   "end": 23302
   }, {
-   "filename": "/SortAlgorithms/shellSort.h",
-   "start": 24776,
-   "end": 25852
+   "filename": "/SortAlgorithms/Exchange/cocktailShakerSort.h",
+   "start": 23302,
+   "end": 24805
   }, {
-   "filename": "/SortAlgorithms/selectionSort.h",
-   "start": 25852,
-   "end": 27040
+   "filename": "/SortAlgorithms/Exchange/gnomeSort.h",
+   "start": 24805,
+   "end": 25776
   }, {
-   "filename": "/SortAlgorithms/stoogeSort.h",
-   "start": 27040,
-   "end": 28362
+   "filename": "/SortAlgorithms/Exchange/combSort.h",
+   "start": 25776,
+   "end": 26933
   }, {
-   "filename": "/SortAlgorithms/binaryInsertionSort.h",
-   "start": 28362,
-   "end": 30377
+   "filename": "/SortAlgorithms/Exchange/bubbleSort.h",
+   "start": 26933,
+   "end": 27866
   }, {
-   "filename": "/SortAlgorithms/cycleSort.h",
-   "start": 30377,
-   "end": 31744
+   "filename": "/SortAlgorithms/Exchange/stoogeSort.h",
+   "start": 27866,
+   "end": 28961
+  }, {
+   "filename": "/SortAlgorithms/Misc/pancakeSort.h",
+   "start": 28961,
+   "end": 30548
   } ],
-  "remote_package_size": 31744
+  "remote_package_size": 30548
  });
 })();
 

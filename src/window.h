@@ -45,6 +45,8 @@ class Window {
 
     [[nodiscard]] static auto isKeyDown(int key) -> bool { return IsKeyDown(key); }
 
+    [[nodiscard]] static auto isKeyPressed(int key) -> bool { return IsKeyPressed(key); }
+
   private:
     inline static auto fps{60};
 };

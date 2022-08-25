@@ -1,12 +1,25 @@
 #ifndef TIM_SORT_H
 #define TIM_SORT_H
 
-#include "../sortStrategy.h"
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
 class TimSort : public SortStrategy {
+  public:
+    TimSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Tim Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        timSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Tim Sort");
+    }
+
   private:
-    void timSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                 int start, int end) {
+    auto timSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
         if (end - start < 15) {
             insertionSort(v, start, end);
             return;
@@ -19,8 +32,7 @@ class TimSort : public SortStrategy {
         }
     }
 
-    void insertionSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                       int start, int end) {
+    auto insertionSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
         for (auto i{start + 1}; i != end + 1; ++i) {
             auto [barHeight, color] = v[i];
             auto j{i};
@@ -34,8 +46,7 @@ class TimSort : public SortStrategy {
         }
     }
 
-    void merge(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start,
-               int mid, int end) {
+    auto merge(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int mid, int end) -> void {
         std::vector<std::pair<int, std::pair<float, Color>>> temp(end - start + 1);
         auto i{start};
         auto j{mid + 1};
@@ -60,40 +71,147 @@ class TimSort : public SortStrategy {
             v[start + i] = temp[i];
         }
     }
+};
 
+#endif#ifndef INSERTION_SORT_H
+#define INSERTION_SORT_H
+
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
+
+class InsertionSort : public SortStrategy {
   public:
-    explicit TimSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Tim Sort");
+    InsertionSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Insertion Sort");
     }
 
-    ~TimSort() noexcept override = default;
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        insertionSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Insertion Sort");
+    }
 
-    TimSort(const TimSort &other) = default;
+  private:
+    auto insertionSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        for (auto i{start + 1}; i != end + 1; ++i) {
+            auto [barHeight, color] = v[i];
+            auto j{i};
+            while (j > 0 && v[j - 1].first > barHeight) {
+                Visualize::visualizeTraverse(v, j - 1, j, "Insertion Sort");
+                v[j] = v[j - 1];
+                --j;
+            }
+            Visualize::visualizeTraverse(v, j, i, "Insertion Sort");
+            v[j] = std::make_pair(barHeight, color);
+        }
+    }
+};
 
-    TimSort &operator=(const TimSort &other) = default;
+#endif#ifndef SHELL_SORT_H
+#define SHELL_SORT_H
 
-    TimSort(TimSort &&other) noexcept = default;
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
-    TimSort &operator=(TimSort &&other) noexcept = default;
+class ShellSort : public SortStrategy {
+  public:
+    ShellSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Shell Sort");
+    }
 
-    void sort() override {
-        auto v{vector_.getVector()};
-        timSort(v, 0, v.size() - 1);
-        Visualize::visualizeEnding(v, "Tim Sort");
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        shellSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Shell Sort");
+    }
+
+  private:
+    auto shellSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        for (auto gap{end + 1 / 2}; gap != start; gap /= 2) {
+            for (auto i{gap}; i != end + 1; ++i) {
+                auto j{i};
+                while (j >= gap && v[j].first < v[j - gap].first) {
+                    Visualize::visualizeTraverse(v, j, j - gap, "Shell Sort");
+                    std::swap(v[j], v[j - gap]);
+                    j -= gap;
+                }
+            }
+        }
+    }
+};
+
+#endif#ifndef BINARY_INSERTION_SORT_H
+#define BINARY_INSERTION_SORT_H
+
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
+
+class BinaryInsertionSort : public SortStrategy {
+  public:
+    BinaryInsertionSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Binary Insertion Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        binaryInsertionSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Binary Insertion Sort");
+    }
+
+  private:
+    auto binaryInsertionSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        for (auto i{start + 1}; i != end + 1; ++i) {
+            auto key{v[i]};
+            auto low{start};
+            auto high{i - 1};
+            while (low <= high) {
+                auto mid{(low + high) / 2};
+                if (v[mid].first < key.first) {
+                    Visualize::visualizeTraverse(v, low, mid + 1, "Binary Insertion Sort");
+                    low = mid + 1;
+                } else {
+                    Visualize::visualizeTraverse(v, high, mid - 1, "Binary Insertion Sort");
+                    high = mid - 1;
+                }
+            }
+            for (auto j{i - 1}; j != low - 1; --j) {
+                Visualize::visualizeTraverse(v, j + 1, j, "Binary Insertion Sort");
+                v[j + 1] = v[j];
+            }
+            Visualize::visualizeTraverse(v, low, i, "Binary Insertion Sort");
+            v[low] = key;
+        }
     }
 };
 
 #endif#ifndef BITONIC_SORT_H
 #define BITONIC_SORT_H
 
-#include "../sortStrategy.h"
-#include "../vector.h"
-#include "../visualize.h"
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
 class BitonicSort : public SortStrategy {
+  public:
+    BitonicSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Bitonic Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        bitonicSort(v, 0, v.size(), true);
+        Visualize::visualizeEnding(v, "Bitonic Sort");
+    }
+
   private:
-    void bitonicSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                     int start, int size, bool ascending) {
+    auto bitonicSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int size, bool ascending) -> void {
         if (size > 1) {
             auto k{size / 2};
             bitonicSort(v, start, k, !ascending);
@@ -102,8 +220,7 @@ class BitonicSort : public SortStrategy {
         }
     };
 
-    void bitonicMerge(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                      int start, int size, bool ascending) {
+    auto bitonicMerge(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int size, bool ascending) -> void {
         if (size > 1) {
             auto k{greatestPowerOfTwoLessThan(size)};
             for (auto i{start}; i != start + size - k; ++i) {
@@ -124,77 +241,30 @@ class BitonicSort : public SortStrategy {
         }
         return k / 2;
     }
-
-  public:
-    BitonicSort() {
-        Visualize::visualizeVector(Vector::getVector(), "Bitonic Sort");
-    }
-
-    ~BitonicSort() noexcept override = default;
-
-    BitonicSort(const BitonicSort &other) = default;
-
-    BitonicSort &operator=(const BitonicSort &other) = default;
-
-    BitonicSort(BitonicSort &&other) noexcept = default;
-
-    BitonicSort &operator=(BitonicSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{Vector::getVector()};
-        bitonicSort(v, 0, v.size(), true);
-        Visualize::visualizeEnding(v, "Bitonic Sort");
-    }
-};
-
-#endif#ifndef INSERTION_SORT_H
-#define INSERTION_SORT_H
-
-#include "../sortStrategy.h"
-
-class InsertionSort : public SortStrategy {
-  public:
-    explicit InsertionSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Insertion Sort");
-    }
-
-    ~InsertionSort() noexcept override = default;
-
-    InsertionSort(const InsertionSort &other) = default;
-
-    InsertionSort &operator=(const InsertionSort &other) = default;
-
-    InsertionSort(InsertionSort &&other) noexcept = default;
-
-    InsertionSort &operator=(InsertionSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        auto size{v.size()};
-        for (auto i{1}; i != size; ++i) {
-            auto [barHeight, color] = v[i];
-            auto j{i};
-            while (j > 0 && v[j - 1].first > barHeight) {
-                Visualize::visualizeTraverse(v, j - 1, j, "Insertion Sort");
-                v[j] = v[j - 1];
-                --j;
-            }
-            Visualize::visualizeTraverse(v, j, i, "Insertion Sort");
-            v[j] = std::make_pair(barHeight, color);
-        }
-        Visualize::visualizeEnding(v, "Insertion Sort");
-    }
 };
 
 #endif#ifndef RADIX_SORT_H
 #define RADIX_SORT_H
 
-#include "../sortStrategy.h"
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
 class RadixSort : public SortStrategy {
+  public:
+    RadixSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Radix Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        radixSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Radix Sort");
+    }
+
   private:
-    void radixSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                   int start, int end) {
+    auto radixSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
         if (start < end) {
             auto max{v[start].first};
             auto j{start};
@@ -202,20 +272,19 @@ class RadixSort : public SortStrategy {
                 if (v[i].first > max) {
                     Visualize::visualizeTraverse(v, i, j, "Radix Sort");
                     max = v[i].first;
-                    j = i;
+                    j   = i;
                 }
             }
             auto exp{1};
             while (max / exp > 0) {
-                countSort(v, start, end, exp);
+                countingSort(v, start, end, exp);
                 exp *= 10;
             }
         }
     }
-    void countSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                   int start, int end, int exp) {
-        std::vector<std::pair<int, std::pair<float, Color>>> temp(end - start +
-                                                                  1);
+
+    auto countingSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end, int exp) -> void {
+        std::vector<std::pair<int, std::pair<float, Color>>> temp(end - start + 1);
         std::vector<int> count(10);
         for (auto i{start}; i != end + 1; ++i) {
             ++count[(v[i].first / exp) % 10];
@@ -235,126 +304,395 @@ class RadixSort : public SortStrategy {
             v[i] = temp[i - start];
         }
     }
+};
+#endif#ifndef PIGEONHOLE_SORT_H
+#define PIGEONHOLE_SORT_H
 
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
+
+class PigeonholeSort : public SortStrategy {
   public:
-    explicit RadixSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Radix Sort");
+    PigeonholeSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Pigeonhole Sort");
     }
 
-    ~RadixSort() noexcept override = default;
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        countingSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Pigeonhole Sort");
+    }
 
-    RadixSort(const RadixSort &other) = default;
-
-    RadixSort &operator=(const RadixSort &other) = default;
-
-    RadixSort(RadixSort &&other) noexcept = default;
-
-    RadixSort &operator=(RadixSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        radixSort(v, 0, v.size() - 1);
-        Visualize::visualizeEnding(v, "Radix Sort");
+  private:
+    auto countingSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        auto min{v[start].first};
+        auto max{v[start].first};
+        for (auto i{start + 1}; i != end + 1; ++i) {
+            if (v[i].first < min) {
+                min = v[i].first;
+            }
+            if (v[i].first > max) {
+                max = v[i].first;
+            }
+        }
+        auto range{max - min + 1};
+        auto buckets{std::vector<std::vector<std::pair<int, std::pair<float, Color>>>>(range)};
+        for (auto i{start}; i != end + 1; ++i) {
+            Visualize::visualizeTraverse(v, i, v[i].first - min, "Pigeonhole Sort");
+            auto index{v[i].first - min};
+            buckets[index].push_back(v[i]);
+        }
+        auto index{0};
+        for (auto i{0}; i != range; ++i) {
+            if (buckets[i].size() > 0) {
+                for (auto j{0}; j != buckets[i].size(); ++j) {
+                    Visualize::visualizeTraverse(v, index, buckets[i][j].first, "Pigeonhole Sort");
+                    v[index] = buckets[i][j];
+                    ++index;
+                }
+            }
+        }
     }
 };
+
+#endif#ifndef MERGE_SORT_H
+#define MERGE_SORT_H
+
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
+
+class MergeSort : public SortStrategy {
+  public:
+    MergeSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Merge Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        mergeSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Merge Sort");
+    }
+
+  private:
+    auto mergeSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end)-> void {
+        if (start < end) {
+            auto mid{(start + end) / 2};
+            mergeSort(v, start, mid);
+            mergeSort(v, mid + 1, end);
+            merge(v, start, mid, end);
+        }
+    }
+
+    auto merge(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int mid, int end)-> void {
+        std::vector<std::pair<int, std::pair<float, Color>>> temp(end - start + 1);
+        auto i{start};
+        auto j{mid + 1};
+        auto k{0};
+        while (i <= mid && j <= end) {
+            Visualize::visualizeTraverse(v, i, j, "Merge Sort");
+            if (v[i].first < v[j].first) {
+                temp[k++] = v[i++];
+            } else {
+                temp[k++] = v[j++];
+            }
+        }
+        while (i <= mid) {
+            Visualize::visualizeTraverse(v, i, j, "Merge Sort");
+            temp[k++] = v[i++];
+        }
+        while (j <= end) {
+            Visualize::visualizeTraverse(v, i, j, "Merge Sort");
+            temp[k++] = v[j++];
+        }
+        auto size{temp.size()};
+        for (auto i{0}; i != size; ++i) {
+            v[start + i] = temp[i];
+        }
+    }
+};
+
+#endif#ifndef HEAP_SORT_H
+#define HEAP_SORT_H
+
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
+
+class HeapSort : public SortStrategy {
+  public:
+    HeapSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Heap Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        heapSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Heap Sort");
+    }
+
+  private:
+    auto heapSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        buildMaxHeap(v);
+        for (auto i{end}; i != start; --i) {
+            Visualize::visualizeTraverse(v, 0, i, "Heap Sort");
+            std::swap(v[0], v[i]);
+            auto j{0};
+            while (j * 2 + 1 < i) {
+                auto index{j * 2 + 1};
+                if (index + 1 < i && v[index].first < v[index + 1].first) {
+                    ++index;
+                }
+                if (v[j].first >= v[index].first) {
+                    break;
+                }
+                Visualize::visualizeTraverse(v, j, index, "Heap Sort");
+                std::swap(v[j], v[index]);
+                j = index;
+            }
+        }
+    }
+    auto buildMaxHeap(std::vector<std::pair<int, std::pair<float, Color>>> &v) -> void {
+        auto size{v.size()};
+        for (auto i{1}; i != size; ++i) {
+            if (v[i].first > v[(i - 1) / 2].first) {
+                auto j{i};
+                while (v[j].first > v[(j - 1) / 2].first) {
+                    Visualize::visualizeTraverse(v, j, (j - 1) / 2, "Heap Sort");
+                    std::swap(v[j], v[(j - 1) / 2]);
+                    j = (j - 1) / 2;
+                }
+            }
+        }
+    }
+};
+
+#endif#ifndef SELECTION_SORT_H
+#define SELECTION_SORT_H
+
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
+
+class SelectionSort : public SortStrategy {
+  public:
+    SelectionSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Selection Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        selectionSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Selection Sort");
+    }
+
+  private:
+    auto selectionSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        for (auto i{start}; i != end + 1; ++i) {
+            auto minIndex{i};
+            for (auto j{i + 1}; j != end + 1; ++j) {
+                Visualize::visualizeTraverse(v, j, minIndex, "Selection Sort");
+                if (v[j].first < v[minIndex].first) {
+                    minIndex = j;
+                }
+            }
+            Visualize::visualizeTraverse(v, i, minIndex, "Selection Sort");
+            std::swap(v[i], v[minIndex]);
+        }
+    }
+};
+
+#endif#ifndef CYCLE_SORT_H
+#define CYCLE_SORT_H
+
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
+
+class CycleSort : public SortStrategy {
+  public:
+    CycleSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Cycle Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        cycleSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Cycle Sort");
+    }
+
+  private:
+    auto cycleSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        auto rank{0};
+        for (auto cycleStart{start}; cycleStart != end + 1; ++cycleStart) {
+            do {
+                Visualize::visualizeTraverse(v, rank, cycleStart, "Cycle Sort");
+                rank = cycleStart;
+                for (auto i{cycleStart + 1}; i < end + 1; ++i) {
+                    if (v[i].first < v[cycleStart].first) {
+                        ++rank;
+                    }
+                }
+                if (rank == cycleStart) {
+                    break;
+                }
+                Visualize::visualizeTraverse(v, rank, cycleStart, "Cycle Sort");
+                std::swap(v[rank], v[cycleStart]);
+            } while (rank != cycleStart);
+        }
+    }
+};
+
 #endif#ifndef SLOW_SORT_H
 #define SLOW_SORT_H
 
-#include "../sortStrategy.h"
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
 class SlowSort : public SortStrategy {
-  private:
-    void slowSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                  int left, int right) {
-        if (left < right) {
-            auto mid{(left + right) / 2};
-            slowSort(v, left, mid);
-            slowSort(v, mid + 1, right);
-            Visualize::visualizeTraverse(v, mid, right, "Slow Sort");
-            if (v[mid].first > v[right].first) {
-                std::swap(v[mid], v[right]);
-            }
-            slowSort(v, left, right - 1);
-        }
-    }
-
   public:
-    explicit SlowSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Slow Sort");
+    SlowSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Slow Sort");
     }
 
-    ~SlowSort() noexcept override = default;
-
-    SlowSort(const SlowSort &other) = default;
-
-    SlowSort &operator=(const SlowSort &other) = default;
-
-    SlowSort(SlowSort &&other) noexcept = default;
-
-    SlowSort &operator=(SlowSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
         slowSort(v, 0, v.size() - 1);
         Visualize::visualizeEnding(v, "Slow Sort");
     }
+
+  private:
+    auto slowSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        if (start < end) {
+            auto mid{(start + end) / 2};
+            slowSort(v, start, mid);
+            slowSort(v, mid + 1, end);
+            Visualize::visualizeTraverse(v, mid, end, "Slow Sort");
+            if (v[mid].first > v[end].first) {
+                std::swap(v[mid], v[end]);
+            }
+            slowSort(v, start, end - 1);
+        }
+    }
 };
 
-#endif#ifndef EVEN_ODD_SORT_H
-#define EVEN_ODD_SORT_H
+#endif#ifndef ODD_EVEN_SORT_H
+#define ODD_EVEN_SORT_H
 
-#include "../sortStrategy.h"
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
-class EvenOddSort : public SortStrategy {
+class OddEvenSort : public SortStrategy {
   public:
-    explicit EvenOddSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Even Odd Sort");
+    OddEvenSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Odd Even Sort");
     }
 
-    ~EvenOddSort() noexcept override = default;
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        oddEvenSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Odd Even Sort");
+    }
 
-    EvenOddSort(const EvenOddSort &other) = default;
-
-    EvenOddSort &operator=(const EvenOddSort &other) = default;
-
-    EvenOddSort(EvenOddSort &&other) noexcept = default;
-
-    EvenOddSort &operator=(EvenOddSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        auto size{v.size()};
+  private:
+    auto oddEvenSort(std::vector<std::pair<int, std::pair<float,Color>>> &v, int start, int end) -> void {
         bool isSorted{false};
         while (!isSorted) {
             isSorted = true;
-            for (auto i{1}; i < size - 1; i = i + 2) {
-                Visualize::visualizeTraverse(v, i, i + 1, "Even Odd Sort");
+            for (auto i{start + 1}; i < end; i += 2) {
+                Visualize::visualizeTraverse(v, i, i + 1, "Odd Even Sort");
                 if (v[i].first > v[i + 1].first) {
                     std::swap(v[i], v[i + 1]);
                     isSorted = false;
                 }
             }
-            for (auto i{0}; i < size - 1; i = i + 2) {
-                Visualize::visualizeTraverse(v, i, i + 1, "Even Odd Sort");
+            for (auto i{start}; i < end; i += 2) {
+                Visualize::visualizeTraverse(v, i, i + 1, "Odd Even Sort");
                 if (v[i].first > v[i + 1].first) {
                     std::swap(v[i], v[i + 1]);
                     isSorted = false;
                 }
             }
         }
-        Visualize::visualizeEnding(v, "Even Odd Sort");
+    }
+};
+
+#endif#ifndef BINARY_GNOME_SORT
+#define BINARY_GNOME_SORT
+
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
+
+class BinaryGnomeSort : public SortStrategy {
+public:
+    BinaryGnomeSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Binary Gnome Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        binaryGnomeSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Binary Gnome Sort");
+    }
+
+  private:
+    auto binaryGnomeSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        for (auto i{start + 1}; i != end + 1; ++i) {
+            auto key{v[i]};
+            auto low{0};
+            auto high{i};
+            while (low < high) {
+                auto mid{(low + high) / 2};
+                if (v[mid].first < key.first) {
+                    Visualize::visualizeTraverse(v, low, mid + 1, "Binary Gnome Sort");
+                    low = mid + 1;
+                } else {
+                    Visualize::visualizeTraverse(v, mid, high, "Binary Gnome Sort");
+                    high = mid;
+                }
+            }
+            for (auto j{i}; j != low; --j) {
+                Visualize::visualizeTraverse(v, j, j - 1, "Binary Gnome Sort");
+                std::swap(v[j], v[j - 1]);
+            }
+        }
     }
 };
 
 #endif#ifndef QUICK_SORT_H
 #define QUICK_SORT_H
 
-#include "../sortStrategy.h"
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
 class QuickSort : public SortStrategy {
+  public:
+    QuickSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Quicksort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        quickSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Quicksort");
+    }
+
   private:
-    void quickSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                   int start, int end) {
+    auto quickSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
         if (start <= end) {
             auto i{start};
             auto j{end};
@@ -406,118 +744,35 @@ class QuickSort : public SortStrategy {
     //   std::swap(v[i + 1], v[end]);
     //   return i + 1;
     // }
-
-  public:
-    explicit QuickSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Quicksort");
-    }
-
-    ~QuickSort() noexcept override = default;
-
-    QuickSort(const QuickSort &other) = default;
-
-    QuickSort &operator=(const QuickSort &other) = default;
-
-    QuickSort(QuickSort &&other) noexcept = default;
-
-    QuickSort &operator=(QuickSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        quickSort(v, 0, v.size() - 1);
-        Visualize::visualizeEnding(v, "Quicksort");
-    }
-};
-
-#endif#ifndef HEAP_SORT_H
-#define HEAP_SORT_H
-
-#include "../sortStrategy.h"
-
-class HeapSort : public SortStrategy {
-  private:
-    void buildMaxHeap(std::vector<std::pair<int, std::pair<float, Color>>> &v) {
-        auto size{v.size()};
-        for (auto i{1}; i != size; ++i) {
-            if (v[i].first > v[(i - 1) / 2].first) {
-                auto j{i};
-                while (v[j].first > v[(j - 1) / 2].first) {
-                    Visualize::visualizeTraverse(v, j, (j - 1) / 2, "Heap Sort");
-                    std::swap(v[j], v[(j - 1) / 2]);
-                    j = (j - 1) / 2;
-                }
-            }
-        }
-    }
-
-  public:
-    explicit HeapSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Heap Sort");
-    }
-
-    ~HeapSort() noexcept override = default;
-
-    HeapSort(const HeapSort &other) = default;
-
-    HeapSort &operator=(const HeapSort &other) = default;
-
-    HeapSort(HeapSort &&other) noexcept = default;
-
-    HeapSort &operator=(HeapSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        auto size{v.size()};
-        buildMaxHeap(v);
-        for (auto i{size - 1}; i != 0; --i) {
-            Visualize::visualizeTraverse(v, 0, i, "Heap Sort");
-            std::swap(v[0], v[i]);
-            auto j{0};
-            while (j * 2 + 1 < i) {
-                auto index{j * 2 + 1};
-                if (index + 1 < i && v[index].first < v[index + 1].first) {
-                    ++index;
-                }
-                if (v[j].first >= v[index].first) {
-                    break;
-                }
-                Visualize::visualizeTraverse(v, j, index, "Heap Sort");
-                std::swap(v[j], v[index]);
-                j = index;
-            }
-        }
-        Visualize::visualizeEnding(v, "Heap Sort");
-    }
 };
 
 #endif#ifndef COCKTAIL_SORT_H
 #define COCKTAIL_SORT_H
 
-#include "../sortStrategy.h"
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
 class CocktailShakerSort : public SortStrategy {
   public:
-    explicit CocktailShakerSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Cocktail Shaker Sort");
+    CocktailShakerSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Cocktail Shaker Sort");
     }
 
-    ~CocktailShakerSort() noexcept override = default;
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        cocktailShakerSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Cocktail Shaker Sort");
+    }
 
-    CocktailShakerSort(const CocktailShakerSort &other) = default;
-
-    CocktailShakerSort &operator=(const CocktailShakerSort &other) = default;
-
-    CocktailShakerSort(CocktailShakerSort &&other) noexcept = default;
-
-    CocktailShakerSort &operator=(CocktailShakerSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        auto size{v.size()};
+  private:
+    auto cocktailShakerSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        auto size{end - start + 1};
         bool swapped{true};
         while (swapped) {
             swapped = false;
-            for (auto i{0}; i != size - 1; ++i) {
+            for (auto i{start}; i != size - 1; ++i) {
                 Visualize::visualizeTraverse(v, i, i + 1, "Cocktail Shaker Sort");
                 if (v[i].first > v[i + 1].first) {
                     std::swap(v[i], v[i + 1]);
@@ -536,19 +791,187 @@ class CocktailShakerSort : public SortStrategy {
                 }
             }
         }
-        Visualize::visualizeEnding(v, "Cocktail Shaker Sort");
+    }
+};
+
+#endif#ifndef GNOME_SORT_H
+#define GNOME_SORT_H
+
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
+
+class GnomeSort : public SortStrategy {
+  public:
+    GnomeSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Gnome Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        gnomeSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Gnome Sort");
+    }
+
+  private:
+    auto gnomeSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        auto index{start};
+        while (index != end + 1) {
+            Visualize::visualizeTraverse(v, index, index - 1, "Gnome Sort");
+            if (index == 0 || v[index].first >= v[index - 1].first) {
+                ++index;
+            } else {
+                std::swap(v[index], v[index - 1]);
+                --index;
+            }
+        }
+    }
+};
+
+#endif#ifndef COMB_SORT_H
+#define COMB_SORT_H
+
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
+
+class CombSort : public SortStrategy {
+  public:
+    CombSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Comb Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        combSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Comb Sort");
+    }
+
+  private:
+    auto combSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        auto gap{end - start};
+        auto size{end - start + 1};
+        bool swapped{true};
+        while (gap > 1 || swapped) {
+            if (gap > 1) {
+                gap = gap * 10 / 13;
+            }
+            swapped = false;
+            for (auto i{start}; i != size - gap; ++i) {
+                Visualize::visualizeTraverse(v, i, i + gap, "Comb Sort");
+                if (v[i].first > v[i + gap].first) {
+                    std::swap(v[i], v[i + gap]);
+                    swapped = true;
+                }
+            }
+        }
+    }
+};
+
+#endif#ifndef BUBBLE_SORT_H
+#define BUBBLE_SORT_H
+
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
+
+class BubbleSort : public SortStrategy {
+  public:
+    BubbleSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Bubble Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        bubbleSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Bubble Sort");
+    }
+
+  private:
+    auto bubbleSort(std::vector<std::pair<int, std::pair<float,Color>>> &v, int start, int end) -> void {
+        for (auto i{start}; i < end; ++i) {
+            for (auto j{start}; j < end - i; ++j) {
+                Visualize::visualizeTraverse(v, j, j + 1, "Bubble Sort");
+                if (v[j].first > v[j + 1].first) {
+                    std::swap(v[j], v[j + 1]);
+                }
+            }
+        }
+    }
+};
+
+#endif#ifndef STOOGE_SORT_H
+#define STOOGE_SORT_H
+
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
+
+class StoogeSort : public SortStrategy {
+  public:
+    StoogeSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Stooge Sort");
+    }
+
+    auto sort() -> void override {
+        auto v{Vector::getVector()};
+        stoogeSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Stooge Sort");
+    }
+
+  private:
+    auto stoogeSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        if (start <= end) {
+            if (v[start].first > v[end].first) {
+                Visualize::visualizeTraverse(v, start, end, "Stooge Sort");
+                std::swap(v[start], v[end]);
+            }
+            if (end - start + 1 > 2) {
+                auto mid{(end - start + 1) / 3};
+                stoogeSort(v, start, end - mid);
+                stoogeSort(v, start + mid, end);
+                stoogeSort(v, start, end - mid);
+            }
+        }
     }
 };
 
 #endif#ifndef PANCAKE_SORT_H
 #define PANCAKE_SORT_H
 
-#include "../sortStrategy.h"
+#include "../../sortStrategy.h"
+#include "../../vector.h"
+#include "../../visualize.h"
 
 class PancakeSort : public SortStrategy {
+  public:
+    PancakeSort() {
+        Visualize::visualizeVector(Vector::getVector());
+        Visualize::visualizeTitle("Pancake Sort");
+    }
+
+    auto sort()-> void override {
+        auto v{Vector::getVector()};
+        pancakeSort(v, 0, v.size() - 1);
+        Visualize::visualizeEnding(v, "Pancake Sort");
+    }
+
   private:
-    int maxIndex(std::vector<std::pair<int, std::pair<float, Color>>> const &v,
-                 int size) {
+    auto pancakeSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        for (auto i{end + 1}; i != start + 1; --i) {
+            auto location{maxIndex(v, i)};
+            if (location != i - 1) {
+                reverseElement(v, location);
+                reverseElement(v, i - 1);
+            }
+        }
+    }
+
+    auto maxIndex(std::vector<std::pair<int, std::pair<float, Color>>> const &v, int size) -> int {
         auto maxIndex{0};
         for (auto i{0}; i != size; ++i) {
             Visualize::visualizeTraverse(v, maxIndex, i, "Pancake Sort");
@@ -559,8 +982,7 @@ class PancakeSort : public SortStrategy {
         return maxIndex;
     }
 
-    void reverseElement(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                        int index) {
+    auto reverseElement(std::vector<std::pair<int, std::pair<float, Color>>> &v, int index) -> void {
         auto start{0};
         while (start < index) {
             Visualize::visualizeTraverse(v, start, index, "Pancake Sort");
@@ -568,491 +990,6 @@ class PancakeSort : public SortStrategy {
             ++start;
             --index;
         }
-    }
-
-  public:
-    explicit PancakeSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Pancake Sort");
-    }
-
-    ~PancakeSort() noexcept override = default;
-
-    PancakeSort(const PancakeSort &other) = default;
-
-    PancakeSort &operator=(const PancakeSort &other) = default;
-
-    PancakeSort(PancakeSort &&other) noexcept = default;
-
-    PancakeSort &operator=(PancakeSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        auto size{v.size()};
-        for (auto i{size}; i != 1; --i) {
-            auto location{maxIndex(v, i)};
-            if (location != i - 1) {
-                reverseElement(v, location);
-                reverseElement(v, i - 1);
-            }
-        }
-        Visualize::visualizeEnding(v, "Pancake Sort");
-    }
-};
-
-#endif#ifndef GNOME_SORT_H
-#define GNOME_SORT_H
-
-#include "../sortStrategy.h"
-
-class GnomeSort : public SortStrategy {
-  public:
-    explicit GnomeSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Gnome Sort");
-    }
-
-    ~GnomeSort() noexcept override = default;
-
-    GnomeSort(const GnomeSort &other) = default;
-
-    GnomeSort &operator=(const GnomeSort &other) = default;
-
-    GnomeSort(GnomeSort &&other) noexcept = default;
-
-    GnomeSort &operator=(GnomeSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        auto size{v.size()};
-        auto index{0};
-        while (index != size) {
-            Visualize::visualizeTraverse(v, index, index - 1, "Gnome Sort");
-            if (index == 0 || v[index].first >= v[index - 1].first) {
-                ++index;
-            } else {
-                std::swap(v[index], v[index - 1]);
-                --index;
-            }
-        }
-        Visualize::visualizeEnding(v, "Gnome Sort");
-    }
-};
-
-#endif#ifndef MERGE_SORT_H
-#define MERGE_SORT_H
-
-#include "../sortStrategy.h"
-
-class MergeSort : public SortStrategy {
-  private:
-    void mergeSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                   int start, int end) {
-        if (start < end) {
-            auto mid{(start + end) / 2};
-            mergeSort(v, start, mid);
-            mergeSort(v, mid + 1, end);
-            merge(v, start, mid, end);
-        }
-    }
-
-    void merge(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start,
-               int mid, int end) {
-        std::vector<std::pair<int, std::pair<float, Color>>> temp(end - start + 1);
-        auto i{start};
-        auto j{mid + 1};
-        auto k{0};
-        while (i <= mid && j <= end) {
-            Visualize::visualizeTraverse(v, i, j, "Merge Sort");
-            if (v[i].first < v[j].first) {
-                temp[k++] = v[i++];
-            } else {
-                temp[k++] = v[j++];
-            }
-        }
-        while (i <= mid) {
-            Visualize::visualizeTraverse(v, i, j, "Merge Sort");
-            temp[k++] = v[i++];
-        }
-        while (j <= end) {
-            Visualize::visualizeTraverse(v, i, j, "Merge Sort");
-            temp[k++] = v[j++];
-        }
-        auto size{temp.size()};
-        for (auto i{0}; i != size; ++i) {
-            v[start + i] = temp[i];
-        }
-    }
-
-  public:
-    explicit MergeSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Merge Sort");
-    }
-
-    ~MergeSort() noexcept override = default;
-
-    MergeSort(const MergeSort &other) = default;
-
-    MergeSort &operator=(const MergeSort &other) = default;
-
-    MergeSort(MergeSort &&other) noexcept = default;
-
-    MergeSort &operator=(MergeSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        mergeSort(v, 0, v.size() - 1);
-        Visualize::visualizeEnding(v, "Merge Sort");
-    }
-};
-
-#endif#ifndef COMB_SORT_H
-#define COMB_SORT_H
-
-#include "../sortStrategy.h"
-
-class CombSort : public SortStrategy {
-  public:
-    explicit CombSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Comb Sort");
-    }
-
-    ~CombSort() noexcept override = default;
-
-    CombSort(const CombSort &other) = default;
-
-    CombSort &operator=(const CombSort &other) = default;
-
-    CombSort(CombSort &&other) noexcept = default;
-
-    CombSort &operator=(CombSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        auto gap{v.size()};
-        auto size{v.size()};
-        bool swapped{true};
-        while (gap > 1 || swapped) {
-            if (gap > 1) {
-                gap = gap * 10 / 13;
-            }
-            swapped = false;
-            for (auto i{0}; i != size - gap; ++i) {
-                Visualize::visualizeTraverse(v, i, i + gap, "Comb Sort");
-                if (v[i].first > v[i + gap].first) {
-                    std::swap(v[i], v[i + gap]);
-                    swapped = true;
-                }
-            }
-        }
-        Visualize::visualizeEnding(v, "Comb Sort");
-    }
-};
-
-#endif#ifndef COUNTING_SORT_H
-#define COUNTING_SORT_H
-
-#include "../sortStrategy.h"
-
-class CountingSort : public SortStrategy {
-  private:
-    void countingSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                      int start, int end) {
-        std::vector<int> count(end - start + 1, 0);
-        for (auto &i : v) {
-            ++count[i.first - start];
-        }
-        auto countSize{count.size()};
-        for (auto i{1}; i != countSize; ++i) {
-            Visualize::visualizeTraverse(v, i, i - 1, "Counting Sort");
-            count[i] += count[i - 1];
-        }
-        auto size{v.size()};
-        std::vector<std::pair<int, std::pair<float, Color>>> sorted(size);
-        for (auto i{size - 1}; i != -1; --i) {
-            auto j{count[v[i].first - start]};
-            Visualize::visualizeTraverse(v, j - 1, i, "Counting Sort");
-            sorted[j - 1] = v[i];
-            --j;
-        }
-        v = std::move(sorted);
-    }
-
-  public:
-    explicit CountingSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Counting Sort");
-    }
-    ~CountingSort() noexcept override = default;
-    CountingSort(const CountingSort &other) = default;
-    CountingSort &operator=(const CountingSort &other) = default;
-    CountingSort(CountingSort &&other) noexcept = default;
-    void sort() override {
-        auto v{vector_.getVector()};
-        countingSort(v, 0, v.size() - 1);
-        Visualize::visualizeEnding(v, "Counting Sort");
-    }
-};
-
-#endif#ifndef BUBBLE_SORT_H
-#define BUBBLE_SORT_H
-
-#include "../sortStrategy.h"
-#include "../vector.h"
-#include "../visualize.h"
-
-class BubbleSort : public SortStrategy {
-  public:
-    BubbleSort() {
-        Visualize::visualizeVector(Vector::getVector(), "Bubble Sort");
-    }
-
-    ~BubbleSort() noexcept override = default;
-
-    BubbleSort(const BubbleSort &other) = default;
-
-    BubbleSort &operator=(const BubbleSort &other) = default;
-
-    BubbleSort(BubbleSort &&other) noexcept = default;
-
-    BubbleSort &operator=(BubbleSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{Vector::getVector()};
-        auto size{v.size()};
-        for (auto i{0}; i != size; ++i) {
-            for (auto j{0}; j != size - i - 1; ++j) {
-                Visualize::visualizeTraverse(v, j, j + 1, "Bubble Sort");
-                if (v[j].first > v[j + 1].first) {
-                    std::swap(v[j], v[j + 1]);
-                }
-            }
-        }
-        Visualize::visualizeEnding(v, "Bubble Sort");
-    }
-};
-
-#endif#ifndef SHELL_SORT_H
-#define SHELL_SORT_H
-
-#include "../sortStrategy.h"
-
-class ShellSort : public SortStrategy {
-  public:
-    explicit ShellSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Shell Sort");
-    }
-
-    ~ShellSort() noexcept override = default;
-
-    ShellSort(const ShellSort &other) = default;
-
-    ShellSort &operator=(const ShellSort &other) = default;
-
-    ShellSort(ShellSort &&other) noexcept = default;
-
-    ShellSort &operator=(ShellSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        auto size{v.size()};
-        for (auto gap{size / 2}; gap != 0; gap /= 2) {
-            for (auto i{gap}; i != size; ++i) {
-                auto j{i};
-                while (j >= gap && v[j].first < v[j - gap].first) {
-                    Visualize::visualizeTraverse(v, j, j - gap, "Shell Sort");
-                    std::swap(v[j], v[j - gap]);
-                    j -= gap;
-                }
-            }
-        }
-        Visualize::visualizeEnding(v, "Shell Sort");
-    }
-};
-
-#endif#ifndef SELECTION_SORT_H
-#define SELECTION_SORT_H
-
-#include "../sortStrategy.h"
-
-class SelectionSort : public SortStrategy {
-  public:
-    explicit SelectionSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Selection Sort");
-    }
-
-    ~SelectionSort() noexcept override = default;
-
-    SelectionSort(const SelectionSort &other) = default;
-
-    SelectionSort &operator=(const SelectionSort &other) = default;
-
-    SelectionSort(SelectionSort &&other) noexcept = default;
-
-    SelectionSort &operator=(SelectionSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        auto size{v.size()};
-        for (auto i{0}; i != size; ++i) {
-            auto minIndex{i};
-            for (auto j{i + 1}; j != size; ++j) {
-                Visualize::visualizeTraverse(v, j, minIndex, "Selection Sort");
-                if (v[j].first < v[minIndex].first) {
-                    minIndex = j;
-                }
-            }
-            Visualize::visualizeTraverse(v, i, minIndex, "Selection Sort");
-            std::swap(v[i], v[minIndex]);
-        }
-        Visualize::visualizeEnding(v, "Selection Sort");
-    }
-};
-
-#endif#ifndef STOOGE_SORT_H
-#define STOOGE_SORT_H
-
-#include "../sortStrategy.h"
-
-class StoogeSort : public SortStrategy {
-  private:
-    void stoogeSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                    int left, int right) {
-        if (left <= right) {
-            if (v[left].first > v[right].first) {
-                Visualize::visualizeTraverse(v, left, right, "Stooge Sort");
-                std::swap(v[left], v[right]);
-            }
-            if (right - left + 1 > 2) {
-                auto mid{(right - left + 1) / 3};
-                stoogeSort(v, left, right - mid);
-                stoogeSort(v, left + mid, right);
-                stoogeSort(v, left, right - mid);
-            }
-        }
-    }
-
-  public:
-    explicit StoogeSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Stooge Sort");
-    }
-
-    ~StoogeSort() noexcept override = default;
-
-    StoogeSort(const StoogeSort &other) = default;
-
-    StoogeSort &operator=(const StoogeSort &other) = default;
-
-    StoogeSort(StoogeSort &&other) noexcept = default;
-
-    StoogeSort &operator=(StoogeSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        stoogeSort(v, 0, v.size() - 1);
-        Visualize::visualizeEnding(v, "Stooge Sort");
-    }
-};
-
-#endif#ifndef BINARY_INSERTION_SORT_H
-#define BINARY_INSERTION_SORT_H
-
-#include "../sortStrategy.h"
-#include "../vector.h"
-#include "../visualize.h"
-
-class BinaryInsertionSort : public SortStrategy {
-  private:
-    void
-    binaryInsertionSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-                        int start, int end) {
-        for (auto i{start + 1}; i != end + 1; ++i) {
-            auto key{v[i]};
-            auto low{start};
-            auto high{i - 1};
-            while (low <= high) {
-                auto mid{(low + high) / 2};
-                if (v[mid].first < key.first) {
-                    Visualize::visualizeTraverse(v, low, mid + 1,
-                                                 "Binary Insertion Sort");
-                    low = mid + 1;
-                } else {
-                    Visualize::visualizeTraverse(v, high, mid - 1,
-                                                 "Binary Insertion Sort");
-                    high = mid - 1;
-                }
-            }
-            for (auto j{i - 1}; j != low - 1; --j) {
-                Visualize::visualizeTraverse(v, j + 1, j, "Binary Insertion Sort");
-                v[j + 1] = v[j];
-            }
-            Visualize::visualizeTraverse(v, low, i, "Binary Insertion Sort");
-            v[low] = key;
-        }
-    }
-
-  public:
-    BinaryInsertionSort() {
-        Visualize::visualizeVector(Vector::getVector(), "Binary Insertion Sort");
-    }
-
-    ~BinaryInsertionSort() noexcept override = default;
-
-    BinaryInsertionSort(const BinaryInsertionSort &other) = default;
-
-    BinaryInsertionSort &operator=(const BinaryInsertionSort &other) = default;
-
-    BinaryInsertionSort(BinaryInsertionSort &&other) noexcept = default;
-
-    BinaryInsertionSort &
-    operator=(BinaryInsertionSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{Vector::getVector()};
-        binaryInsertionSort(v, 0, v.size() - 1);
-        Visualize::visualizeEnding(v, "Binary Insertion Sort");
-    }
-};
-
-#endif#ifndef CYCLE_SORT_H
-#define CYCLE_SORT_H
-
-#include "../sortStrategy.h"
-
-class CycleSort : public SortStrategy {
-  public:
-    explicit CycleSort(int size) : SortStrategy(size) {
-        Visualize::visualizeSortTitle("Cycle Sort");
-    }
-
-    ~CycleSort() noexcept override = default;
-
-    CycleSort(const CycleSort &other) = default;
-
-    CycleSort &operator=(const CycleSort &other) = default;
-
-    CycleSort(CycleSort &&other) noexcept = default;
-
-    CycleSort &operator=(CycleSort &&other) noexcept = default;
-
-    void sort() override {
-        auto v{vector_.getVector()};
-        auto size{v.size()};
-        auto rank{0};
-        for (auto cycleStart{0}; cycleStart != size; ++cycleStart) {
-            do {
-                Visualize::visualizeTraverse(v, rank, cycleStart, "Cycle Sort");
-                rank = cycleStart;
-                for (auto i{cycleStart + 1}; i < size; ++i) {
-                    if (v[i].first < v[cycleStart].first) {
-                        ++rank;
-                    }
-                }
-                if (rank == cycleStart) {
-                    break;
-                }
-                Visualize::visualizeTraverse(v, rank, cycleStart, "Cycle Sort");
-                std::swap(v[rank], v[cycleStart]);
-            } while (rank != cycleStart);
-        }
-        Visualize::visualizeEnding(v, "Cycle Sort");
     }
 };
 
