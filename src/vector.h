@@ -1,11 +1,8 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-#include "../lib/raylib-4.2.0/src/raylib.h"
 #include "visualize.h"
 #include <algorithm>
-#include <random>
-#include <vector>
 
 class Vector {
   public:
@@ -14,11 +11,30 @@ class Vector {
         Vector::randomShuffle(false);
     }
 
-    static void generate() {
+    static auto changeColor() {
+        auto [r1, g1, b1, a1] = Visualize::getRandomColor();
+        auto [r2, g2, b2, a2] = Visualize::getRandomColor();
+        auto deltaRed{static_cast<float>(r2 - r1) / static_cast<float>(Vector::v_size_)};
+        auto deltaGreen{static_cast<float>(g2 - g1) / static_cast<float>(Vector::v_size_)};
+        auto deltaBlue{static_cast<float>(b2 - b1) / static_cast<float>(Vector::v_size_)};
+        for (auto i{0}; i != Vector::v_size_; ++i) {
+            auto it = std::find_if(Vector::v_.begin(), Vector::v_.end(),
+                                   [i](auto const &p) { return p.first == i; });
+            if (it != Vector::v_.end()) {
+                it->second.second.r = r1 + static_cast<int>(deltaRed * i);
+                it->second.second.g = g1 + static_cast<int>(deltaGreen * i);
+                it->second.second.b = b1 + static_cast<int>(deltaBlue * i);
+            }
+        }
+        Visualize::visualizeVector(Vector::v_);
+        Visualize::visualizeTitle("Color Changed");
+    }
+
+    static auto generate() -> void {
         Vector::v_.clear();
         Vector::v_.reserve(Vector::v_size_);
-        auto [r1, g1, b1, a1] = Vector::getRandomColor();
-        auto [r2, g2, b2, a2] = Vector::getRandomColor();
+        auto [r1, g1, b1, a1] = Visualize::getRandomColor();
+        auto [r2, g2, b2, a2] = Visualize::getRandomColor();
         auto deltaRed{static_cast<float>(r2 - r1) / static_cast<float>(Vector::v_size_)};
         auto deltaGreen{static_cast<float>(g2 - g1) / static_cast<float>(Vector::v_size_)};
         auto deltaBlue{static_cast<float>(b2 - b1) / static_cast<float>(Vector::v_size_)};
@@ -85,33 +101,36 @@ class Vector {
     static auto incrementVectorSize() {
         if (Vector::v_size_ < 480) {
             Vector::v_size_ += 20;
+            Vector::generate();
+            Vector::randomShuffle(false);
+            Visualize::visualizeVector(Vector::getVector());
+            auto title{"Vector Size: " + std::to_string(Vector::v_size_)};
+            Visualize::visualizeTitle(title);
+        } else {
+            Visualize::visualizeVector(Vector::getVector());
+            auto title{"Max Size: " + std::to_string(Vector::v_size_)};
+            Visualize::visualizeTitle(title);
         }
-        Vector::generate();
-        Vector::randomShuffle(false);
-        Visualize::visualizeVector(Vector::getVector());
-        Visualize::visualizeTitle("Increment Vector Size");
     }
 
     static auto decrementVectorSize() {
         if (Vector::v_size_ > 20) {
             Vector::v_size_ -= 20;
+            Vector::generate();
+            Vector::randomShuffle(false);
+            Visualize::visualizeVector(Vector::getVector());
+            auto title{"Vector Size: " + std::to_string(Vector::v_size_)};
+            Visualize::visualizeTitle(title);
+        } else {
+            Visualize::visualizeVector(Vector::getVector());
+            auto title{"Min Size: " + std::to_string(Vector::v_size_)};
+            Visualize::visualizeTitle(title);
         }
-        Vector::generate();
-        Vector::randomShuffle(false);
-        Visualize::visualizeVector(Vector::getVector());
-        Visualize::visualizeTitle("Decrement Vector Size");
     }
 
   private:
     inline static std::vector<std::pair<int, std::pair<float, Color>>> v_;
     inline static auto v_size_{120};
-
-    static Color getRandomColor() {
-        std::random_device rd;
-        std::mt19937 g(rd());
-        std::uniform_int_distribution<int> rgb(0, 255);
-        return {static_cast<unsigned char>(rgb(g)), static_cast<unsigned char>(rgb(g)), static_cast<unsigned char>(rgb(g)), 255};
-    }
 };
 
 #endif

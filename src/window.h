@@ -23,7 +23,7 @@ class Window {
 
     Window &operator=(Window &&other) noexcept = default;
 
-    static auto incrementFps() {
+    static auto incrementFps(bool isSorting = false) {
         if (Window::fps < 240) {
             Window::fps += 2;
             SetTargetFPS(Window::fps);
@@ -40,6 +40,10 @@ class Window {
     static auto beginDrawing() { BeginDrawing(); }
 
     static auto endDrawing() { EndDrawing(); }
+
+    static auto pause() { while(Window::isKeyPressed(KEY_SPACE)); }
+
+    [[nodiscard]] static auto getFps() { return Window::fps; }
 
     [[nodiscard]] static auto windowShouldClose() { return WindowShouldClose(); }
 

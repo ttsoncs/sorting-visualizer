@@ -3,14 +3,15 @@
 
 #include "../lib/raylib-4.2.0/src/raylib.h"
 #include "window.h"
+#include <random>
 #include <vector>
 
 class Visualize {
   private:
-    inline static bool style_ = false;
+    inline static bool style_ = true;
 
   public:
-    static auto visualizeVector(std::vector<std::pair<int, std::pair<float, Color>>> const &v = {}) {
+    static auto visualizeVector(std::vector<std::pair<int, std::pair<float, Color>>> const &v) {
         auto size{v.size()};
         auto barWidth{static_cast<float>(GetScreenWidth()) / static_cast<float>(size)};
         auto screenHeight{static_cast<float>(GetScreenHeight())};
@@ -30,7 +31,7 @@ class Visualize {
         }
     }
 
-    static auto visualizeBar(std::vector<std::pair<int, std::pair<float, Color>>> const &v = {}, int index = 0) {
+    static auto visualizeBar(std::vector<std::pair<int, std::pair<float, Color>>> const &v, int index = 0) {
         auto barWidth{static_cast<float>(GetScreenWidth()) / static_cast<float>(v.size())};
         auto [barHeight, color] = v[index].second;
         auto screenHeight{static_cast<float>(GetScreenHeight())};
@@ -47,7 +48,7 @@ class Visualize {
         DrawText(title.c_str(), 10, 10, GetScreenWidth() / 40, RAYWHITE);
     }
 
-    static void visualizeTraverse(std::vector<std::pair<int, std::pair<float, Color>>> const &v = {}, int firstBar = 0, int secondBar = 0,
+    static void visualizeTraverse(std::vector<std::pair<int, std::pair<float, Color>>> const &v, int firstBar = 0, int secondBar = 0,
                                   std::string const &title = {}) {
         Window::beginDrawing();
         Visualize::visualizeVector(v);
@@ -66,7 +67,7 @@ class Visualize {
         Window::endDrawing();
     }
 
-    static auto visualizeEnding(std::vector<std::pair<int, std::pair<float, Color>>> const &v = {}, std::string const &title = {}) {
+    static auto visualizeEnding(std::vector<std::pair<int, std::pair<float, Color>>> const &v, std::string const &title = {}) {
         auto size{v.size()};
         Window::beginDrawing();
         Visualize::visualizeVector(v);
@@ -99,7 +100,7 @@ class Visualize {
         Window::endDrawing();
     }
 
-    static auto visualizeStyle(std::vector<std::pair<int, std::pair<float, Color>>> const &v = {}) {
+    static auto visualizeStyle(std::vector<std::pair<int, std::pair<float, Color>>> const &v) {
         Visualize::style_ = !Visualize::style_;
         Visualize::visualizeVector(v);
         if (Visualize::style_) {
@@ -107,6 +108,13 @@ class Visualize {
         } else {
             Visualize::visualizeTitle("Bar Chart Style");
         }
+    }
+
+    static auto getRandomColor() -> Color {
+        std::random_device rd;
+        std::mt19937 g(rd());
+        std::uniform_int_distribution<int> rgb(0, 255);
+        return {static_cast<unsigned char>(rgb(g)), static_cast<unsigned char>(rgb(g)), static_cast<unsigned char>(rgb(g)), 255};
     }
 };
 

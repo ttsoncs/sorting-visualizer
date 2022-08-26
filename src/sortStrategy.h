@@ -3,7 +3,7 @@
 
 class SortStrategy {
   public:
-    explicit SortStrategy() {}
+    SortStrategy() {}
 
     virtual ~SortStrategy() noexcept = default;
 

@@ -129,10 +129,14 @@ int main() {
 
         if (Window::isKeyDown(KEY_LEFT)) {
             Window::decrementFps();
+            Visualize::visualizeVector(Vector::getVector());
+            Visualize::visualizeTitle("FPS: " + std::to_string(Window::getFps()));
         }
 
         if (Window::isKeyDown(KEY_RIGHT)) {
             Window::incrementFps();
+            Visualize::visualizeVector(Vector::getVector());
+            Visualize::visualizeTitle("FPS: " + std::to_string(Window::getFps()));
         }
 
         if (Window::isKeyPressed(KEY_Z)) {
@@ -149,6 +153,10 @@ int main() {
 
         if (Window::isKeyPressed(KEY_V)) {
             Visualize::visualizeStyle(Vector::getVector());
+        }
+
+        if (Window::isKeyPressed(KEY_B)) {
+            Vector::changeColor();
         }
 
         Window::beginDrawing();
