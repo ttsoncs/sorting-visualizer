@@ -3,6 +3,7 @@
 
 #include "../lib/raylib-4.2.0/src/raylib.h"
 #include <string>
+#include <iostream>
 
 class Window {
   public:
@@ -41,7 +42,18 @@ class Window {
 
     static auto endDrawing() { EndDrawing(); }
 
-    static auto pause() { while(Window::isKeyPressed(KEY_SPACE)); }
+    static auto pause() {
+        while (true) {
+            if (Window::isKeyDown(KEY_M)) {
+                break;
+            }
+            if (Window::isKeyPressed(KEY_ESCAPE)) {
+                break;
+            }
+            Window::beginDrawing();
+            Window::endDrawing();
+        }
+    }
 
     [[nodiscard]] static auto getFps() { return Window::fps; }
 

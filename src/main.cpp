@@ -1,6 +1,8 @@
 #include "SortAlgorithms/Concurrent/bitonicSort.h"
 #include "SortAlgorithms/Distribute/pigeonholeSort.h"
 #include "SortAlgorithms/Distribute/radixSort.h"
+#include "SortAlgorithms/Distribute/interpolationSort.h"
+#include "SortAlgorithms/Distribute/beadSort.h"
 #include "SortAlgorithms/Exchange/binaryGnomeSort.h"
 #include "SortAlgorithms/Exchange/bubbleSort.h"
 #include "SortAlgorithms/Exchange/cocktailShakerSort.h"
@@ -11,6 +13,7 @@
 #include "SortAlgorithms/Exchange/slowSort.h"
 #include "SortAlgorithms/Exchange/stoogeSort.h"
 #include "SortAlgorithms/Hybrid/timSort.h"
+#include "SortAlgorithms/Hybrid/introSort.h"
 #include "SortAlgorithms/Insert/binaryInsertionSort.h"
 #include "SortAlgorithms/Insert/insertionSort.h"
 #include "SortAlgorithms/Insert/shellSort.h"
@@ -109,6 +112,18 @@ int main() {
 
         if (Window::isKeyPressed(KEY_A)) {
             sortController.setSortStrategy(std::make_unique<BinaryGnomeSort>());
+        }
+
+        if (Window::isKeyPressed(KEY_S)) {
+            sortController.setSortStrategy(std::make_unique<InterpolationSort>());
+        }
+
+        if (Window::isKeyPressed(KEY_D)) {
+            sortController.setSortStrategy(std::make_unique<IntroSort>());
+        }
+
+        if (Window::isKeyPressed(KEY_F)) {
+            sortController.setSortStrategy(std::make_unique<BeadSort>());
         }
 
         if (Window::isKeyPressed(KEY_SPACE)) {

@@ -7,9 +7,6 @@
 #include <vector>
 
 class Visualize {
-  private:
-    inline static bool style_ = true;
-
   public:
     static auto visualizeVector(std::vector<std::pair<int, std::pair<float, Color>>> const &v) {
         auto size{v.size()};
@@ -51,19 +48,24 @@ class Visualize {
     static void visualizeTraverse(std::vector<std::pair<int, std::pair<float, Color>>> const &v, int firstBar = 0, int secondBar = 0,
                                   std::string const &title = {}) {
         Window::beginDrawing();
-        Visualize::visualizeVector(v);
-        Visualize::visualizeBar(v, firstBar);
-        Visualize::visualizeBar(v, secondBar);
-        Visualize::visualizeTitle(title);
         if (Window::isKeyDown(KEY_LEFT)) {
             Window::decrementFps();
         }
         if (Window::isKeyDown(KEY_RIGHT)) {
             Window::incrementFps();
         }
+        if (Window::isKeyDown(KEY_N)) {
+            Visualize::visualizeVector(v);
+            Visualize::visualizeTitle("Pause");
+            Window::pause();
+        }
         if (Window::isKeyDown(KEY_ESCAPE)) {
             return;
         }
+        Visualize::visualizeVector(v);
+        Visualize::visualizeBar(v, firstBar);
+        Visualize::visualizeBar(v, secondBar);
+        Visualize::visualizeTitle(title);
         Window::endDrawing();
     }
 
@@ -116,6 +118,9 @@ class Visualize {
         std::uniform_int_distribution<int> rgb(0, 255);
         return {static_cast<unsigned char>(rgb(g)), static_cast<unsigned char>(rgb(g)), static_cast<unsigned char>(rgb(g)), 255};
     }
+
+  private:
+    inline static bool style_ = true;
 };
 
 #endif

@@ -39,6 +39,7 @@ class HeapSort : public SortStrategy {
             }
         }
     }
+
     auto buildMaxHeap(std::vector<std::pair<int, std::pair<float, Color>>> &v) -> void {
         auto size{v.size()};
         for (auto i{1}; i != size; ++i) {
