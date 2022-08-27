@@ -20,7 +20,8 @@ class TimSort : public SortStrategy {
 
   private:
     auto timSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
-        if (end - start < 15) {
+        auto size{end - start + 1};
+        if (size <= 16) {
             insertionSort(v, start, end);
             return;
         }

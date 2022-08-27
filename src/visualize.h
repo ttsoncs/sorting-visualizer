@@ -12,7 +12,7 @@ class Visualize {
         auto size{v.size()};
         auto barWidth{static_cast<float>(GetScreenWidth()) / static_cast<float>(size)};
         auto screenHeight{static_cast<float>(GetScreenHeight())};
-        ClearBackground(BLANK);
+        ClearBackground(Color{31, 40, 45, 255});
         if (Visualize::style_) {
             for (auto i{0}; i != size; ++i) {
                 auto [barHeight, color] = v[i].second;

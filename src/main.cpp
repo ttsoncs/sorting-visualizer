@@ -1,8 +1,8 @@
 #include "SortAlgorithms/Concurrent/bitonicSort.h"
+#include "SortAlgorithms/Distribute/gravitySort.h"
+#include "SortAlgorithms/Distribute/interpolationSort.h"
 #include "SortAlgorithms/Distribute/pigeonholeSort.h"
 #include "SortAlgorithms/Distribute/radixSort.h"
-#include "SortAlgorithms/Distribute/interpolationSort.h"
-#include "SortAlgorithms/Distribute/beadSort.h"
 #include "SortAlgorithms/Exchange/binaryGnomeSort.h"
 #include "SortAlgorithms/Exchange/bubbleSort.h"
 #include "SortAlgorithms/Exchange/cocktailShakerSort.h"
@@ -12,16 +12,21 @@
 #include "SortAlgorithms/Exchange/quickSort.h"
 #include "SortAlgorithms/Exchange/slowSort.h"
 #include "SortAlgorithms/Exchange/stoogeSort.h"
-#include "SortAlgorithms/Hybrid/timSort.h"
 #include "SortAlgorithms/Hybrid/introSort.h"
+#include "SortAlgorithms/Hybrid/timSort.h"
 #include "SortAlgorithms/Insert/binaryInsertionSort.h"
+#include "SortAlgorithms/Insert/doubleInsertionSort.h"
 #include "SortAlgorithms/Insert/insertionSort.h"
+#include "SortAlgorithms/Insert/shellMetznerSort.h"
 #include "SortAlgorithms/Insert/shellSort.h"
 #include "SortAlgorithms/Merge/mergeSort.h"
+#include "SortAlgorithms/Merge/naturalMergeSort.h"
 #include "SortAlgorithms/Misc/pancakeSort.h"
+#include "SortAlgorithms/Misc/stalinSort.h"
 #include "SortAlgorithms/Select/cycleSort.h"
 #include "SortAlgorithms/Select/heapSort.h"
 #include "SortAlgorithms/Select/selectionSort.h"
+#include "SortAlgorithms/Select/smoothSort.h"
 #include "sortController.h"
 #include "window.h"
 
@@ -123,7 +128,27 @@ int main() {
         }
 
         if (Window::isKeyPressed(KEY_F)) {
-            sortController.setSortStrategy(std::make_unique<BeadSort>());
+            sortController.setSortStrategy(std::make_unique<GravitySort>());
+        }
+
+        if (Window::isKeyPressed(KEY_G)) {
+            sortController.setSortStrategy(std::make_unique<StalinSort>());
+        }
+
+        if (Window::isKeyPressed(KEY_H)) {
+            sortController.setSortStrategy(std::make_unique<ShellMetznerSort>());
+        }
+
+        if (Window::isKeyPressed(KEY_J)) {
+            sortController.setSortStrategy(std::make_unique<NaturalMergeSort>());
+        }
+
+        if (Window::isKeyPressed(KEY_K)) {
+            sortController.setSortStrategy(std::make_unique<SmoothSort>());
+        }
+
+        if (Window::isKeyPressed(KEY_L)) {
+            sortController.setSortStrategy(std::make_unique<DoubleInsertionSort>());
         }
 
         if (Window::isKeyPressed(KEY_SPACE)) {
@@ -173,7 +198,6 @@ int main() {
         if (Window::isKeyPressed(KEY_B)) {
             Vector::changeColor();
         }
-
         Window::beginDrawing();
         Window::endDrawing();
     }

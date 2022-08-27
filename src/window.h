@@ -2,19 +2,25 @@
 #define WINDOW_H
 
 #include "../lib/raylib-4.2.0/src/raylib.h"
-#include <string>
 #include <iostream>
+#include <string>
 
 class Window {
   public:
     Window() {
         InitWindow(1280, 720, "Sort Visualizer");
+        InitAudioDevice();
         SetExitKey(KEY_ESCAPE);
         SetTargetFPS(Window::fps);
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
+        Sound sound{LoadSound("sound.mp3")};
+        PlaySound(sound);
     }
 
-    ~Window() noexcept { CloseWindow(); }
+    ~Window() noexcept {
+        CloseAudioDevice();
+        CloseWindow();
+    }
 
     Window(const Window &other) = delete;
 
