@@ -24,8 +24,8 @@ class SlowSort : public SortStrategy {
             auto mid{(start + end) / 2};
             slowSort(v, start, mid);
             slowSort(v, mid + 1, end);
-            Visualize::visualizeTraverse(v, mid, end, "Slow Sort");
             if (v[mid].first > v[end].first) {
+                Visualize::visualizeTraverse(v, mid, end, "Slow Sort");
                 std::swap(v[mid], v[end]);
             }
             slowSort(v, start, end - 1);

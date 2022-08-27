@@ -28,7 +28,7 @@ class Visualize {
         }
     }
 
-    static auto visualizeBar(std::vector<std::pair<int, std::pair<float, Color>>> const &v, int index = 0) {
+    static auto visualizeBar(std::vector<std::pair<int, std::pair<float, Color>>> const &v, int index) {
         auto barWidth{static_cast<float>(GetScreenWidth()) / static_cast<float>(v.size())};
         auto [barHeight, color] = v[index].second;
         auto screenHeight{static_cast<float>(GetScreenHeight())};
@@ -41,12 +41,12 @@ class Visualize {
         }
     }
 
-    static auto visualizeTitle(std::string const &title = {}) {
+    static auto visualizeTitle(std::string const &title) {
         DrawText(title.c_str(), 10, 10, GetScreenWidth() / 40, RAYWHITE);
     }
 
-    static void visualizeTraverse(std::vector<std::pair<int, std::pair<float, Color>>> const &v, int firstBar = 0, int secondBar = 0,
-                                  std::string const &title = {}) {
+    static void visualizeTraverse(std::vector<std::pair<int, std::pair<float, Color>>> const &v, int firstBar, int secondBar,
+                                  std::string const &title) {
         Window::beginDrawing();
         if (Window::isKeyDown(KEY_LEFT)) {
             Window::decrementFps();
@@ -69,7 +69,7 @@ class Visualize {
         Window::endDrawing();
     }
 
-    static auto visualizeEnding(std::vector<std::pair<int, std::pair<float, Color>>> const &v, std::string const &title = {}) {
+    static auto visualizeEnding(std::vector<std::pair<int, std::pair<float, Color>>> const &v, std::string const &title) {
         auto size{v.size()};
         Window::beginDrawing();
         Visualize::visualizeVector(v);

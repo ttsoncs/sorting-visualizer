@@ -15,7 +15,7 @@ class SortStrategy {
 
     SortStrategy &operator=(SortStrategy &&other) noexcept = default;
 
-    virtual void sort() = 0;
+    virtual auto sort() -> void = 0;
 };
 
 #endif

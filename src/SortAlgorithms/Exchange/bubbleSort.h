@@ -19,11 +19,11 @@ class BubbleSort : public SortStrategy {
     }
 
   private:
-    auto bubbleSort(std::vector<std::pair<int, std::pair<float,Color>>> &v, int start, int end) -> void {
-        for (auto i{start}; i < end; ++i) {
-            for (auto j{start}; j < end - i; ++j) {
-                Visualize::visualizeTraverse(v, j, j + 1, "Bubble Sort");
+    auto bubbleSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        for (auto i{start}; i != end; ++i) {
+            for (auto j{start}; j != end - i; ++j) {
                 if (v[j].first > v[j + 1].first) {
+                    Visualize::visualizeTraverse(v, j, j + 1, "Bubble Sort");
                     std::swap(v[j], v[j + 1]);
                 }
             }

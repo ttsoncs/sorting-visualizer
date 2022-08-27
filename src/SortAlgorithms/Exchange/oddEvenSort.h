@@ -19,7 +19,7 @@ class OddEvenSort : public SortStrategy {
     }
 
   private:
-    auto oddEvenSort(std::vector<std::pair<int, std::pair<float,Color>>> &v, int start, int end) -> void {
+    auto oddEvenSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
         bool isSorted{false};
         while (!isSorted) {
             isSorted = true;

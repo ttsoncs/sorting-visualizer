@@ -6,7 +6,7 @@
 #include "../../visualize.h"
 
 class BinaryGnomeSort : public SortStrategy {
-public:
+  public:
     BinaryGnomeSort() {
         Visualize::visualizeVector(Vector::getVector());
         Visualize::visualizeTitle("Binary Gnome Sort");

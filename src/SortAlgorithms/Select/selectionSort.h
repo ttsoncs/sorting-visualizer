@@ -23,8 +23,8 @@ class SelectionSort : public SortStrategy {
         for (auto i{start}; i != end + 1; ++i) {
             auto minIndex{i};
             for (auto j{i + 1}; j != end + 1; ++j) {
-                Visualize::visualizeTraverse(v, j, minIndex, "Selection Sort");
                 if (v[j].first < v[minIndex].first) {
+                    Visualize::visualizeTraverse(v, j, minIndex, "Selection Sort");
                     minIndex = j;
                 }
             }

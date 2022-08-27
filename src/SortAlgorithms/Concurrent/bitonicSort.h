@@ -32,8 +32,8 @@ class BitonicSort : public SortStrategy {
         if (size > 1) {
             auto k{greatestPowerOfTwoLessThan(size)};
             for (auto i{start}; i != start + size - k; ++i) {
-                Visualize::visualizeTraverse(v, i, i + k, "Bitonic Sort");
                 if (ascending == (v[i].first > v[i + k].first)) {
+                    Visualize::visualizeTraverse(v, i, i + k, "Bitonic Sort");
                     std::swap(v[i], v[i + k]);
                 }
             }

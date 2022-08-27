@@ -2,7 +2,6 @@
 #define WINDOW_H
 
 #include "../lib/raylib-4.2.0/src/raylib.h"
-#include <iostream>
 #include <string>
 
 class Window {
@@ -13,7 +12,7 @@ class Window {
         SetExitKey(KEY_ESCAPE);
         SetTargetFPS(Window::fps);
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
-        Sound sound{LoadSound("sound.mp3")};
+        Sound sound{LoadSound("Sound/sound.mp3")};
         PlaySound(sound);
     }
 

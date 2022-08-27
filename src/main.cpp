@@ -1,16 +1,19 @@
 #include "SortAlgorithms/Concurrent/bitonicSort.h"
 #include "SortAlgorithms/Distribute/gravitySort.h"
-#include "SortAlgorithms/Distribute/interpolationSort.h"
 #include "SortAlgorithms/Distribute/pigeonholeSort.h"
 #include "SortAlgorithms/Distribute/radixSort.h"
 #include "SortAlgorithms/Exchange/binaryGnomeSort.h"
 #include "SortAlgorithms/Exchange/bubbleSort.h"
+#include "SortAlgorithms/Exchange/circloidSort.h"
 #include "SortAlgorithms/Exchange/cocktailShakerSort.h"
 #include "SortAlgorithms/Exchange/combSort.h"
 #include "SortAlgorithms/Exchange/gnomeSort.h"
 #include "SortAlgorithms/Exchange/oddEvenSort.h"
 #include "SortAlgorithms/Exchange/quickSort.h"
+#include "SortAlgorithms/Exchange/shoveSort.h"
+#include "SortAlgorithms/Exchange/slopeSort.h"
 #include "SortAlgorithms/Exchange/slowSort.h"
+#include "SortAlgorithms/Exchange/snuffleSort.h"
 #include "SortAlgorithms/Exchange/stoogeSort.h"
 #include "SortAlgorithms/Hybrid/introSort.h"
 #include "SortAlgorithms/Hybrid/timSort.h"
@@ -23,7 +26,9 @@
 #include "SortAlgorithms/Merge/naturalMergeSort.h"
 #include "SortAlgorithms/Misc/pancakeSort.h"
 #include "SortAlgorithms/Misc/stalinSort.h"
+#include "SortAlgorithms/Select/bingoSort.h"
 #include "SortAlgorithms/Select/cycleSort.h"
+#include "SortAlgorithms/Select/doubleSelectionSort.h"
 #include "SortAlgorithms/Select/heapSort.h"
 #include "SortAlgorithms/Select/selectionSort.h"
 #include "SortAlgorithms/Select/smoothSort.h"
@@ -56,7 +61,7 @@ int main() {
         }
 
         if (Window::isKeyPressed(KEY_SIX)) {
-            sortController.setSortStrategy(std::make_unique<SlowSort>());
+            sortController.setSortStrategy(std::make_unique<ShoveSort>());
         }
 
         if (Window::isKeyPressed(KEY_SEVEN)) {
@@ -120,7 +125,7 @@ int main() {
         }
 
         if (Window::isKeyPressed(KEY_S)) {
-            sortController.setSortStrategy(std::make_unique<InterpolationSort>());
+            sortController.setSortStrategy(std::make_unique<CircloidSort>());
         }
 
         if (Window::isKeyPressed(KEY_D)) {
@@ -144,7 +149,7 @@ int main() {
         }
 
         if (Window::isKeyPressed(KEY_K)) {
-            sortController.setSortStrategy(std::make_unique<SmoothSort>());
+            sortController.setSortStrategy(std::make_unique<DoubleSelectionSort>());
         }
 
         if (Window::isKeyPressed(KEY_L)) {
