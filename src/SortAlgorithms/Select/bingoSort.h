@@ -23,9 +23,9 @@ class BingoSort : public SortStrategy {
         auto maximum{end};
         auto next{v[end].first};
         auto k{end};
-        for (auto i{maximum}; i >= start; --i) {
-            Visualize::visualizeTraverse(v, i, k, "Bingo Sort");
+        for (auto i{maximum}; i != start - 1; --i) {
             if (v[i].first > next) {
+                Visualize::visualizeTraverse(v, i, k, "Bingo Sort");
                 next = v[i].first;
                 k    = i;
             }
@@ -36,7 +36,7 @@ class BingoSort : public SortStrategy {
         while (maximum > 0) {
             auto val{next};
             next = v[maximum].first;
-            for (auto i{maximum}; i >= start; --i) {
+            for (auto i{maximum}; i != start - 1; --i) {
                 if (v[i].first == val) {
                     Visualize::visualizeTraverse(v, i, maximum, "Bingo Sort");
                     std::swap(v[i], v[maximum]);

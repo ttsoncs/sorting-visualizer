@@ -23,45 +23,50 @@ class DoubleInsertionSort : public SortStrategy {
         auto left{start + (end - start + 1) / 2 - 1};
         auto right{left + 1};
         if (v[left].first > v[right].first) {
+            Visualize::visualizeTraverse(v, left, right, "Double Insertion Sort");
             std::swap(v[left], v[right]);
         }
         --left;
         ++right;
         while (left >= start && right <= end) {
             if (v[left].first > v[right].first) {
-                auto leftItem{v[right]};
-                auto rightItem{v[left]};
+                auto leftKey{v[right]};
+                auto rightKey{v[left]};
                 auto pos{left + 1};
-                while (pos <= right && v[pos].first <= leftItem.first) {
+                while (pos != right + 1 && v[pos].first <= leftKey.first) {
                     Visualize::visualizeTraverse(v, pos, pos - 1, "Double Insertion Sort");
                     v[pos - 1] = v[pos];
                     ++pos;
                 }
-                v[pos - 1] = leftItem;
+                Visualize::visualizeTraverse(v, right, pos - 1, "Double Insertion Sort");
+                v[pos - 1] = leftKey;
                 pos        = right - 1;
-                while (pos >= left && v[pos].first >= rightItem.first) {
+                while (pos != left - 1 && v[pos].first >= rightKey.first) {
                     Visualize::visualizeTraverse(v, pos, pos + 1, "Double Insertion Sort");
                     v[pos + 1] = v[pos];
                     --pos;
                 }
-                v[pos + 1] = rightItem;
+                Visualize::visualizeTraverse(v, left, pos + 1, "Double Insertion Sort");
+                v[pos + 1] = rightKey;
             } else {
-                auto leftItem{v[left]};
-                auto rightItem{v[right]};
+                auto leftKey{v[left]};
+                auto rightKey{v[right]};
                 auto pos{left + 1};
-                while (v[pos].first < leftItem.first) {
+                while (v[pos].first < leftKey.first) {
                     Visualize::visualizeTraverse(v, pos, pos - 1, "Double Insertion Sort");
                     v[pos - 1] = v[pos];
                     ++pos;
                 }
-                v[pos - 1] = leftItem;
+                Visualize::visualizeTraverse(v, left, pos - 1, "Double Insertion Sort");
+                v[pos - 1] = leftKey;
                 pos        = right - 1;
-                while (v[pos].first > rightItem.first) {
+                while (v[pos].first > rightKey.first) {
                     Visualize::visualizeTraverse(v, pos, pos + 1, "Double Insertion Sort");
                     v[pos + 1] = v[pos];
                     --pos;
                 }
-                v[pos + 1] = rightItem;
+                Visualize::visualizeTraverse(v, right, pos + 1, "Double Insertion Sort");
+                v[pos + 1] = rightKey;
             }
             --left;
             ++right;
@@ -74,6 +79,7 @@ class DoubleInsertionSort : public SortStrategy {
                 v[pos + 1] = v[pos];
                 --pos;
             }
+            Visualize::visualizeTraverse(v, right - 1, pos + 1, "Double Insertion Sort");
             v[pos + 1] = current;
         }
     }

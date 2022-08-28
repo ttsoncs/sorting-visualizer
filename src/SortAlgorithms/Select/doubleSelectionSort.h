@@ -22,12 +22,10 @@ class DoubleSelectionSort : public SortStrategy {
     auto doubleSelectionSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
         auto left{start};
         auto right{end};
-        auto min{0};
-        auto max{0};
         while (left < right) {
-            min = left;
-            max = right;
-            for (auto i{left}; i <= right; ++i) {
+            auto min{left};
+            auto max{right};
+            for (auto i{left}; i != right + 1; ++i) {
                 if (v[i].first < v[min].first) {
                     Visualize::visualizeTraverse(v, i, min, "Double Selection Sort");
                     min = i;
@@ -40,6 +38,7 @@ class DoubleSelectionSort : public SortStrategy {
             Visualize::visualizeTraverse(v, min, left, "Double Selection Sort");
             std::swap(v[left], v[min]);
             if (max == left) {
+                Visualize::visualizeTraverse(v, max, min, "Double Selection Sort");
                 max = min;
             }
             Visualize::visualizeTraverse(v, max, right, "Double Selection Sort");

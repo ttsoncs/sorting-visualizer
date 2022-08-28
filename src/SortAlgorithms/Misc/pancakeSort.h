@@ -12,7 +12,7 @@ class PancakeSort : public SortStrategy {
         Visualize::visualizeTitle("Pancake Sort");
     }
 
-    auto sort()-> void override {
+    auto sort() -> void override {
         auto v{Vector::getVector()};
         pancakeSort(v, 0, v.size() - 1);
         Visualize::visualizeEnding(v, "Pancake Sort");
@@ -32,8 +32,8 @@ class PancakeSort : public SortStrategy {
     auto maxIndex(std::vector<std::pair<int, std::pair<float, Color>>> const &v, int size) -> int {
         auto maxIndex{0};
         for (auto i{0}; i != size; ++i) {
-            Visualize::visualizeTraverse(v, maxIndex, i, "Pancake Sort");
             if (v[i].first > v[maxIndex].first) {
+                Visualize::visualizeTraverse(v, maxIndex, i, "Pancake Sort");
                 maxIndex = i;
             }
         }
@@ -41,11 +41,11 @@ class PancakeSort : public SortStrategy {
     }
 
     auto reverseElement(std::vector<std::pair<int, std::pair<float, Color>>> &v, int index) -> void {
-        auto start{0};
-        while (start < index) {
-            Visualize::visualizeTraverse(v, start, index, "Pancake Sort");
-            std::swap(v[start], v[index]);
-            ++start;
+        auto j{0};
+        while (j < index) {
+            Visualize::visualizeTraverse(v, j, index, "Pancake Sort");
+            std::swap(v[j], v[index]);
+            ++j;
             --index;
         }
     }

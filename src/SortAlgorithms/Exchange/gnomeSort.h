@@ -20,14 +20,14 @@ class GnomeSort : public SortStrategy {
 
   private:
     auto gnomeSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
-        auto index{start};
-        while (index != end + 1) {
-            Visualize::visualizeTraverse(v, index, index - 1, "Gnome Sort");
-            if (index == 0 || v[index].first >= v[index - 1].first) {
-                ++index;
+        auto i{start};
+        while (i != end + 1) {
+            Visualize::visualizeTraverse(v, i, i - 1, "Gnome Sort");
+            if (i == 0 || v[i].first >= v[i - 1].first) {
+                ++i;
             } else {
-                std::swap(v[index], v[index - 1]);
-                --index;
+                std::swap(v[i], v[i - 1]);
+                --i;
             }
         }
     }

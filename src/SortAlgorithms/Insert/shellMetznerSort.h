@@ -19,26 +19,27 @@ class ShellMetznerSort : public SortStrategy {
     }
 
   private:
-    auto shellMetznerSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int left, int right) -> void {
-        auto m{v.size()};
+    auto shellMetznerSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        auto size{end - start + 1};
+        auto m{size};
         while (m > 0) {
-            m = m / 2;
-            auto k{v.size() - m};
-            auto j{0};
+            m /= 2;
+            auto k{size - m};
+            auto i{0};
             do {
-                auto i{j};
+                auto j{i};
                 do {
-                    auto l{i + m};
-                    Visualize::visualizeTraverse(v, i, l, "Shell-Metzner Sort");
-                    if (v[i].first > v[l].first) {
-                        std::swap(v[i], v[l]);
-                        i -= m;
+                    auto l{j + m};
+                    if (v[j].first > v[l].first) {
+                        Visualize::visualizeTraverse(v, j, l, "Shell-Metzner Sort");
+                        std::swap(v[j], v[l]);
+                        j -= m;
                     } else {
                         break;
                     }
-                } while (i >= left);
-                ++j;
-            } while (j < k);
+                } while (j >= start);
+                ++i;
+            } while (i < k);
         }
     }
 };

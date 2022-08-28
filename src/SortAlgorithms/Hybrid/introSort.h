@@ -107,15 +107,15 @@ class IntroSort : public SortStrategy {
 
     auto insertionSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
         for (auto i{start + 1}; i != end + 1; ++i) {
-            auto [barHeight, color] = v[i];
+            auto temp = v[i];
             auto j{i};
-            while (j > 0 && v[j - 1].first > barHeight) {
+            while (j > 0 && v[j - 1].first > temp.first) {
                 Visualize::visualizeTraverse(v, j - 1, j, "Intro Sort");
                 v[j] = v[j - 1];
                 --j;
             }
             Visualize::visualizeTraverse(v, j, i, "Intro Sort");
-            v[j] = std::make_pair(barHeight, color);
+            v[j] = temp;
         }
     }
 };

@@ -14,22 +14,22 @@ class StalinSort : public SortStrategy {
 
     auto sort() -> void override {
         auto v{Vector::getVector()};
-        stalinSort(v);
+        stalinSort(v, 0, v.size() - 1);
         Visualize::visualizeEnding(v, "Stalin Sort");
     }
 
   private:
-    auto stalinSort(std::vector<std::pair<int, std::pair<float, Color>>> &v) -> void {
+    auto stalinSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
         auto j{0};
         while (true) {
             auto moved{0};
-            for (auto i{0}; i != v.size() - 1 - j; ++i) {
-                Visualize::visualizeTraverse(v, i, i + 1, "Stalin Sort");
+            for (auto i{start}; i != end - j; ++i) {
                 if (v[i].first > v[i + 1].first) {
-                    std::vector<std::pair<int, std::pair<float, Color>>>::iterator it{v.begin() + i + 1};
-                    auto temp{v[i + 1]};
+                    Visualize::visualizeTraverse(v, i, i + 1, "Stalin Sort");
+                    auto it{v.begin() + i + 1};
+                    auto key{v[i + 1]};
                     v.erase(it);
-                    v.insert(v.begin() + moved, temp);
+                    v.insert(v.begin() + moved, key);
                     ++moved;
                 }
             }

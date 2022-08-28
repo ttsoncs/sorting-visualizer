@@ -20,21 +20,21 @@ class OddEvenSort : public SortStrategy {
 
   private:
     auto oddEvenSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
-        bool isSorted{false};
-        while (!isSorted) {
-            isSorted = true;
+        bool sorted{false};
+        while (!sorted) {
+            sorted = true;
             for (auto i{start + 1}; i < end; i += 2) {
-                Visualize::visualizeTraverse(v, i, i + 1, "Odd Even Sort");
                 if (v[i].first > v[i + 1].first) {
+                    Visualize::visualizeTraverse(v, i, i + 1, "Odd Even Sort");
                     std::swap(v[i], v[i + 1]);
-                    isSorted = false;
+                    sorted = false;
                 }
             }
             for (auto i{start}; i < end; i += 2) {
-                Visualize::visualizeTraverse(v, i, i + 1, "Odd Even Sort");
                 if (v[i].first > v[i + 1].first) {
+                    Visualize::visualizeTraverse(v, i, i + 1, "Odd Even Sort");
                     std::swap(v[i], v[i + 1]);
-                    isSorted = false;
+                    sorted = false;
                 }
             }
         }

@@ -28,8 +28,9 @@ class MergeSort : public SortStrategy {
         }
     }
 
-    auto merge(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int mid, int end)-> void {
-        std::vector<std::pair<int, std::pair<float, Color>>> temp(end - start + 1);
+    auto merge(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int mid, int end) -> void {
+        auto size{end - start + 1};
+        std::vector<std::pair<int, std::pair<float, Color>>> temp(size);
         auto i{start};
         auto j{mid + 1};
         auto k{0};
@@ -49,7 +50,6 @@ class MergeSort : public SortStrategy {
             Visualize::visualizeTraverse(v, i, j, "Merge Sort");
             temp[k++] = v[j++];
         }
-        auto size{temp.size()};
         for (auto i{0}; i != size; ++i) {
             v[start + i] = temp[i];
         }

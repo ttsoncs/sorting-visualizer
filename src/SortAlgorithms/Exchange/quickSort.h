@@ -31,8 +31,8 @@ class QuickSort : public SortStrategy {
                 while (v[j].first > pivot.first) {
                     --j;
                 }
-                Visualize::visualizeTraverse(v, i, j, "Quicksort");
                 if (i <= j) {
+                    Visualize::visualizeTraverse(v, i, j, "Quicksort");
                     std::swap(v[i], v[j]);
                     ++i;
                     --j;
@@ -46,31 +46,6 @@ class QuickSort : public SortStrategy {
             }
         }
     }
-
-    // void quickSort(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-    //                int start, int end) {
-    //   if (start < end) {
-    //     auto pivot = partition(v, start, end);
-    //     quickSort(v, start, pivot - 1);
-    //     quickSort(v, pivot + 1, end);
-    //   }
-    // }
-
-    // int partition(std::vector<std::pair<int, std::pair<float, Color>>> &v,
-    //               int start, int end) {
-    //   auto pivot = v[end];
-    //   auto i = start - 1;
-    //   for (auto j = start; j < end; j++) {
-    //     Visualize::visualizeTraverse(v, i, j, "Quicksort");
-    //     if (v[j].first <= pivot.first) {
-    //       i++;
-    //       std::swap(v[i], v[j]);
-    //     }
-    //   }
-    //   Visualize::visualizeTraverse(v, i + 1, end, "Quicksort");
-    //   std::swap(v[i + 1], v[end]);
-    //   return i + 1;
-    // }
 };
 
 #endif

@@ -42,7 +42,7 @@ class BitonicSort : public SortStrategy {
         }
     };
 
-    int greatestPowerOfTwoLessThan(int n) {
+    auto greatestPowerOfTwoLessThan(int n) -> int {
         auto k{1};
         while (k < n) {
             k *= 2;

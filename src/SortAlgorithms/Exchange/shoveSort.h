@@ -24,7 +24,7 @@ class ShoveSort : public SortStrategy {
         while (i < end) {
             if (v[i].first > v[i + 1].first) {
                 Visualize::visualizeTraverse(v, i, i + 1, "Shove Sort");
-                for (auto j{i}; j < end; ++j) {
+                for (auto j{i}; j != end; ++j) {
                     Visualize::visualizeTraverse(v, j, j + 1, "Shove Sort");
                     std::swap(v[j], v[j + 1]);
                 }

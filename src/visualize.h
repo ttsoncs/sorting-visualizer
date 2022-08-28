@@ -17,13 +17,13 @@ class Visualize {
             for (auto i{0}; i != size; ++i) {
                 auto [barHeight, color] = v[i].second;
                 DrawRectangleV(Vector2{static_cast<float>(i) * barWidth, screenHeight - barHeight},
-                               Vector2{barWidth, barWidth}, color);
+                               Vector2{barWidth - 1, barWidth - 1}, color);
             }
         } else {
             for (auto i{0}; i != size; ++i) {
                 auto [barHeight, color] = v[i].second;
                 DrawRectangleV(Vector2{static_cast<float>(i) * barWidth, screenHeight - barHeight},
-                               Vector2{barWidth, barHeight}, color);
+                               Vector2{barWidth - 1, barHeight}, color);
             }
         }
     }
@@ -34,10 +34,10 @@ class Visualize {
         auto screenHeight{static_cast<float>(GetScreenHeight())};
         if (Visualize::style_) {
             DrawRectangleV(Vector2{static_cast<float>(index) * barWidth, screenHeight - barHeight},
-                           Vector2{barWidth, barWidth}, RAYWHITE);
+                           Vector2{barWidth - 1, barWidth - 1}, RAYWHITE);
         } else {
             DrawRectangleV(Vector2{static_cast<float>(index) * barWidth, screenHeight - barHeight},
-                           Vector2{barWidth, barHeight}, RAYWHITE);
+                           Vector2{barWidth - 1, barHeight}, RAYWHITE);
         }
     }
 

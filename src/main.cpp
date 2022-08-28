@@ -133,7 +133,7 @@ int main() {
         }
 
         if (Window::isKeyPressed(KEY_F)) {
-            sortController.setSortStrategy(std::make_unique<GravitySort>());
+            sortController.setSortStrategy(std::make_unique<BingoSort>());
         }
 
         if (Window::isKeyPressed(KEY_G)) {

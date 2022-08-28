@@ -31,12 +31,12 @@ class CircloidSort : public SortStrategy {
     auto circloidMerge(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> bool {
         auto left{start};
         auto right{end};
-        auto isSwapped{false};
+        auto swapped{false};
         while (left < right) {
             if (v[left].first > v[right].first) {
                 Visualize::visualizeTraverse(v, left, right, "Circloid Sort");
                 std::swap(v[left], v[right]);
-                isSwapped = true;
+                swapped = true;
             }
             ++left;
             --right;
@@ -44,7 +44,7 @@ class CircloidSort : public SortStrategy {
                 ++right;
             }
         }
-        return isSwapped;
+        return swapped;
     }
 };
 

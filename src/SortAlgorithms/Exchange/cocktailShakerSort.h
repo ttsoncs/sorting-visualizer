@@ -20,13 +20,12 @@ class CocktailShakerSort : public SortStrategy {
 
   private:
     auto cocktailShakerSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
-        auto size{end - start + 1};
         bool swapped{true};
         while (swapped) {
             swapped = false;
-            for (auto i{start}; i != size - 1; ++i) {
-                Visualize::visualizeTraverse(v, i, i + 1, "Cocktail Shaker Sort");
+            for (auto i{start}; i != end; ++i) {
                 if (v[i].first > v[i + 1].first) {
+                    Visualize::visualizeTraverse(v, i, i + 1, "Cocktail Shaker Sort");
                     std::swap(v[i], v[i + 1]);
                     swapped = true;
                 }
@@ -35,10 +34,10 @@ class CocktailShakerSort : public SortStrategy {
                 break;
             }
             swapped = false;
-            for (auto i{size - 1}; i != 0; --i) {
-                Visualize::visualizeTraverse(v, i, i - 1, "Cocktail Shaker Sort");
-                if (v[i].first < v[i - 1].first) {
-                    std::swap(v[i], v[i - 1]);
+            for (auto i{end - 1}; i != start - 1; --i) {
+                if (v[i].first > v[i + 1].first) {
+                    Visualize::visualizeTraverse(v, i, i + 1, "Cocktail Shaker Sort");
+                    std::swap(v[i], v[i + 1]);
                     swapped = true;
                 }
             }

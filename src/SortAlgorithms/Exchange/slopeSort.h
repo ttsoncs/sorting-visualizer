@@ -20,8 +20,8 @@ class SlopeSort : public SortStrategy {
 
   private:
     auto slopeSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
-        for (auto i{start + 1}, j{start + 1}; i <= end; ++i, ++j) {
-            for (auto k{i}; k > start; --k) {
+        for (auto i{start + 1}, j{start + 1}; i != end + 1; ++i, ++j) {
+            for (auto k{i}; k != start; --k) {
                 if (v[k].first < v[k - 1].first) {
                     Visualize::visualizeTraverse(v, k, k - 1, "Slope Sort");
                     std::swap(v[k], v[k - 1]);

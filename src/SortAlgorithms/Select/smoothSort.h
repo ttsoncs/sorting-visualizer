@@ -29,13 +29,13 @@ class SmoothSort : public SortStrategy {
             m = (m - 1) / 2;
             for (auto i{start + m}; i <= end; ++i) {
                 auto j{i};
-                auto temp{v[i]};
-                while (j >= start + m && temp.first < v[j - m].first) {
+                auto key{v[i]};
+                while (j >= start + m && key.first < v[j - m].first) {
                     Visualize::visualizeTraverse(v, j, j - m, "Smooth Sort");
                     v[j] = v[j - m];
                     j = j - m;
                 }
-                v[j] = temp;
+                v[j] = key;
             }
         }
     }

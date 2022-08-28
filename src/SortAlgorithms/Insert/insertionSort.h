@@ -20,20 +20,16 @@ class InsertionSort : public SortStrategy {
 
   private:
     auto insertionSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
-        auto i{0};
-        while (i != v.size() - 1) {
-            Visualize::visualizeTraverse(v, i, i + 1, "Double Insertion Sort");
-            if (v[i].first > v[i + 1].first) {
-                auto temp{v[i + 1]};
-                auto j{i};
-                while (j >= 0 && v[j].first > temp.first) {
-                    Visualize::visualizeTraverse(v, j, j + 1, "Double Insertion Sort");
-                    v[j + 1] = v[j];
-                    --j;
-                }
-                v[j + 1] = temp;
+        for (auto i{start + 1}; i != end + 1; ++i) {
+            auto key{v[i]};
+            auto j{i};
+            while (j > 0 && v[j - 1].first > key.first) {
+                Visualize::visualizeTraverse(v, j, j - 1, "Insertion Sort");
+                v[j] = v[j - 1];
+                --j;
             }
-            ++i;
+            Visualize::visualizeTraverse(v, j, i, "Insertion Sort");
+            v[j] = key;
         }
     }
 };

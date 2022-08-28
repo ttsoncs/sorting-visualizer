@@ -97,7 +97,7 @@ class Vector {
     static auto getVector() { return Vector::v_; }
 
     static auto incrementVectorSize() {
-        if (Vector::v_size_ < 480) {
+        if (Vector::v_size_ < 240) {
             Vector::v_size_ += 20;
             Vector::generate();
             Vector::randomShuffle(false);
@@ -128,7 +128,7 @@ class Vector {
 
   private:
     inline static std::vector<std::pair<int, std::pair<float, Color>>> v_;
-    inline static auto v_size_{120};
+    inline static auto v_size_{60};
 };
 
 #endif

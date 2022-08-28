@@ -20,13 +20,14 @@ class StoogeSort : public SortStrategy {
 
   private:
     auto stoogeSort(std::vector<std::pair<int, std::pair<float, Color>>> &v, int start, int end) -> void {
+        auto size{end - start + 1};
         if (start <= end) {
             if (v[start].first > v[end].first) {
                 Visualize::visualizeTraverse(v, start, end, "Stooge Sort");
                 std::swap(v[start], v[end]);
             }
-            if (end - start + 1 > 2) {
-                auto mid{(end - start + 1) / 3};
+            if (size > 2) {
+                auto mid{size / 3};
                 stoogeSort(v, start, end - mid);
                 stoogeSort(v, start + mid, end);
                 stoogeSort(v, start, end - mid);

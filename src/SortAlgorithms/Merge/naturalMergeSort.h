@@ -46,9 +46,11 @@ class NaturalMergeSort : public SortStrategy {
                     }
                 }
                 while (i < r) {
+                    Visualize::visualizeTraverse(v, i, j, "Natural Merge Sort");
                     temp[k++] = v[i++];
                 }
                 while (j < m) {
+                    Visualize::visualizeTraverse(v, i, j, "Natural Merge Sort");
                     temp[k++] = v[j++];
                 }
                 for (i = l; i < m; ++i) {
@@ -71,9 +73,11 @@ class NaturalMergeSort : public SortStrategy {
                     }
                 }
                 while (i < r) {
+                    Visualize::visualizeTraverse(v, i, j, "Natural Merge Sort");
                     temp[k++] = v[i++];
                 }
                 while (j < m) {
+                    Visualize::visualizeTraverse(v, i, j, "Natural Merge Sort");
                     temp[k++] = v[j++];
                 }
                 for (i = l; i < m; ++i) {
