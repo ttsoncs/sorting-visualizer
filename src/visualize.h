@@ -14,13 +14,13 @@ class Visualize {
         auto screenHeight{static_cast<float>(GetScreenHeight())};
         ClearBackground(Color{31, 40, 45, 255});
         if (Visualize::style_) {
-            for (auto i{0}; i != size; ++i) {
+            for (auto i{0}; i != static_cast<int>(size); ++i) {
                 auto [barHeight, color] = v[i].second;
                 DrawRectangleV(Vector2{static_cast<float>(i) * barWidth, screenHeight - barHeight},
                                Vector2{barWidth - 1, barWidth - 1}, color);
             }
         } else {
-            for (auto i{0}; i != size; ++i) {
+            for (auto i{0}; i != static_cast<int>(size); ++i) {
                 auto [barHeight, color] = v[i].second;
                 DrawRectangleV(Vector2{static_cast<float>(i) * barWidth, screenHeight - barHeight},
                                Vector2{barWidth - 1, barHeight}, color);
@@ -78,7 +78,7 @@ class Visualize {
             return;
         }
         Window::endDrawing();
-        for (auto i{0}; i != size; ++i) {
+        for (auto i{0}; i != static_cast<int>(size); ++i) {
             Window::beginDrawing();
             Visualize::visualizeBar(v, i);
             Visualize::visualizeTitle(title);

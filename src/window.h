@@ -10,7 +10,7 @@ class Window {
         InitWindow(1280, 720, "Sort Visualizer");
         InitAudioDevice();
         SetExitKey(KEY_ESCAPE);
-        SetTargetFPS(Window::fps);
+        SetTargetFPS(Window::fps_);
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
         Sound sound{LoadSound("Sound/sound.mp3")};
         PlaySound(sound);
@@ -23,23 +23,23 @@ class Window {
 
     Window(const Window &other) = delete;
 
-    Window &operator=(const Window &other) = delete;
+    auto operator=(const Window &other) -> Window & = delete;
 
     Window(Window &&other) noexcept = default;
 
-    Window &operator=(Window &&other) noexcept = default;
+    auto operator=(Window &&other) noexcept -> Window & = default;
 
-    static auto incrementFps(bool isSorting = false) {
-        if (Window::fps < 240) {
-            Window::fps += 2;
-            SetTargetFPS(Window::fps);
+    static auto incrementFps() {
+        if (Window::fps_ < 240) {
+            Window::fps_ += 2;
+            SetTargetFPS(Window::fps_);
         }
     }
 
     static auto decrementFps() {
-        if (Window::fps > 2) {
-            Window::fps -= 2;
-            SetTargetFPS(Window::fps);
+        if (Window::fps_ > 2) {
+            Window::fps_ -= 2;
+            SetTargetFPS(Window::fps_);
         }
     }
 
@@ -60,7 +60,7 @@ class Window {
         }
     }
 
-    [[nodiscard]] static auto getFps() { return Window::fps; }
+    [[nodiscard]] static auto getFps() { return Window::fps_; }
 
     [[nodiscard]] static auto windowShouldClose() { return WindowShouldClose(); }
 
@@ -69,7 +69,7 @@ class Window {
     [[nodiscard]] static auto isKeyPressed(int key) -> bool { return IsKeyPressed(key); }
 
   private:
-    inline static auto fps{60};
+    inline static auto fps_{60};
 };
 
 #endif

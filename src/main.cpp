@@ -35,7 +35,7 @@
 #include "sortController.h"
 #include "window.h"
 
-int main() {
+auto main() -> int {
     Window window;
     Vector vector_;
     SortController sortController;
